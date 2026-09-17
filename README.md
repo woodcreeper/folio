@@ -77,6 +77,10 @@ AppImages are built on Ubuntu 22.04 and are not guaranteed to work on every dist
 
 Use your file manager’s **Open With** settings to associate Markdown with Folio. The `.deb` installs a desktop entry; a standalone AppImage may need manual desktop integration. Finder-style Space-bar preview is a macOS feature only.
 
+### Omarchy / Arch Linux
+
+Omarchy support is being investigated. The Linux AppImage is a candidate, and an [experimental native Arch package and Wayland check](packaging/arch/README.md) are saved in this repository. Neither has been verified on an actual Omarchy desktop yet. We are also checking whether Omarchy’s existing tools or plugin model are a better fit before adding an integration.
+
 ## Make it yours
 
 Open **Appearance** (the **Aa** button) to choose a reading style, theme, or text size. The styles use local system fonts, so details vary by platform. They are original CSS inspired by familiar reading experiences, not exact replicas or affiliated products.

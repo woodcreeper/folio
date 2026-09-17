@@ -1,0 +1,55 @@
+name: Experimental Arch and Wayland check
+on:
+  workflow_dispatch:
+    inputs:
+      build_run_id:
+        description: 'Successful Build and release run containing the Folio-Linux artifact'
+        required: true
+        type: string
+permissions:
+  contents: read
+  actions: read
+jobs:
+  arch:
+    name: Arch package and Wayland startup
+    runs-on: ubuntu-latest
+    container:
+      image: archlinux:base-devel
+      # Allow WebKit's nested user-namespace sandbox inside this disposable CI container.
+      options: --security-opt seccomp=unconfined --security-opt apparmor=unconfined
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: Folio-Linux
+          path: artifacts
+          github-token: ${{ github.token }}
+          run-id: ${{ inputs.build_run_id }}
+      - name: Install Arch runtime and packaging tools
+        run: |
+          pacman -Syu --noconfirm --needed nodejs webkit2gtk-4.1 gtk3 openssl xdotool librsvg hicolor-icon-theme desktop-file-utils weston dbus ttf-dejavu
+          useradd --create-home builder
+          chown -R builder:builder "$GITHUB_WORKSPACE"
+      - name: Build native Arch package
+        shell: bash
+        run: |
+          deb=$(find artifacts -name '*.deb' -print -quit)
+          test -n "$deb"
+          runuser -u builder -- bash scripts/package-arch.sh "$deb"
+          pacman -U --noconfirm release-assets/*.pkg.tar.zst
+          ldd /usr/bin/folio | tee /tmp/folio-libraries.txt
+          ! grep -q 'not found' /tmp/folio-libraries.txt
+          desktop=$(pacman -Qlq folio-markdown | grep '\.desktop$' | head -1)
+          desktop-file-validate "$desktop"
+      - name: Native Wayland startup
+        run: runuser -u builder -- dbus-run-session -- bash scripts/smoke-wayland.sh
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: Folio-Arch
+          path: release-assets/*.pkg.tar.zst
+          if-no-files-found: error
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: failure()
+        with:
+          name: arch-wayland-diagnostics
+          path: test-results/arch-wayland.log
