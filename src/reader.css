@@ -1,0 +1,406 @@
+/* Shared typography for the desktop reader and native Quick Look preview. */
+:root {
+  color-scheme: light;
+  --reader-max-width: 830px;
+  --reader-body-font: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --reader-heading-font: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --reader-line-height: 1.85;
+  --reader-paragraph-space: 1.25em;
+  --reader-light-paper: #fffefa;
+  --reader-light-text: #323630;
+  --reader-light-muted: #788075;
+  --reader-light-accent: #526b48;
+  --reader-light-rule: #e6e8df;
+  --reader-light-code: #f4f5ee;
+  --reader-light-quote: #f5f6ef;
+  --reader-light-selection: #dce8ce;
+  --reader-light-keyword: #85604d;
+  --reader-light-string: #4c7350;
+  --reader-light-number: #9a6840;
+  --reader-light-title: #557693;
+  --reader-dark-paper: #22251f;
+  --reader-dark-text: #e1e5d9;
+  --reader-dark-muted: #a2ad98;
+  --reader-dark-accent: #b0c59b;
+  --reader-dark-rule: #3d4337;
+  --reader-dark-code: #2c3027;
+  --reader-dark-quote: #2b3026;
+  --reader-dark-selection: #4f6141;
+  --reader-dark-keyword: #dbb59b;
+  --reader-dark-string: #a5c58d;
+  --reader-dark-number: #dcba81;
+  --reader-dark-title: #a1bdd0;
+  --reader-paper: var(--reader-light-paper);
+  --reader-text: var(--reader-light-text);
+  --reader-muted: var(--reader-light-muted);
+  --reader-accent: var(--reader-light-accent);
+  --reader-rule: var(--reader-light-rule);
+  --reader-code: var(--reader-light-code);
+  --reader-quote: var(--reader-light-quote);
+  --reader-selection: var(--reader-light-selection);
+  --reader-code-keyword: var(--reader-light-keyword);
+  --reader-code-string: var(--reader-light-string);
+  --reader-code-number: var(--reader-light-number);
+  --reader-code-title: var(--reader-light-title);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --reader-paper: var(--reader-dark-paper);
+    --reader-text: var(--reader-dark-text);
+    --reader-muted: var(--reader-dark-muted);
+    --reader-accent: var(--reader-dark-accent);
+    --reader-rule: var(--reader-dark-rule);
+    --reader-code: var(--reader-dark-code);
+    --reader-quote: var(--reader-dark-quote);
+    --reader-selection: var(--reader-dark-selection);
+    --reader-code-keyword: var(--reader-dark-keyword);
+    --reader-code-string: var(--reader-dark-string);
+    --reader-code-number: var(--reader-dark-number);
+    --reader-code-title: var(--reader-dark-title);
+  }
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --reader-paper: var(--reader-dark-paper);
+  --reader-text: var(--reader-dark-text);
+  --reader-muted: var(--reader-dark-muted);
+  --reader-accent: var(--reader-dark-accent);
+  --reader-rule: var(--reader-dark-rule);
+  --reader-code: var(--reader-dark-code);
+  --reader-quote: var(--reader-dark-quote);
+  --reader-selection: var(--reader-dark-selection);
+  --reader-code-keyword: var(--reader-dark-keyword);
+  --reader-code-string: var(--reader-dark-string);
+  --reader-code-number: var(--reader-dark-number);
+  --reader-code-title: var(--reader-dark-title);
+}
+
+/* Independent reading presets. These are local interpretations, not bundled
+   third-party themes or fonts. Only the reader consumes these variables; the
+   host may use --reader-max-width for its reading column. No selection = Folio.
+   References: Microsoft vscode/media/markdown.css; iA Writer Preview Templates
+   (Classic/Palatino); GitHub Primer src/markdown. */
+:root[data-reading-style="code"] {
+  --reader-max-width: 940px;
+  --reader-body-font: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", Ubuntu, sans-serif;
+  --reader-heading-font: var(--reader-body-font);
+  --reader-line-height: 1.57;
+  --reader-paragraph-space: 1em;
+  --reader-light-paper: #ffffff;
+  --reader-light-text: #303030;
+  --reader-light-muted: #626262;
+  --reader-light-accent: #006ab1;
+  --reader-light-rule: #d8d8d8;
+  --reader-light-code: #f1f1f1;
+  --reader-light-quote: #f5f5f5;
+  --reader-light-selection: #cce5ff;
+  --reader-light-keyword: #0000bb;
+  --reader-light-string: #a31515;
+  --reader-light-number: #096650;
+  --reader-light-title: #795e26;
+  --reader-dark-paper: #1e1e1e;
+  --reader-dark-text: #d4d4d4;
+  --reader-dark-muted: #ababab;
+  --reader-dark-accent: #65b7f3;
+  --reader-dark-rule: #474747;
+  --reader-dark-code: #292929;
+  --reader-dark-quote: #252525;
+  --reader-dark-selection: #264f78;
+  --reader-dark-keyword: #569cd6;
+  --reader-dark-string: #ce9178;
+  --reader-dark-number: #b5cea8;
+  --reader-dark-title: #dcdcaa;
+}
+
+:root[data-reading-style="writer"] {
+  --reader-max-width: 780px;
+  --reader-body-font: "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  --reader-heading-font: var(--reader-body-font);
+  --reader-line-height: 1.8;
+  --reader-paragraph-space: 1.25em;
+  --reader-light-paper: #fffefb;
+  --reader-light-text: #30302f;
+  --reader-light-muted: #71716d;
+  --reader-light-accent: #424c55;
+  --reader-light-rule: #ddddd7;
+  --reader-light-code: #f1f1ed;
+  --reader-light-quote: #f7f7f2;
+  --reader-light-selection: #dce7ef;
+  --reader-light-keyword: #60474b;
+  --reader-light-string: #4f6652;
+  --reader-light-number: #695540;
+  --reader-light-title: #455b70;
+  --reader-dark-paper: #20201f;
+  --reader-dark-text: #e0e0da;
+  --reader-dark-muted: #a8a8a1;
+  --reader-dark-accent: #c2ccd5;
+  --reader-dark-rule: #44443f;
+  --reader-dark-code: #2b2b28;
+  --reader-dark-quote: #292926;
+  --reader-dark-selection: #3e4b55;
+  --reader-dark-keyword: #c8adb1;
+  --reader-dark-string: #b3c8aa;
+  --reader-dark-number: #ccbea4;
+  --reader-dark-title: #acc1d5;
+}
+
+:root[data-reading-style="github"] {
+  --reader-max-width: 980px;
+  --reader-body-font: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+  --reader-heading-font: var(--reader-body-font);
+  --reader-line-height: 1.5;
+  --reader-paragraph-space: 1em;
+  --reader-light-paper: #ffffff;
+  --reader-light-text: #1f2328;
+  --reader-light-muted: #59636e;
+  --reader-light-accent: #0969da;
+  --reader-light-rule: #d1d9e0;
+  --reader-light-code: #f6f8fa;
+  --reader-light-quote: #ffffff;
+  --reader-light-selection: #c8e1ff;
+  --reader-light-keyword: #cf222e;
+  --reader-light-string: #0a3069;
+  --reader-light-number: #0550ae;
+  --reader-light-title: #6639ba;
+  --reader-dark-paper: #0d1117;
+  --reader-dark-text: #f0f6fc;
+  --reader-dark-muted: #9198a1;
+  --reader-dark-accent: #4493f8;
+  --reader-dark-rule: #3d444d;
+  --reader-dark-code: #151b23;
+  --reader-dark-quote: #0d1117;
+  --reader-dark-selection: #264f78;
+  --reader-dark-keyword: #ff7b72;
+  --reader-dark-string: #a5d6ff;
+  --reader-dark-number: #79c0ff;
+  --reader-dark-title: #d2a8ff;
+}
+
+.markdown-body {
+  color: var(--reader-text);
+  background: var(--reader-paper);
+  font-family: var(--reader-body-font);
+  font-size: var(--reading-size, 16px);
+  line-height: var(--reader-line-height);
+  overflow-wrap: break-word;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+.markdown-body ::selection { background: var(--reader-selection); }
+.markdown-body > :first-child { margin-top: 0; }
+.markdown-body > :last-child { margin-bottom: 0; }
+.markdown-body p { margin: 0 0 var(--reader-paragraph-space); }
+
+.markdown-body :is(h1, h2, h3, h4, h5, h6) {
+  font-family: var(--reader-heading-font);
+  color: var(--reader-text);
+  font-weight: 500;
+  line-height: 1.24;
+  letter-spacing: -.025em;
+  scroll-margin-top: 34px;
+}
+.markdown-body h1 { margin: 0 0 24px; font-size: 2.55em; line-height: 1.18; letter-spacing: -1.2px; }
+.markdown-body h2 { margin: 1.7em 0 .6em; font-size: 1.52em; }
+.markdown-body h3 { margin: 1.65em 0 .55em; font-size: 1.13em; }
+.markdown-body h4 { margin: 1.6em 0 .5em; font-size: 1.12em; font-weight: 600; }
+.markdown-body h5 { margin: 1.6em 0 .5em; font-size: 1em; font-weight: 600; }
+.markdown-body h6 { margin: 1.6em 0 .5em; font-size: .9em; font-weight: 600; color: var(--reader-muted); }
+.markdown-body :is(h1, h2, h3, h4, h5, h6) + :is(h2, h3, h4, h5, h6) { margin-top: .8em; }
+.markdown-body strong { font-weight: 650; }
+.markdown-body a { color: var(--reader-accent); text-decoration-thickness: 1px; text-underline-offset: .2em; }
+.markdown-body a:hover { text-decoration-thickness: 2px; }
+.markdown-body a:focus-visible { outline: 2px solid var(--reader-accent); outline-offset: 3px; border-radius: 2px; }
+.markdown-body .unsupported-link { text-decoration: underline dotted; text-underline-offset: .2em; }
+.markdown-body hr { height: 0; margin: 2.5em 0; border: 0; border-top: 1px solid var(--reader-rule); }
+
+.markdown-body :is(ul, ol) { padding-left: 1.65em; margin: 0 0 1.25em; }
+.markdown-body li { padding-left: .22em; margin: .4em 0; }
+.markdown-body li::marker { color: var(--reader-accent); }
+.markdown-body li > :is(ul, ol) { margin: .45em 0; }
+.markdown-body li > p { margin: .6em 0; }
+.markdown-body .task-list-item { list-style: none; position: relative; }
+.markdown-body .task-checkbox {
+  position: absolute;
+  left: -1.45em;
+  top: .53em;
+  width: 14px;
+  height: 14px;
+  margin: 0;
+  accent-color: var(--reader-accent);
+  opacity: .9;
+}
+
+.markdown-body blockquote {
+  margin: 1.7em 0;
+  padding: 1.05em 1.4em;
+  border-left: 3px solid var(--reader-accent);
+  border-radius: 0 5px 5px 0;
+  background: var(--reader-quote);
+  color: var(--reader-text);
+}
+.markdown-body blockquote > :first-child { margin-top: 0; }
+.markdown-body blockquote > :last-child { margin-bottom: 0; }
+
+.markdown-body :is(code, pre) { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace; }
+.markdown-body code { font-size: .82em; background: var(--reader-code); padding: .18em .42em; border-radius: 4px; }
+.markdown-body pre {
+  margin: 1.65em 0;
+  padding: 1.35em 1.5em;
+  border: 1px solid var(--reader-rule);
+  border-radius: 7px;
+  background: var(--reader-code);
+  line-height: 1.65;
+  overflow-x: auto;
+  tab-size: 2;
+}
+.markdown-body pre code { display: block; padding: 0; border-radius: 0; font-size: .81em; background: transparent; overflow-wrap: normal; }
+.markdown-body .hljs-comment, .markdown-body .hljs-quote { color: var(--reader-muted); font-style: italic; }
+.markdown-body .hljs-keyword, .markdown-body .hljs-selector-tag, .markdown-body .hljs-literal { color: var(--reader-code-keyword); }
+.markdown-body .hljs-string, .markdown-body .hljs-attr, .markdown-body .hljs-regexp, .markdown-body .hljs-addition { color: var(--reader-code-string); }
+.markdown-body .hljs-number, .markdown-body .hljs-symbol, .markdown-body .hljs-built_in { color: var(--reader-code-number); }
+.markdown-body .hljs-title, .markdown-body .hljs-type, .markdown-body .hljs-name, .markdown-body .hljs-section { color: var(--reader-code-title); }
+.markdown-body .hljs-deletion { color: var(--reader-code-keyword); }
+.markdown-body .hljs-emphasis { font-style: italic; }
+.markdown-body .hljs-strong { font-weight: 700; }
+
+.markdown-body table {
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  overflow-x: auto;
+  margin: 1.7em 0;
+  border-collapse: collapse;
+  font-size: .9em;
+  line-height: 1.65;
+}
+.markdown-body th { font-weight: 600; background: var(--reader-quote); }
+.markdown-body :is(th, td) { padding: .75em 1.1em; border: 1px solid var(--reader-rule); text-align: left; }
+.markdown-body tr:nth-child(even) td { background: var(--reader-code); }
+.markdown-body img { display: block; max-width: 100%; height: auto; margin: 1.5em auto; border-radius: 5px; }
+.markdown-body .image-placeholder {
+  display: inline-block;
+  max-width: 100%;
+  padding: .75em 1em;
+  margin: .5em 0;
+  border: 1px dashed var(--reader-rule);
+  border-radius: 5px;
+  color: var(--reader-muted);
+  font-size: .85em;
+  background: var(--reader-code);
+}
+.markdown-body .footnotes { color: var(--reader-muted); font-size: .84em; margin-top: 2em; }
+.markdown-body .footnotes-sep { margin-bottom: 1.5em; }
+.markdown-body .footnote-ref { font-size: .7em; line-height: 0; margin-left: .12em; }
+.markdown-body .footnote-ref a { text-decoration: none; }
+.markdown-body .footnote-backref { text-decoration: none; margin-left: .2em; }
+
+/* Technical previews: system typography, compact rhythm, and clear structure. */
+:root:is([data-reading-style="code"], [data-reading-style="github"]) .markdown-body :is(h1, h2, h3, h4, h5, h6) {
+  margin-top: 1.5em;
+  margin-bottom: 1em;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: normal;
+}
+:root:is([data-reading-style="code"], [data-reading-style="github"]) .markdown-body h1 { font-size: 2em; }
+:root:is([data-reading-style="code"], [data-reading-style="github"]) .markdown-body h2 { font-size: 1.5em; }
+:root:is([data-reading-style="code"], [data-reading-style="github"]) .markdown-body h3 { font-size: 1.25em; }
+:root:is([data-reading-style="code"], [data-reading-style="github"]) .markdown-body h4 { font-size: 1em; }
+:root:is([data-reading-style="code"], [data-reading-style="github"]) .markdown-body h5 { font-size: .875em; }
+:root:is([data-reading-style="code"], [data-reading-style="github"]) .markdown-body h6 { font-size: .85em; }
+:root:is([data-reading-style="code"], [data-reading-style="github"]) .markdown-body :is(h1, h2) {
+  padding-bottom: .3em;
+  border-bottom: 1px solid var(--reader-rule);
+}
+:root:is([data-reading-style="code"], [data-reading-style="github"]) .markdown-body :is(ul, ol) { margin-bottom: 1em; padding-left: 2em; }
+:root:is([data-reading-style="code"], [data-reading-style="github"]) .markdown-body li { margin: .25em 0; padding-left: 0; }
+:root:is([data-reading-style="code"], [data-reading-style="github"]) .markdown-body li::marker { color: var(--reader-text); }
+:root:is([data-reading-style="code"], [data-reading-style="github"]) .markdown-body .task-checkbox { top: .35em; }
+:root:is([data-reading-style="code"], [data-reading-style="github"]) .markdown-body a { text-decoration: none; }
+:root:is([data-reading-style="code"], [data-reading-style="github"]) .markdown-body a:hover { text-decoration: underline; }
+:root:is([data-reading-style="code"], [data-reading-style="github"]) .markdown-body :is(code, pre) {
+  font-family: "SFMono-Regular", "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+}
+:root:is([data-reading-style="code"], [data-reading-style="github"]) .markdown-body pre {
+  margin: 1em 0;
+  padding: 1em;
+  line-height: 1.5;
+}
+:root:is([data-reading-style="code"], [data-reading-style="github"]) .markdown-body pre code { font-size: .85em; }
+
+:root[data-reading-style="code"] .markdown-body code { font-size: .9em; border-radius: 3px; }
+:root[data-reading-style="code"] .markdown-body pre { border-radius: 3px; }
+:root[data-reading-style="code"] .markdown-body blockquote { margin: 1.1em 0; padding: .2em 1em; border-left-width: 5px; border-radius: 2px; }
+:root[data-reading-style="code"] .markdown-body table { margin: 1.2em 0; font-size: .94em; }
+:root[data-reading-style="code"] .markdown-body :is(th, td) { padding: .35em .7em; border: 0; border-bottom: 1px solid var(--reader-rule); background: transparent; }
+:root[data-reading-style="code"] .markdown-body th { border-bottom-color: var(--reader-muted); }
+:root[data-reading-style="code"] .markdown-body tr:nth-child(even) td { background: transparent; }
+
+/* iA-inspired Classic prose, using local serif fonts rather than iA's fonts. */
+:root[data-reading-style="writer"] .markdown-body :is(h1, h2, h3, h4, h5, h6) {
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -.015em;
+  margin-top: 1.75em;
+  margin-bottom: .55em;
+}
+:root[data-reading-style="writer"] .markdown-body h1 { font-size: 2.25em; margin-bottom: .8em; }
+:root[data-reading-style="writer"] .markdown-body h2 { font-size: 1.55em; }
+:root[data-reading-style="writer"] .markdown-body h3 { font-size: 1.2em; }
+:root[data-reading-style="writer"] .markdown-body h4 { font-size: 1em; }
+:root[data-reading-style="writer"] .markdown-body strong { font-weight: 700; }
+:root[data-reading-style="writer"] .markdown-body a { text-decoration-color: var(--reader-muted); }
+:root[data-reading-style="writer"] .markdown-body blockquote { margin: 1.8em 0; padding: 0 1.5em; border: 0; border-radius: 0; background: transparent; font-style: italic; }
+:root[data-reading-style="writer"] .markdown-body pre { border: 0; border-radius: 2px; padding: 1.2em; line-height: 1.6; }
+:root[data-reading-style="writer"] .markdown-body table { font-size: .92em; }
+:root[data-reading-style="writer"] .markdown-body hr { width: 5em; margin: 2.5em auto; }
+
+/* GitHub-inspired README rhythm and rules, with a complete dark palette. */
+:root[data-reading-style="github"] .markdown-body strong { font-weight: 600; }
+:root[data-reading-style="github"] .markdown-body blockquote { margin: 1em 0; padding: 0 1em; border-left: .25em solid var(--reader-rule); border-radius: 0; color: var(--reader-muted); background: transparent; }
+:root[data-reading-style="github"] .markdown-body code { font-size: .85em; padding: .2em .4em; border-radius: 6px; }
+:root[data-reading-style="github"] .markdown-body pre { border: 0; border-radius: 6px; }
+:root[data-reading-style="github"] .markdown-body pre code { padding: 0; border-radius: 0; }
+:root[data-reading-style="github"] .markdown-body table { margin: 1em 0; font-size: 1em; }
+:root[data-reading-style="github"] .markdown-body :is(th, td) { padding: .375em .8125em; }
+:root[data-reading-style="github"] .markdown-body th { background: transparent; }
+:root[data-reading-style="github"] .markdown-body hr { height: .25em; margin: 1.5em 0; border: 0; background: var(--reader-rule); }
+
+:root[data-reading-style] .markdown-body > :first-child { margin-top: 0; }
+:root[data-reading-style] .markdown-body > :last-child { margin-bottom: 0; }
+
+@media (max-width: 760px) {
+  .markdown-body h1 { font-size: 2.1em; }
+}
+
+@media (max-width: 540px) {
+  .markdown-body { font-size: var(--reading-size, 15px); }
+  .markdown-body pre { padding: 1em; }
+  .markdown-body :is(th, td) { padding: .6em .8em; }
+}
+
+@media print {
+  :root, :root[data-theme], :root:not([data-theme="light"]) {
+    color-scheme: light;
+    --reader-paper: #fff;
+    --reader-text: #222;
+    --reader-muted: #555;
+    --reader-accent: #334b61;
+    --reader-rule: #ddd;
+    --reader-code: #f4f4f4;
+    --reader-quote: #f6f6f6;
+    --reader-code-keyword: #54404c;
+    --reader-code-string: #395540;
+    --reader-code-number: #684d38;
+    --reader-code-title: #354f69;
+  }
+  .markdown-body { color: #222; background: #fff; font-size: 11pt; }
+  .markdown-body :is(h1, h2, h3, h4, h5, h6) { break-after: avoid; color: #222; }
+  .markdown-body :is(pre, blockquote, tr, img) { break-inside: avoid; }
+  .markdown-body pre { white-space: pre-wrap; }
+  .markdown-body table { display: table; width: 100%; }
+}

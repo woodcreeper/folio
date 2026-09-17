@@ -1,0 +1,42 @@
+{
+  "name": "folio-markdown-viewer",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 1420 --strictPort",
+    "build": "tsc --noEmit && vite build && npm run build:renderer",
+    "build:renderer": "vite build --config vite.renderer.config.ts && node scripts/copy-reader.mjs",
+    "build:quicklook": "npm run build:renderer && bash scripts/build-quicklook.sh",
+    "desktop": "node scripts/tauri.mjs dev",
+    "desktop:build": "node scripts/tauri.mjs build",
+    "test": "vitest run src",
+    "test:ui": "playwright test",
+    "preview": "vite preview --host 127.0.0.1 --port 1420",
+    "tauri": "tauri"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "^2.10.1",
+    "highlight.js": "^11.11.1",
+    "markdown-it": "^14.1.0",
+    "markdown-it-footnote": "^4.0.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.58.2",
+    "@tauri-apps/cli": "^2.10.0",
+    "@types/markdown-it": "^14.1.2",
+    "@types/markdown-it-footnote": "^3.0.4",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.1",
+    "vitest": "^4.1.11"
+  },
+  "description": "A lightweight Markdown reader with beautiful typography and macOS Quick Look.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/woodcreeper/folio.git"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
