@@ -37,6 +37,6 @@
     "url": "https://github.com/woodcreeper/folio.git"
   },
   "engines": {
-    "node": ">=22"
+    "node": "^22.12.0 || >=24.0.0"
   }
 }

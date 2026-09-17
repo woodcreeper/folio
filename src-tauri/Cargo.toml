@@ -2,6 +2,9 @@
 name = "folio"
 version = "0.1.0"
 description = "A quiet, lightweight Markdown reader"
+authors = ["David La Puma"]
+license = "MIT"
+repository = "https://github.com/woodcreeper/folio"
 edition = "2021"
 rust-version = "1.88"
 

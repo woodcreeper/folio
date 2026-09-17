@@ -17,7 +17,7 @@ Folio is a desktop-first Markdown viewer with a shared rendering core. Mobile is
 
 ## Lightweight choices
 
-The app uses the OS webview through Tauri. It does not bundle a browser engine, React, an editor, or a background service. The shared renderer includes only eleven common highlighting grammars. The current Mac app is approximately 3.8 MB installed; build dependencies and caches are much larger and are excluded from the app.
+The app uses the OS webview through Tauri. It does not include Electron, React, an editor, or a background service. Linux AppImage packaging may include additional runtime libraries for portability. The shared renderer includes only eleven common highlighting grammars. The local Apple Silicon Mac app is approximately 3.8 MB installed (universal and other platform builds differ); build dependencies and caches are much larger and are excluded from the app.
 
 Markdown files are neither uploaded nor written by Folio; the external editor owns edits. Folio writes only its own editor preference, and the frontend stores display preferences. Remote images are placeholders; web and mail links open only after a click. Raw HTML is displayed as text. This makes the rendering behavior predictable for untrusted Markdown, with the same output in the app and Quick Look.
 
@@ -38,15 +38,15 @@ Do not add a plugin framework until a concrete feature requires it. Reasonable n
 - macOS detects `net.daringfireball.markdown`; Folio’s Quick Look extension is registered and explicitly enabled.
 - Native app launch and opening a real Markdown file were observed. The updated native UI was visually observed with Open in Editor, Live preview, and the VS Code-inspired style. Actual external-editor launch still has no manual end-to-end acceptance record; native argument/validation tests and mocked frontend picker/launch tests pass.
 - `qlmanage -p` crashes in Apple’s ExtensionFoundation (`key cannot be nil`) before preview rendering on this machine. That command cannot establish Finder success or extension failure. Direct Finder spacebar acceptance remains a separate check.
-- Windows/Linux native builds and packaged file associations remain untested on those platforms.
+- Windows/Linux native tests pass in GitHub Actions. Packaged file associations, installer interaction, and actual external-editor launching still need manual verification on those platforms.
 
 ## Local operations
 
-`npm run desktop:build` builds/tests the Quick Look extension automatically on macOS, embeds it, then signs the outer app. The extension must be signed first: Tauri’s extra-file mapping does not independently sign nested extensions. The default identity `-` is for local development; Developer ID signing/notarization is required for public distribution. Override host signing settings and `FOLIO_SIGNING_IDENTITY` together for distribution.
+`npm run desktop:build` builds/tests the Quick Look extension automatically on macOS, embeds it, then signs the outer app. The extension must be signed first: Tauri’s extra-file mapping does not independently sign nested extensions. The default identity `-` is for local development; Developer ID signing/notarization is needed for trusted Mac distribution without unidentified-developer warnings; the first public preview is ad-hoc signed. Override host signing settings and `FOLIO_SIGNING_IDENTITY` together for distribution.
 
 The app output is `src-tauri/target/release/bundle/macos/Folio.app`. A zip is available at `build/Folio-macOS-arm64.zip`. Current host architecture is Apple Silicon; the bundled extension contains both Intel and Apple Silicon slices.
 
-No Git repository or remote existed in the supplied folder. No remote publishing or installer distribution was performed.
+Source and installation documentation are published at https://github.com/woodcreeper/folio under the MIT license. The GitHub Actions workflow builds universal Mac, Windows x64, and Linux x64 packages; manual release runs publish only after every platform succeeds. See DEVELOPMENT.md for the release procedure and the Releases page for available binaries.
 
 ## Reading-style scope
 

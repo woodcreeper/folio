@@ -4,7 +4,7 @@ Folio is a Tauri 2 desktop application with a TypeScript frontend and a separate
 
 ## Common prerequisites
 
-- Git, Node.js **22 or later**, and npm.
+- Git, a current **Node.js 22 or 24 LTS** release (22.12+), and npm.
 - A current stable Rust toolchain from [rustup](https://rustup.rs/) (minimum Rust 1.88).
 - The platform tools below. See the maintained [Tauri prerequisites](https://v2.tauri.app/start/prerequisites/) for details and other Linux distributions.
 

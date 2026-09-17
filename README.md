@@ -18,7 +18,7 @@ Open a Markdown file and get straight to the words. Folio keeps your source unto
 - **Easy navigation:** a heading outline, document search, and a read-only source view.
 - **Markdown essentials:** tables, highlighted code, task lists, footnotes, and local raster images.
 - **Mac Quick Look:** an included native extension for Finder’s Space-bar preview.
-- **Local by design:** no accounts, uploads, analytics, or bundled browser engine. Built with Tauri and the system webview.
+- **Local by design:** no accounts, uploads, or analytics. Built with Tauri and platform webviews.
 
 ## Install
 
@@ -40,7 +40,7 @@ Filenames may vary slightly; choose the matching extension in the release assets
 3. If macOS blocks it as an unidentified developer, review the warning. If you trust this release, use **System Settings → Privacy & Security → Open Anyway**, then confirm. See [Apple’s guidance](https://support.apple.com/en-us/102445).
 4. Open a Markdown file with **⌘O**, or drag it into Folio.
 
-**Space-bar preview:** open Folio once, then enable its Quick Look extension in System Settings if needed. On recent macOS versions, look under **General → Login Items & Extensions → Quick Look**; older versions use **Privacy & Security → Extensions → Quick Look**. Select a Markdown file in Finder and press **Space**. Other Markdown Quick Look extensions may take precedence.
+**Space-bar preview:** open Folio once, then enable its Quick Look extension in System Settings if needed. On recent macOS versions, look under **General → Login Items & Extensions → Quick Look**; older versions may use **Privacy & Security → Extensions → Quick Look**, or **System Preferences → Extensions** on macOS Monterey. Select a Markdown file in Finder and press **Space**. Other Markdown Quick Look extensions may take precedence.
 
 **Double-click to open in Folio:** select a `.md` file in Finder, choose **Get Info → Open with → Folio → Change All**. Folio does not replace your current default automatically.
 
@@ -52,7 +52,7 @@ Quick Look is still experimental: its native renderer and bundle checks pass, bu
 2. Follow the installer. It can install Microsoft Edge WebView2 if the runtime is missing; that step needs an internet connection.
 3. Open **Folio** from Start, then press **Ctrl+O** or drag in a Markdown file.
 
-An unsigned preview may trigger SmartScreen. Check that the file came from this repository’s release; if you trust it and Windows offers the option, choose **More info → Run anyway**. See [Microsoft’s SmartScreen guidance](https://support.microsoft.com/windows/how-can-smartscreen-help-protect-me-in-microsoft-edge-1c9a874a-6826-be5e-45b1-67fa445a74c8).
+An unsigned preview may trigger SmartScreen. Check that the file came from this repository’s release; if you trust it and Windows offers the option, choose **More info → Run anyway**. Some Windows 11 configurations with Smart App Control may block unsigned previews altogether. See [Microsoft’s SmartScreen guidance](https://learn.microsoft.com/en-us/windows/apps/package-and-deploy/smartscreen-reputation).
 
 To use Folio for double-clicks, right-click a `.md` file, choose **Open with → Choose another app**, and select Folio as the default. Windows ARM64 packages are not currently provided.
 
@@ -110,7 +110,7 @@ npm ci
 npm run desktop
 ```
 
-Install Node.js 22+, Rust, and the platform dependencies first. Browser-only development is available with `npm run dev`.
+Install a current Node.js 22 or 24 LTS release, Rust, and the platform dependencies first. Browser-only development is available with `npm run dev`.
 
 Built with [Tauri](https://tauri.app/), [markdown-it](https://github.com/markdown-it/markdown-it), [highlight.js](https://highlightjs.org/), TypeScript, and Swift. Reading styles take inspiration from [VS Code](https://github.com/microsoft/vscode/blob/main/extensions/markdown-language-features/media/markdown.css), [iA Writer Classic](https://ia.net/writer/support/preview/templates), and [GitHub Primer](https://github.com/primer/css/tree/main/src/markdown).
 
