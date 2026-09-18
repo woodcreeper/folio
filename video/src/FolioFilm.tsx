@@ -42,6 +42,21 @@ function Pointer({x,y,click=false}:{x:number;y:number;click?:boolean}) {
  const f=useCurrentFrame(); const ring=(f%15)/15;
  return <div style={{position:'absolute',left:x,top:y}}>{click&&<div style={{position:'absolute',width:60,height:60,left:-27,top:-27,border:'3px solid #b393d3',borderRadius:'50%',transform:`scale(${.6+ring*.7})`,opacity:1-ring}}/>}<svg width="32" height="40" viewBox="0 0 24 30"><path d="M2 1v24l6-6 5 10 4-2-5-9h9z" fill="#2c2634" stroke="#fff" strokeWidth="1.8"/></svg></div>;
 }
+function Splash() {
+ // Fully drawn from frame zero: this frame is also the shared video cover.
+ return <AbsoluteFill style={{background:'#19181f',color:'#f5f3f8',fontFamily:sans,overflow:'hidden'}}>
+  <div style={{position:'absolute',left:108,top:82,color:'#bda6d7',fontSize:17,letterSpacing:3.5,fontWeight:600}}>FOR THE MARKDOWN YOUR AI AGENT WRITES</div>
+  <div style={{position:'absolute',left:108,top:233,width:870}}>
+   <div style={{display:'flex',alignItems:'center',gap:27}}><Mark size={86} color="#d6c5e9"/><div style={{fontFamily:serif,fontSize:152,fontWeight:600,letterSpacing:-8,lineHeight:1.1}}>folio<span style={{color:'#b79bd6'}}>.</span></div></div>
+   <div style={{fontFamily:serif,fontSize:81,lineHeight:1.08,letterSpacing:-2.5,marginTop:39}}>Markdown.<br/>Beautifully read.</div>
+   <div style={{display:'flex',alignItems:'center',gap:23,marginTop:49}}><Key/><span style={{fontSize:26,color:'#d6c5e9'}}>Select. Space. Read.</span></div>
+   <div style={{fontSize:20,color:'#aaa0b4',marginTop:24}}>Instant preview in Finder on Mac.</div>
+  </div>
+  <Screen name="quicklook" width={730} style={{left:1080,top:173,boxShadow:'0 28px 75px #0006'}}/>
+  <div style={{position:'absolute',left:108,bottom:66,color:'#b5aabd',fontSize:18,letterSpacing:2.3}}>MAC · WINDOWS · LINUX</div>
+  <div style={{position:'absolute',right:110,bottom:66,color:'#b5aabd',fontSize:20}}>github.com/woodcreeper/folio</div>
+ </AbsoluteFill>;
+}
 function AgentOutput() {
  const f=useCurrentFrame();
  return <Base dark><Brand dark label="FOR THE FILES YOUR AI AGENT LEAVES BEHIND"/><Copy eyebrow="THE WORK KEEPS MOVING" title={<>Your agent<br/>writes.</>} subtitle="Plans. READMEs. Research." dark y={314} size={95} width={660}/><div style={{position:'absolute',left:958,top:240,width:690}}>{['PLAN.md','README.md','RESEARCH.md','TASKS.md'].map((name,i)=><div key={name} style={{height:126,display:'flex',gap:28,alignItems:'center',borderBottom:'1px solid #38323f',opacity:tween(f,i*13,i*13+16,0,1),transform:`translateX(${tween(f,i*13,i*13+22,45,0)}px)`}}><div style={{width:52,height:64,border:'1.5px solid #81718f',borderRadius:7,display:'flex',alignItems:'center',justifyContent:'center',fontSize:17,color:'#bda6d7',fontFamily:'monospace'}}>md</div><span style={{fontSize:39,letterSpacing:-.6,color:i===0?'#f4edf9':'#aaa0b4'}}>{name}</span><span style={{marginLeft:'auto',color:'#bda6d7',fontSize:24}}>✓</span></div>)}</div><div style={{position:'absolute',left:108,bottom:104,color:'#9c92a7',fontSize:19}}>A folder full of ideas. One next step.</div></Base>;
@@ -81,5 +96,5 @@ function Outro() {
  return <Base dark><Brand dark label="READ IT. THEN KEEP BUILDING."/><div style={{position:'absolute',left:106,top:235,width:910}}><div style={{display:'flex',alignItems:'center',gap:25}}><Mark size={86} color="#d6c5e9"/><div style={{fontFamily:serif,fontSize:158,fontWeight:600,letterSpacing:-8,lineHeight:1.1}}>folio<span style={{color:'#b79bd6'}}>.</span></div></div><div style={{fontFamily:serif,fontSize:55,lineHeight:1.17,letterSpacing:-1,color:'#e5ddeb',marginTop:30}}>From agent output<br/>to a beautiful read.</div><div style={{fontSize:23,color:'#b5aabd',marginTop:37}}>Preview. Explore. Edit in your own app.</div><div style={{fontSize:17,letterSpacing:2.5,color:'#c7bdd0',marginTop:62}}>MAC &nbsp;·&nbsp; WINDOWS &nbsp;·&nbsp; LINUX</div><div style={{fontSize:16,color:'#9689a3',marginTop:14}}>Space bar preview on Mac</div><div style={{fontSize:25,color:'#f2edf8',marginTop:44}}>github.com/woodcreeper/folio</div></div><Screen name="quicklook" width={663} style={{left:1160,top:214,transform:'rotate(2deg)',boxShadow:'0 35px 90px #0005'}}/></Base>;
 }
 export function FolioFilm() {
- return <AbsoluteFill style={{background:paper}}><Audio src={staticFile('ambient.wav')} volume={.9}/><Sequence from={0} durationInFrames={130}><AgentOutput/></Sequence><Sequence from={120} durationInFrames={130}><SelectFile/></Sequence><Sequence from={240} durationInFrames={250}><QuickLook/></Sequence><Sequence from={480} durationInFrames={190}><OpenFolio/></Sequence><Sequence from={660} durationInFrames={190}><Features/></Sequence><Sequence from={840} durationInFrames={250}><Edit/></Sequence><Sequence from={1080} durationInFrames={180}><Outro/></Sequence></AbsoluteFill>;
+ return <AbsoluteFill style={{background:paper}}><Audio src={staticFile('ambient.wav')} volume={.9}/><Sequence from={0} durationInFrames={46}><Splash/></Sequence><Sequence from={36} durationInFrames={94}><AgentOutput/></Sequence><Sequence from={120} durationInFrames={130}><SelectFile/></Sequence><Sequence from={240} durationInFrames={250}><QuickLook/></Sequence><Sequence from={480} durationInFrames={190}><OpenFolio/></Sequence><Sequence from={660} durationInFrames={190}><Features/></Sequence><Sequence from={840} durationInFrames={250}><Edit/></Sequence><Sequence from={1080} durationInFrames={180}><Outro/></Sequence></AbsoluteFill>;
 }
