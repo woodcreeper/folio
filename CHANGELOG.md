@@ -12,7 +12,7 @@
 - Folio’s default page and app controls use a neutral palette in place of the green tint. The shared Quick Look default is neutral too; custom app preferences are not shared with Quick Look.
 - Refreshed the README screenshot and appearance instructions.
 
-Validation: 8 renderer tests, 13 browser interaction tests, the local Mac build, the Swift Quick Look smoke test, and strict bundle signature checks pass. The macOS color picker was opened in the rebuilt app. Updated Windows/Linux packages have not yet been built or tested for this change.
+Validation: 8 renderer tests, 13 browser interaction tests, the local Mac build, the Swift Quick Look smoke test, and strict bundle signature checks pass. The macOS color picker was opened in the rebuilt app. Cross-platform automated checks and package builds are tracked in [GitHub Actions](https://github.com/woodcreeper/folio/actions/runs/35304846135). Windows/Linux installer and desktop behavior still require hands-on acceptance.
 
 ## 0.1.0 — 2026-09-17
 

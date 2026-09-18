@@ -15,8 +15,8 @@
 
 ## Git and release state
 
-- Integration target: `main`. The tint feature was developed on `codex/custom-tint`, created from `ca334ca`. The user approved merging the feature and documentation on 2026-09-17.
-- `6459638`: neutral palette and custom tint feature. `1978858`: README, changelog, platform notes, and handoff updates. Both are pushed; the approved integration into `main` includes them. No new release downloads have been published.
+- Integrated into `main` at `b0e288a` on 2026-09-17, following the user’s approval. The tint feature was developed on `codex/custom-tint`, created from `ca334ca`; the merge was a fast-forward with no conflicting remote changes.
+- `6459638`: neutral palette and custom tint feature. `1978858`: README, changelog, platform notes, and handoff updates. Both are pushed and included in `main`. No new release downloads have been published.
 - `730a5e08fc228858b918ff94562cb9707faeb0f9`: full app, README, license, and build workflow. All three platform build jobs passed at this exact commit.
 - `a7d5623`: installation clarifications and package author/license metadata.
 - `ac57f31`: saved Omarchy experiment and documentation. This was the last packaging-only change before the tint feature.
@@ -27,7 +27,7 @@
 ## Validation
 
 - Tint feature: 8 renderer tests, 13 Playwright tests, production TypeScript/Vite builds, the Mac app build, Swift Quick Look smoke test, and strict native bundle signatures pass. Browser checks cover persistence/reset, unchanged document content, independent appearance preferences, and extreme-color contrast across all four styles in system light/dark mode.
-- Earlier local validation: 19 Rust tests pass; no Rust behavior changed. Updated Windows/Linux packages have not been built for the tint feature.
+- Earlier local validation: 19 Rust tests pass; no Rust behavior changed. The merged source passed automated checks and package builds for Mac, Windows, and Linux in [build run 35304846135](https://github.com/woodcreeper/folio/actions/runs/35304846135). Build artifacts are available on that run; the published v0.1.0 release assets remain unchanged.
 - GitHub Actions for the published v0.1.0 commit: Mac, Windows, and Linux native tests and release packaging **all passed**. Linux browser interaction tests passed. Mac package is universal (Apple Silicon + Intel); Windows/Linux are x64.
 - Release collector was checked with nested fixtures, four SHA-256 entries, and rejection of a mismatched version.
 - New experimental Arch shell scripts pass `bash -n`; workflow YAML parses. **No Arch package build or Wayland startup test has run.**
@@ -44,7 +44,7 @@
 
 ## Omarchy work on the other machine
 
-The user has resumed with an adjacent **x86_64 Omarchy machine, version 4.0.4-1**, and is working on that side independently. They reported that the existing Space-bar preview and OmaWrite displayed unformatted Markdown; this is not yet a Folio compatibility test. They want Omarchy support and consideration of its plugin model. Coordinate through Git without overwriting work from that machine. After the approved merge, pull the latest `main` to include the tint feature and documentation. Check for local changes before syncing the Omarchy checkout.
+The user has resumed with an adjacent **x86_64 Omarchy machine, version 4.0.4-1**, and is working on that side independently. They reported that the existing Space-bar preview and OmaWrite displayed unformatted Markdown; this is not yet a Folio compatibility test. They want Omarchy support and consideration of its plugin model. Coordinate through Git without overwriting work from that machine. Pull the latest `main` to include the merged tint feature and documentation. Check for local changes before syncing the Omarchy checkout.
 
 Remaining compatibility checks:
 
