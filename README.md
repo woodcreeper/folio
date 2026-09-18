@@ -14,9 +14,9 @@ Your AI agent writes the Markdown. Select a file in Finder, press **Space**, and
 ![Folio — Markdown. Beautifully read. Select. Space. Read.](docs/images/folio-video-poster.png)
 
 <details>
-<summary>▶ Watch here · 42 seconds, with music</summary>
+<summary>▶ Watch here · 30 seconds, with music</summary>
 
-https://github.com/user-attachments/assets/f57c1998-6762-4e90-8b9f-efa5350801e9
+https://github.com/user-attachments/assets/efac994a-534f-4c66-8c75-b9e16c432c21
 
 </details>
 
