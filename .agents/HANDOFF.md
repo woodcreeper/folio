@@ -57,7 +57,7 @@ Remaining compatibility checks:
 ## Product video revision — 2026-09-18
 
 - Revised script: `video/SCRIPT.md`. New story: AI agent output → Finder file selection → Space bar Quick Look → double-click into Folio → outline/search/appearance → local editor.
-- New export: `video/out/Folio-From-Agent-Output-Warm-Score.mp4`, 42 seconds, 1080p, 30 fps. After the user found the first upbeat score jarring, replaced it with soft keys, open chords, rounded bass, and restrained brushed percussion at 120 BPM with a half-time feel. Only audio changed; matching encoded-video hashes confirm the picture is identical. Generated output/audio remain ignored; screenshot assets and source are versioned.
+- New export: `video/out/Folio-Final.mp4`, 42 seconds, 1080p, 30 fps, 5.27 MB. The feature scene cycles through VS Code + blue and iA Writer + amber using real native screenshots. The user approved the warm music; its exact AAC stream is preserved in this final cut (matching audio-stream hashes). Full decode and inspection of both new shots passed. Generated output/audio remain ignored; screenshot assets and source are versioned.
 - Native screenshots are in `video/public/screenshots/workflow-*.png`, using only the new public fixtures in `video/public/Agent workspace/`. Native Finder, Folio, and iA Writer workflow acceptance succeeded while capturing them.
 - Only PLAN.md was associated with Folio; the global Markdown default was not changed. Finder sidebar, Folio's GitHub/dark/blue/14 appearance, and iA Writer's window/preview mode were restored after capture.
 - Earlier 40-second export remains locally available under its original name. `npm run capture --prefix video` still captures legacy browser assets; current native screenshots are already committed for rendering.

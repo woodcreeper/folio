@@ -28,7 +28,7 @@ function Copy({title,subtitle,eyebrow,x=104,y=300,width=470,dark=false,size=78}:
 }
 // Original screenshot coordinates. Native Folio's OS title strip is cropped;
 // all product controls and document content remain unchanged.
-const sizes:Record<string,[number,number,number]>={finder:[920,436,0],quicklook:[777,768,0],folio:[1076,768,30],search:[1076,768,30],appearance:[1076,768,30],tinted:[1076,768,30],editor:[1223,768,0]};
+const sizes:Record<string,[number,number,number]>={finder:[920,436,0],quicklook:[777,768,0],folio:[1076,768,30],search:[1076,768,30],appearance:[1076,768,30],tinted:[1076,768,30],editor:[1223,768,0],'style-code-blue':[1224,768,0],'style-writer-amber':[1224,768,0]};
 function Screen({name,width=1120,style={},crop}:{name:string;width?:number;style?:React.CSSProperties;crop?:[number,number,number,number]}) {
  const [sw,sh,trim]=sizes[name];
  const [cx,cy,cw,ch]=crop||[0,trim,sw,sh-trim];
@@ -60,8 +60,18 @@ function OpenFolio() {
 }
 function Features() {
  const f=useCurrentFrame();
- const i=f<49?0:f<106?1:2;
- return <Base><Brand label="THE FULL FOLIO READER"/><Copy eyebrow="YOUR NEXT LAYER" title={<>More room.<br/>More control.</>} y={269} size={75} width={560}/><div style={{position:'absolute',left:108,top:569,width:424}}>{['Explore the outline','Search the document','Choose your style & tint'].map((label,k)=><div key={label} style={{display:'flex',alignItems:'center',gap:18,padding:'18px 0',borderBottom:'1px solid #ddd7e5',fontSize:25,color:i===k?ink:'#a59ead'}}><span style={{width:7,height:7,borderRadius:4,background:i===k?violet:'transparent'}}/>{label}</div>)}</div>{['folio','search','appearance'].map((name,k)=><Screen key={name} name={name} width={1152} style={{left:690,top:170,opacity:k===0?1:tween(f,k===1?49:106,k===1?60:117,0,1)}}/>)}</Base>;
+ const active=f<45?0:f<90?1:2;
+ const presets=[
+  {name:'style-code-blue',from:90,label:'VS Code preset · Blue tint',color:'#5776c8'},
+  {name:'style-writer-amber',from:135,label:'iA Writer preset · Amber tint',color:'#a97735'},
+ ];
+ const preset=presets[f<135?0:1];
+ return <Base><Brand label="THE FULL FOLIO READER"/><Copy eyebrow="YOUR NEXT LAYER" title={<>More room.<br/>More control.</>} y={269} size={75} width={560}/>
+  <div style={{position:'absolute',left:108,top:569,width:424}}>{['Explore the outline','Search the document','Choose your style & tint'].map((label,k)=><div key={label} style={{display:'flex',alignItems:'center',gap:18,padding:'18px 0',borderBottom:'1px solid #ddd7e5',fontSize:25,color:active===k?ink:'#a59ead'}}><span style={{width:7,height:7,borderRadius:4,background:active===k?violet:'transparent'}}/>{label}</div>)}</div>
+  <div style={{opacity:1-tween(f,90,100,0,1)}}><Screen name="folio" width={1152} style={{left:690,top:170}}/><Screen name="search" width={1152} style={{left:690,top:170,opacity:tween(f,45,55,0,1)}}/></div>
+  {presets.map(p=><Screen key={p.name} name={p.name} width={1152} style={{left:690,top:204,opacity:tween(f,p.from,p.from+10,0,1)}}/>)}
+  <div style={{position:'absolute',left:127,top:823,display:'flex',alignItems:'center',gap:13,fontSize:20,color:muted,opacity:tween(f,94,104,0,1)}}><span style={{width:15,height:15,borderRadius:'50%',background:preset.color}}/>{preset.label}</div>
+ </Base>;
 }
 function Edit() {
  const f=useCurrentFrame(); const editor=tween(f,115,132,0,1); const button=tween(f,52,66,0,1);
