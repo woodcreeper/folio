@@ -2,7 +2,7 @@
 
 A 42-second, 1080p Remotion film about the reason Folio exists: your AI agent creates Markdown files, and you want to read them quickly. The [script and storyboard](SCRIPT.md) follow Finder selection → Space bar Quick Look → double-click into Folio → your local editor.
 
-The film uses real Mac screenshots captured on September 18, 2026, an original upbeat 120 BPM instrumental score, and on-screen copy. An optional voiceover is included in the script; the export has no narration.
+The film uses real Mac screenshots captured on September 18, 2026, an original warm 120 BPM instrumental score with a relaxed half-time groove, and on-screen copy. An optional voiceover is included in the script; the export has no narration.
 
 ## Render the current film
 
@@ -21,10 +21,10 @@ Rendering uses installed Google Chrome on Mac; set `REMOTION_BROWSER` to an alte
 - `public/Agent workspace/`: the public demonstration files created for this film.
 - `public/screenshots/workflow-*.png`: real Finder, Quick Look, Folio, and iA Writer screenshots.
 - `src/FolioFilm.tsx`: scenes, on-screen copy, screenshot crops, timing, and transitions.
-- `scripts/soundtrack.py`: deterministic keys, bass, kick, clap, and shaker score; no external samples or licensed recordings.
-- `out/Folio-From-Agent-Output-to-a-Beautiful-Read.mp4`: revised H.264/AAC export.
+- `scripts/soundtrack.py`: deterministic soft keys, rounded bass, and restrained brushed percussion; no external samples or licensed recordings.
+- `out/Folio-From-Agent-Output-Warm-Score.mp4`: revised H.264/AAC export.
 
-The earlier 40-second film and its browser-capture assets remain available locally. `npm run capture` is the **legacy browser screenshot workflow**, requiring the root app's dependencies and `npm run dev`; it does not overwrite the new native `workflow-*` captures.
+The earlier 40-second film and the first 42-second soundtrack version remain available locally. The warm-score revision replaces only audio; the encoded picture is unchanged. `npm run capture` is the **legacy browser screenshot workflow**, requiring the root app's dependencies and `npm run dev`; it does not overwrite the new native `workflow-*` captures.
 
 ## Native capture record
 
@@ -42,7 +42,7 @@ The intro document labels, pointer/key illustrations, crops, transitions, and ti
 
 ## Export verification
 
-The revised export contains 1,260 H.264 frames at 1920 × 1080 and 30 fps, with stereo 48 kHz AAC audio. Duration is 42 seconds (42.048 seconds including the AAC container tail); file size is 5.53 MB. TypeScript validation passes. Storyboard frames covering all scenes and selected frames decoded from the completed MP4 were visually inspected. Full video and audio decoding completed without errors. Audio peaks at −3.5 dBFS with no clipping.
+The revised export contains 1,260 H.264 frames at 1920 × 1080 and 30 fps, with stereo 48 kHz AAC audio. The warm-score export is exactly 42 seconds; file size is 5.18 MB. TypeScript validation passes. Storyboard frames covering all scenes and selected frames decoded from the completed MP4 were visually inspected. Full video and audio decoding completed without errors. The revised audio averages −24.9 dBFS and peaks at −10.6 dBFS, with no clipping. Compared with the first workflow-film soundtrack, the arrangement removes the bright bell line and claps, softens note attacks, simplifies harmony, and leaves more space between phrases. SHA-256 hashes of the encoded video streams match, confirming the picture is unchanged.
 
 Outputs and generated audio are ignored in Git; all screenshot assets, fixtures, source, and reproduction instructions are versioned.
 

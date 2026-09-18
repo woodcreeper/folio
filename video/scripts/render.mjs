@@ -18,6 +18,6 @@ if(process.argv.includes('--stills')) {
   }
 } else {
   let last=-1;
-  await renderMedia({serveUrl,composition,browserExecutable,codec:'h264',audioCodec:'aac',crf:18,pixelFormat:'yuv420p',concurrency:4,outputLocation:path.join(output,'Folio-From-Agent-Output-to-a-Beautiful-Read.mp4'),onProgress:({progress})=>{const percent=Math.floor(progress*100/10)*10;if(percent!==last){last=percent;console.log(`Render ${percent}%`);}}});
-  console.log(path.join(output,'Folio-From-Agent-Output-to-a-Beautiful-Read.mp4'));
+  await renderMedia({serveUrl,composition,browserExecutable,codec:'h264',audioCodec:'aac',crf:18,pixelFormat:'yuv420p',concurrency:4,outputLocation:path.join(output,'Folio-From-Agent-Output-Warm-Score.mp4'),onProgress:({progress})=>{const percent=Math.floor(progress*100/10)*10;if(percent!==last){last=percent;console.log(`Render ${percent}%`);}}});
+  console.log(path.join(output,'Folio-From-Agent-Output-Warm-Score.mp4'));
 }

@@ -1,98 +1,147 @@
-"""Original 120 BPM keys/bass/percussion groove. Deterministic; no samples."""
+"""Original warm keyboard groove: soft attacks, open triads, restrained drums.
+
+Standard-library-only synthesis; deterministic and free of external samples.
+120 BPM keeps the video timing, while the arrangement moves at half-time.
+"""
 from array import array
 from pathlib import Path
 import math
 import random
 import wave
 
-rate, seconds, bpm = 48000, 42, 120
-beat = 60 / bpm
-channels = [array('f', [0]) * (rate * seconds) for _ in range(2)]
+RATE, SECONDS, BPM = 48000, 42, 120
+LENGTH = RATE * SECONDS
+BEAT = 60 / BPM
 rng = random.Random(42)
+keys = [array('f', [0]) * LENGTH for _ in range(2)]
+rhythm = [array('f', [0]) * LENGTH for _ in range(2)]
 
-def tone(start, midi, duration=.65, gain=.08, pan=.5, kind='keys'):
-    freq = 440 * 2 ** ((midi - 69) / 12)
-    offset = round(start * rate)
-    count = min(round(duration * rate), rate * seconds - offset)
-    left, right = math.sqrt(1-pan), math.sqrt(pan)
-    decay = .26 if kind == 'keys' else .18 if kind == 'bass' else .48
-    for j in range(count):
-        t = j / rate
-        phase = math.tau * freq * t
-        env = min(1,t/.006) * min(1,(duration-t)/.07) * math.exp(-t/decay)
-        if kind == 'bass':
-            value = math.sin(phase) + .23 * math.sin(phase*2) + .08 * math.sin(phase*3)
-        elif kind == 'bell':
-            value = math.sin(phase + 1.1*math.sin(phase*2)*math.exp(-t*9)) + .08*math.sin(phase*3)
+
+def add_note(start, midi, duration, gain, pan=.5, bass=False):
+    """Mellow, softly struck keys; no bright FM or detuned harmonics."""
+    frequency = 440 * 2 ** ((midi - 69) / 12)
+    offset = round(start * RATE)
+    total = min(round(duration * RATE), LENGTH - offset)
+    attack = .035 if bass else .028
+    decay = .48 if bass else 1.05
+    release = .14 if bass else .42
+    left, right = math.sqrt(1 - pan), math.sqrt(pan)
+    track = rhythm if bass else keys
+    for j in range(total):
+        t = j / RATE
+        # Cosine onset/release prevent the hard clicks of short linear gates.
+        onset = .5 - .5 * math.cos(math.pi * min(1, t / attack))
+        tail = .5 - .5 * math.cos(math.pi * min(1, (duration - t) / release))
+        envelope = onset * tail * math.exp(-t / decay)
+        phase = math.tau * frequency * t
+        if bass:
+            value = math.sin(phase) + .1 * math.sin(phase * 2)
         else:
-            value = math.sin(phase) + .28*math.sin(phase*2.001) + .14*math.sin(phase*3.002) + .04*math.sin(phase*5)
-        value *= env * gain
-        channels[0][offset+j] += value*left
-        channels[1][offset+j] += value*right
+            value = math.sin(phase) + .15 * math.sin(phase * 2) * math.exp(-t * 2) + .035 * math.sin(phase * 3) * math.exp(-t * 3)
+        value *= gain * envelope
+        track[0][offset + j] += value * left
+        track[1][offset + j] += value * right
 
-def drum(start, kind, gain=.07, pan=.5):
-    duration={'kick':.3,'clap':.13,'hat':.065,'tick':.1}[kind]
-    offset=round(start*rate)
-    last=0
-    phase=0
-    for j in range(min(round(duration*rate),rate*seconds-offset)):
-        t=j/rate
-        noise=rng.uniform(-1,1)
-        high=noise-last; last=noise
-        if kind=='kick':
-            phase += math.tau*(49+100*math.exp(-t*55))/rate
-            value=math.sin(phase)*math.exp(-t*17)+high*.1*math.exp(-t*200)
-        elif kind=='clap':
-            env=sum(math.exp(-(t-d)*65) if t>=d else 0 for d in [0,.01,.022])
-            value=high*.23*env+math.sin(math.tau*190*t)*.15*math.exp(-t*40)
-        elif kind=='tick':
-            value=math.sin(math.tau*1350*t)*math.exp(-t*65)*.5
+
+def soft_drum(start, brush=False, gain=.025):
+    """Soft low thump or low-passed brush: no clap, rimshot, or bright hats."""
+    duration = .24 if brush else .32
+    offset = round(start * RATE)
+    total = min(round(duration * RATE), LENGTH - offset)
+    low = 0.
+    phase = 0.
+    coefficient = 1 - math.exp(-math.tau * 1250 / RATE)
+    for j in range(total):
+        t = j / RATE
+        onset = .5 - .5 * math.cos(math.pi * min(1, t / .018))
+        release = min(1, (duration - t) / .06)
+        if brush:
+            low += coefficient * (rng.uniform(-1, 1) - low)
+            value = low * math.exp(-t / .055)
         else:
-            value=high*.3*math.exp(-t*75)
-        env=min(1,t/.001)*min(1,(duration-t)/.008)
-        channels[0][offset+j]+=value*env*gain*math.sqrt(1-pan)
-        channels[1][offset+j]+=value*env*gain*math.sqrt(pan)
+            phase += math.tau * (54 + 13 * math.exp(-t * 18)) / RATE
+            value = math.sin(phase) * math.exp(-t / .085)
+        value *= gain * onset * release
+        rhythm[0][offset + j] += value * .7071
+        rhythm[1][offset + j] += value * .7071
 
-chords=[(48,[60,64,67,71]),(45,[60,64,67,69]),(41,[60,64,65,69]),(43,[59,62,67,69])]
-melodies=[[76,79,81,79],[76,72,76,79],[77,76,72,69],[74,79,76,74]]
-for bar in range(20):
-    start=bar*4*beat
-    root,chord=chords[bar%4]
-    # Syncopated, open keyboard voicings.
-    for pulse,vel in [(0,.047),(1.5,.039),(2.75,.042)]:
-        for n,midi in enumerate(chord):
-            tone(start+pulse*beat+n*.012,midi,gain=vel,pan=.25+n*.15)
-    for pulse,midi in [(0,root-12),(1.5,root),(2,root-12),(3.5,root-5)]:
-        tone(start+pulse*beat,midi,duration=.38,gain=.13,kind='bass')
-    for pulse in [0,2]: drum(start+pulse*beat,'kick',.23)
-    for pulse in [1,3]: drum(start+pulse*beat,'clap',.085)
-    for pulse in range(8):
-        swing=.016 if pulse%2 else 0
-        drum(start+pulse*beat/2+swing,'hat',.04 if pulse%2 else .026,pan=.65)
-    if bar>=2:
-        for pulse,midi in zip([.5,1.25,2.5,3.25],melodies[bar%4]):
-            tone(start+pulse*beat,midi,duration=.85,gain=.047 if bar%2 else .036,pan=.58,kind='bell')
-    if bar in [3,7,11,15,17]:
-        drum(start+3.75*beat,'tick',.048,.25)
-# One final major-nine chord, giving the end card a clean musical landing.
-for n,midi in enumerate([48,60,64,67,74]):
-    tone(40+n*.015,midi,duration=2,gain=.075,pan=.28+n*.1,kind='bell')
-drum(40,'kick',.18)
-# Short, sparse room reflections; bass/kick remain centered.
-for channel in channels:
-    for delay,gain in [(round(.1875*rate),.095),(round(.375*rate),.045)]:
-        for i in range(delay,len(channel)):
-            channel[i]+=channel[i-delay]*gain
-peak=max(max(abs(x) for x in channel) for channel in channels)
-normalization=.75/peak
-output=array('h')
-for i in range(rate*seconds):
-    t=i/rate
-    fade=min(1,t/.09,max(0,(seconds-t)/.7))
-    for channel in channels:
-        output.append(round(channel[i]*normalization*fade*32767))
-target=Path(__file__).resolve().parents[1]/'public/ambient.wav'
-with wave.open(str(target),'wb') as wav:
-    wav.setnchannels(2); wav.setsampwidth(2); wav.setframerate(rate)
+
+# Long phrases and consonant voicings. Every chord lasts two bars (four seconds).
+# Keep root notes, inner voices, and melody on the same harmony at each change.
+harmonies = [
+    (48, [55, 60, 64, 67], [72, 76, 74]),  # C
+    (45, [57, 60, 64, 69], [72, 76, 72]),  # Am
+    (41, [53, 60, 65, 69], [72, 69, 72]),  # F
+    (43, [55, 59, 62, 67], [71, 74, 71]),  # G
+]
+for phrase in range(9):
+    start = phrase * 4
+    root, chord, melody = harmonies[phrase % 4]
+    # A gentle broken chord, then a quiet answer. Space between gestures.
+    for beat_index, index in enumerate([0, 2, 1, 3]):
+        add_note(start + .05 + beat_index * BEAT, chord[index], 2.1,
+                 .048 if beat_index == 0 else .037, .42 + index * .05)
+    for index, midi in enumerate(chord[1:]):
+        add_note(start + 2.52 + index * .032, midi, 1.32, .026, .44 + index * .06)
+    # Rounded bass keeps a steady pulse without the previous sub-bass jumps.
+    for pulse, velocity in [(0, .063), (2, .05), (4, .06), (6, .045)]:
+        add_note(start + pulse * BEAT, root, .9, velocity, bass=True)
+    # Enter percussion gradually; keep the backbeat soft and in half-time.
+    if phrase >= 1:
+        level = min(1, (phrase + 1) / 4)
+        for pulse in [0, 4]:
+            soft_drum(start + pulse * BEAT, gain=.06 * level)
+        for pulse in [2, 6]:
+            soft_drum(start + pulse * BEAT, brush=True, gain=.028 * level)
+    # A sparse lower-register answer, only in alternating phrases.
+    if phrase in [2, 4, 6]:
+        for time, midi in zip([.8, 1.8, 2.8], melody):
+            add_note(start + time, midi, 1.15, .015, .53)
+
+# At the end card, gently resolve F -> G -> C with no percussive punctuation.
+for start, root, chord in [(36, 41, [53, 60, 65, 69]),
+                           (38, 43, [55, 59, 62, 67]),
+                           (40, 48, [55, 60, 64, 67])]:
+    add_note(start, root, 1.8, .047, bass=True)
+    for index, midi in enumerate(chord):
+        add_note(start + .035 * index, midi, min(2.4, SECONDS - start - .035 * index),
+                 .027, .4 + index * .065)
+
+# Subtle non-recursive early reflections on keys only; no rhythmic echo clutter.
+reflections = [(0.053, .12), (.097, .085), (.149, .065), (.211, .045)]
+mix = [array('f', [0]) * LENGTH for _ in range(2)]
+for channel in range(2):
+    source = keys[channel]
+    for i in range(LENGTH):
+        mix[channel][i] = source[i] + rhythm[channel][i]
+    for delay, gain in reflections:
+        offset = round((delay + channel * .006) * RATE)
+        for i in range(offset, LENGTH):
+            mix[channel][i] += source[i - offset] * gain
+
+# Smooth the mix and master gently. Preserve transients, without a peak boost.
+coefficient = 1 - math.exp(-math.tau * 3600 / RATE)
+for channel in mix:
+    low = 0.
+    for i in range(LENGTH):
+        low += coefficient * (channel[i] - low)
+        t = i / RATE
+        fade_in = .5 - .5 * math.cos(math.pi * min(1, t / .7))
+        fade_out = .5 - .5 * math.cos(math.pi * min(1, (SECONDS - t) / 1.7))
+        channel[i] = low * fade_in * fade_out
+peak = max(max(abs(v) for v in channel) for channel in mix)
+rms = math.sqrt(sum(sum(v * v for v in channel) for channel in mix) / (2 * LENGTH))
+# Target -24 dBFS RMS and no peak above -7 dBFS before the film's 0.9 gain.
+gain = min(10 ** (-24 / 20) / rms, 10 ** (-7 / 20) / peak)
+output = array('h')
+for i in range(LENGTH):
+    for channel in mix:
+        output.append(round(channel[i] * gain * 32767))
+target = Path(__file__).resolve().parents[1] / 'public/ambient.wav'
+with wave.open(str(target), 'wb') as wav:
+    wav.setnchannels(2)
+    wav.setsampwidth(2)
+    wav.setframerate(RATE)
     wav.writeframes(output.tobytes())
-print(f'Created original {seconds}s stereo score at {bpm} BPM: {target}')
+print(f'Created {SECONDS}s original warm score at {BPM} BPM: {target}')
+print(f'RMS {20 * math.log10(rms * gain):.1f} dBFS; peak {20 * math.log10(peak * gain):.1f} dBFS')

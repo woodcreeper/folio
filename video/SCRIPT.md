@@ -4,7 +4,7 @@
 
 **Story:** Your AI agent leaves you a folder of Markdown. You only need to read a file or two. Select one in Finder, press Space, and read it beautifully. Double-click for Folio’s full reading tools. When it is time to change something, use your own editor.
 
-**Feel:** Elegant, direct, and quick. Keep the generous type and neutral/violet palette, but give the cuts a brighter 120 BPM instrumental groove: warm keys, plucked bass, light kick, clap, and shakers. No voiceover is required.
+**Feel:** Elegant, direct, and quick. A warm, understated keyboard groove keeps the 120 BPM timing with a relaxed half-time feel: open chords, softly rounded bass, and quiet brushed percussion. Soft note attacks, space between phrases, and a gentle ending replace the earlier bright bells and sharp claps. No voiceover is required.
 
 | Time | On-screen copy | Picture and motion |
 | --- | --- | --- |
