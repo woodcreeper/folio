@@ -8,7 +8,8 @@
 
 | Time | On-screen copy | Picture and motion |
 | --- | --- | --- |
-| 00–04 | **Your agent writes.** / Plans. READMEs. Research. | The names of the actual demo documents arrive in time with the beat. This is typography introducing the workflow, not a simulated agent conversation. |
+| 00–01.2 | **folio.** / Markdown. Beautifully read. / Select. Space. Read. | Fully visible branded splash from frame zero, beside the real Finder Quick Look preview. This exact frame also serves as the downloadable cover and GitHub poster. |
+| 01.2–04 | **Your agent writes.** / Plans. READMEs. Research. | Brief dissolve into the original agent-output scene. The names of the actual demo documents arrive in time with the beat. This is typography introducing the workflow, not a simulated agent conversation. |
 | 04–08 | **You just need to read.** / Select a Markdown file in Finder. | Real Finder screenshot with PLAN.md selected. Move the focus to the selected row. A Space key appears and presses at the transition. |
 | 08–16 | **Space. And there it is.** / Beautiful Markdown. Right in Finder. | The edit reveals the real native Quick Look screenshot. Hold long enough to read the headings, quote, and task list. The actual “Open with Folio” action stays visible. Small label: macOS Quick Look. |
 | 16–22 | **Want to go deeper?** / Double-click. Open in Folio. | Brief return to the same selected file with an animated double-click indicator, then the real Folio app showing the same plan. Small setup note: Set Folio as your Markdown opener. |

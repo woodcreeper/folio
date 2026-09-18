@@ -7,6 +7,7 @@
     "audio": "python3 scripts/soundtrack.py",
     "studio": "remotion studio src/index.tsx",
     "stills": "node scripts/render.mjs --stills",
+    "poster": "node scripts/render.mjs --poster",
     "render": "node scripts/render.mjs"
   },
   "dependencies": {
