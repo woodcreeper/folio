@@ -81,7 +81,7 @@ Use your file manager’s **Open With** settings to associate Markdown with Foli
 
 ### Omarchy / Arch Linux
 
-Omarchy support is being investigated. The Linux AppImage is a candidate, and an [experimental native Arch package and Wayland check](packaging/arch/README.md) are saved in this repository. Neither has been verified on an actual Omarchy desktop yet. We are also checking whether Omarchy’s existing tools or plugin model are a better fit before adding an integration.
+Folio has been confirmed working on **Omarchy 4.0.4-1, x86_64**, through a user test on a physical machine on September 18, 2026. An [experimental native Arch package and Wayland check](packaging/arch/README.md) are also saved in this repository; that packaging path has not been separately verified. An Omarchy plugin is still under consideration.
 
 ## Make it yours
 
@@ -107,7 +107,7 @@ Folio reads UTF-8 `.md`, `.markdown`, `.mdown`, and `.mkd` files up to **10 MiB*
 
 Built-in editing, annotations, Markdown-to-Markdown navigation, Mermaid, math, and mobile apps are future work. The renderer and document model are separate from the UI so editing can be added without replacing the reading foundation.
 
-The Mac app has been exercised locally. CI builds packages and runs Rust tests on all three desktop platforms, plus browser interaction tests on Linux. Automated builds do not replace hands-on testing of Windows/Linux installation, external editors, and desktop integration. Please [report issues](https://github.com/woodcreeper/folio/issues) with your OS version and a minimal non-private sample.
+The Mac app has been exercised locally, and a user has confirmed Folio works on Omarchy. CI builds packages and runs Rust tests on all three desktop platforms, plus browser interaction tests on Linux. Windows/Linux installer behavior, external editors, and file associations still need individual hands-on verification. Please [report issues](https://github.com/woodcreeper/folio/issues) with your OS version and a minimal non-private sample.
 
 ## Build, contribute, or explore
 

@@ -1,7 +1,7 @@
 # Folio session handoff
 
-**Date:** 2026-09-17
-**Focus:** Custom tint and a neutral default for the Mac app; push the approved feature and current documentation. The user is independently working on the adjacent Omarchy machine.
+**Date:** 2026-09-18
+**Focus:** Tint feature merged and built successfully; screenshot-based product video saved on `codex/folio-product-video` at `07cdcb4`. The user has now confirmed Folio works on their adjacent Omarchy machine.
 
 ## Completed
 
@@ -44,15 +44,15 @@
 
 ## Omarchy work on the other machine
 
-The user has resumed with an adjacent **x86_64 Omarchy machine, version 4.0.4-1**, and is working on that side independently. They reported that the existing Space-bar preview and OmaWrite displayed unformatted Markdown; this is not yet a Folio compatibility test. They want Omarchy support and consideration of its plugin model. Coordinate through Git without overwriting work from that machine. Pull the latest `main` to include the merged tint feature and documentation. Check for local changes before syncing the Omarchy checkout.
+On **2026-09-18**, the user confirmed that **Folio works on their x86_64 Omarchy machine, version 4.0.4-1**. They are working on that side independently. Their earlier report of unformatted Markdown concerned the existing Space-bar preview and OmaWrite. The successful Folio test supersedes the previous lack of hardware confirmation; its installation method and individual integration checks were not specified. They want Omarchy support and consideration of its plugin model. Coordinate through Git without overwriting work from that machine. Pull the latest `main` to include the merged tint feature and documentation. Check for local changes before syncing the Omarchy checkout.
 
 Remaining compatibility checks:
 
 1. Start with product/compatibility research: https://omarchy.org/manual/ and its linked plugin catalog. Inspect its current native Markdown viewer/preview tools and plugin format before deciding whether Folio should integrate as an app, plugin, or neither.
 2. Read `packaging/arch/README.md`. Saved files: `PKGBUILD.in`, `scripts/package-arch.sh`, `scripts/smoke-wayland.sh`, `.github/workflows/arch-preview.yml`. The draft repackages the tested Ubuntu binary to avoid depending on a newer glibc than Omarchy's lagged Arch mirror.
 3. If appropriate, run the experimental workflow with successful build run ID `35278637065`. It attempts Arch dependency/desktop-file validation and native window startup under headless Weston. This does not prove Hyprland or actual document rendering.
-4. Test on the user's home machine: launch/file picker, file associations, typography, HiDPI, themes, external editors, atomic-save refresh, and uninstall. Terminal-only editors such as Neovim need a terminal wrapper; selecting the executable alone does not launch a terminal window.
-5. Keep Omarchy support marked experimental until verified. No Arch package, AUR listing, or Omarchy plugin is published.
+4. Record the installation method used for the successful hardware test and check any remaining desktop behaviors: file picker, file associations, typography, HiDPI, themes, external editors, atomic-save refresh, and uninstall. Terminal-only editors such as Neovim need a terminal wrapper; selecting the executable alone does not launch a terminal window.
+5. Document Folio as user-confirmed working on Omarchy 4.0.4-1 x86_64. Keep the separate Arch package/workflow marked experimental until verified. No Arch package, AUR listing, or Omarchy plugin is published.
 
 ## Useful commands
 
