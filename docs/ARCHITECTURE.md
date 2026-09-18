@@ -28,7 +28,7 @@ Add an explicit editor pane which changes the source string and reuses `renderMa
 
 Do not add a plugin framework until a concrete feature requires it. Reasonable next increments are local Markdown links, closing open documents, a persistent recent-file list (paths only, after a privacy decision), and opt-in math/diagram rendering.
 
-## Verification recorded 2026-09-17
+## Verification recorded through 2026-09-18
 
 - TypeScript and production frontend build pass.
 - 8 renderer tests pass: syntax, tasks/footnotes, IDs, Unicode, escaping, safe links/images, and reading statistics.
@@ -38,9 +38,10 @@ Do not add a plugin framework until a concrete feature requires it. Reasonable n
 - Complete Mac app and nested Quick Look extension pass strict code-signature verification using ad-hoc signing.
 - The rebuilt Mac app shows the new tint controls and opens the native macOS color picker. Browser tests verify immediate custom-color updates, persistence/reset, and readable link/control contrast across all four styles in both system color schemes.
 - macOS detects `net.daringfireball.markdown`; Folio’s Quick Look extension is registered and explicitly enabled.
-- Native app launch and opening a real Markdown file were observed. The updated native UI was visually observed with Open in Editor, Live preview, and the VS Code-inspired style. Actual external-editor launch still has no manual end-to-end acceptance record; native argument/validation tests and mocked frontend picker/launch tests pass.
-- `qlmanage -p` crashes in Apple’s ExtensionFoundation (`key cannot be nil`) before preview rendering on this machine. That command cannot establish Finder success or extension failure. Direct Finder spacebar acceptance remains a separate check.
+- On 2026-09-18, Finder Space-bar preview successfully rendered the public video demo plan with headings, paragraphs, a quote, task lists, and a table in light mode. Double-clicking the file opened it in Folio, and Open in Editor launched the same file in iA Writer. Only the demo file’s Open With association was changed.
+- The earlier `qlmanage -p` crash in Apple’s ExtensionFoundation (`key cannot be nil`) is separate from the successful Finder test. Quick Look dark mode, missing images, and broader Mac coverage still need individual checks.
 - Windows/Linux native tests pass in GitHub Actions. Packaged file associations, installer interaction, and actual external-editor launching still need manual verification on those platforms.
+- On 2026-09-18, the user confirmed Folio works on their physical x86_64 Omarchy 4.0.4-1 machine. The installation method and individual desktop integration checks were not specified; this does not establish validation of the experimental Arch package or Wayland workflow.
 
 ## Local operations
 

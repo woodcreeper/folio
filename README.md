@@ -7,6 +7,14 @@
   <p><a href="https://github.com/woodcreeper/folio/actions/workflows/build.yml"><img src="https://github.com/woodcreeper/folio/actions/workflows/build.yml/badge.svg" alt="Build status"></a> <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-sage" alt="MIT license"></a></p>
 </div>
 
+## From agent output to a beautiful read
+
+Your AI agent writes the Markdown. Select a file in Finder, press **Space**, and read it beautifully formatted. Double-click for Folio’s full reader, then open the same file in your favorite editor when you want to make a change.
+
+https://github.com/user-attachments/assets/b93b3f6e-6f92-49df-b3a7-1643db71c045
+
+*42 seconds, with music. [Video script and Remotion source](video/README.md).*
+
 ![Folio displaying its sample document, with a heading outline and a quiet reading layout](docs/images/folio.png)
 
 ## Read first. Edit where you like.
@@ -46,7 +54,7 @@ Filenames may vary slightly; choose the matching extension in the release assets
 
 **Double-click to open in Folio:** select a `.md` file in Finder, choose **Get Info → Open with → Folio → Change All**. Folio does not replace your current default automatically.
 
-Quick Look is still experimental: its native renderer and bundle checks pass, but Finder integration needs broader real-machine testing. See [Quick Look troubleshooting and acceptance checks](macos/README.md). Quick Look uses the default Folio reading style and shows placeholders for images.
+Finder’s Space-bar preview, double-clicking into Folio, and opening the same file in iA Writer were verified on the development Mac on September 18, 2026. Quick Look remains experimental pending broader testing across Macs. See [Quick Look troubleshooting and acceptance checks](macos/README.md). Quick Look uses the default Folio reading style and shows placeholders for images.
 
 ### Windows
 
@@ -81,7 +89,7 @@ Use your file manager’s **Open With** settings to associate Markdown with Foli
 
 ### Omarchy / Arch Linux
 
-Omarchy support is being investigated. The Linux AppImage is a candidate, and an [experimental native Arch package and Wayland check](packaging/arch/README.md) are saved in this repository. Neither has been verified on an actual Omarchy desktop yet. We are also checking whether Omarchy’s existing tools or plugin model are a better fit before adding an integration.
+Folio has been confirmed working on **Omarchy 4.0.4-1, x86_64**, through a user test on a physical machine on September 18, 2026. An [experimental native Arch package and Wayland check](packaging/arch/README.md) are also saved in this repository; that packaging path has not been separately verified. An Omarchy plugin is still under consideration.
 
 ## Make it yours
 
@@ -107,7 +115,7 @@ Folio reads UTF-8 `.md`, `.markdown`, `.mdown`, and `.mkd` files up to **10 MiB*
 
 Built-in editing, annotations, Markdown-to-Markdown navigation, Mermaid, math, and mobile apps are future work. The renderer and document model are separate from the UI so editing can be added without replacing the reading foundation.
 
-The Mac app has been exercised locally. CI builds packages and runs Rust tests on all three desktop platforms, plus browser interaction tests on Linux. Automated builds do not replace hands-on testing of Windows/Linux installation, external editors, and desktop integration. Please [report issues](https://github.com/woodcreeper/folio/issues) with your OS version and a minimal non-private sample.
+The Mac app has been exercised locally, and a user has confirmed Folio works on Omarchy. CI builds packages and runs Rust tests on all three desktop platforms, plus browser interaction tests on Linux. Windows/Linux installer behavior, external editors, and file associations still need individual hands-on verification. Please [report issues](https://github.com/woodcreeper/folio/issues) with your OS version and a minimal non-private sample.
 
 ## Build, contribute, or explore
 
