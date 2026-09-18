@@ -14,7 +14,7 @@
 Open a Markdown file and get straight to the words. Folio keeps your source untouched and gives it comfortable spacing, readable code, and a clear outline. When you want to make a change, **Open in Editor** sends the same file to your chosen editor. Save there, and Folio refreshes while keeping your place.
 
 - **Four reading styles:** Folio, VS Code-inspired, iA Writer Classic-inspired, and GitHub-inspired.
-- **Your preferred appearance:** light, dark, or system, with adjustable text size and remembered settings.
+- **Your preferred appearance:** light, dark, or system, with a neutral default, custom color tint, adjustable text size, and remembered settings.
 - **Easy navigation:** a heading outline, document search, and a read-only source view.
 - **Markdown essentials:** tables, highlighted code, task lists, footnotes, and local raster images.
 - **Mac Quick Look:** an included native extension for Finder’s Space-bar preview.
@@ -83,7 +83,9 @@ Omarchy support is being investigated. The Linux AppImage is a candidate, and an
 
 ## Make it yours
 
-Open **Appearance** (the **Aa** button) to choose a reading style, theme, or text size. The styles use local system fonts, so details vary by platform. They are original CSS inspired by familiar reading experiences, not exact replicas or affiliated products.
+Open **Appearance** (the **Aa** button) to choose a reading style, theme, tint, or text size. Under **Tint**, pick a swatch or click **Custom color** to open your system’s color picker. Changes preview immediately and are remembered. **Neutral** restores the selected style’s original palette. Tint affects accents and adds a subtle wash to the page; it leaves your Markdown unchanged. These preferences apply to the app; Quick Look uses the neutral Folio default.
+
+The styles use local system fonts, so details vary by platform. They are original CSS inspired by familiar reading experiences, not exact replicas or affiliated products.
 
 Choose **Open in Editor** to pick your editor once. On Mac, select its `.app`; on Windows, its `.exe`; on Linux, its executable. Change that choice under **Appearance → External Editor**. Folio watches the current file, including editors that save by replacing it, and preserves the visible paragraph when it refreshes. Source view keeps its proportional scroll position.
 

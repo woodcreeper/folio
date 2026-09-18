@@ -6,6 +6,7 @@ Folio is a desktop-first Markdown viewer with a shared rendering core. Mobile is
 
 - `src/renderer.ts`: synchronous Markdown → HTML, headings, approximate reading statistics. No DOM, file access, or native API. Bundles to `FolioRenderer` for JavaScriptCore.
 - `src/reader.css`: common typography, code colors, and themes. App chrome is separate in `src/style.css`.
+- `src/tint.ts`: optional color tint over the CSS palette for both app chrome and reading surfaces. Reads each preset’s default tokens, prepares light/dark variants, and adjusts accent contrast against their backgrounds. Preferences store only the chosen hex color (or `null` for neutral), alongside style, theme, and size.
 - `src/main.ts`: document selection, outline, source view, search, theme/size controls, and presentation. Keeps original source separate from rendered HTML.
 - `src/reading-position.ts`: captures the visible block and nearby headings, restores that anchor after document changes, and falls back to proportional position when no matching block survives. Explicit navigation invalidates late image restoration.
 - `src/platform.ts`: browser/desktop boundary and common document shape `{ name, path, content }`.
@@ -31,7 +32,7 @@ Do not add a plugin framework until a concrete feature requires it. Reasonable n
 
 - TypeScript and production frontend build pass.
 - 8 renderer tests pass: syntax, tasks/footnotes, IDs, Unicode, escaping, safe links/images, and reading statistics.
-- 11 browser interaction tests pass: baseline viewing, style persistence, editor selection/cancellation, automatic save refresh, temporary disappearance, source position, stale-response protection, and late-image navigation.
+- Browser interaction tests cover baseline viewing, style/tint persistence, accent contrast, editor selection/cancellation, automatic save refresh, temporary disappearance, source position, stale-response protection, and late-image navigation.
 - 19 Rust tests pass: document/security checks, editor validation and persistence, literal launch arguments, actual in-place and atomic saves, debounce timing, and worker shutdown.
 - Universal native Quick Look compile and JavaScriptCore smoke tests pass.
 - Complete Mac app and nested Quick Look extension pass strict code-signature verification using ad-hoc signing.

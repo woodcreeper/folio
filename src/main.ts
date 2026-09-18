@@ -2,6 +2,7 @@ import './reader.css';
 import './style.css';
 import { renderMarkdown } from './renderer';
 import { sample } from './sample';
+import { applyTint, normalizeTint } from './tint';
 import { capturePosition, restorePosition, scrollInstantly } from './reading-position';
 import { documentFromFile, isDesktop, native, openLink, type MarkdownDocument } from './platform';
 
@@ -36,12 +37,18 @@ let activeHeading = '';
 let toastTimer: ReturnType<typeof setTimeout>;
 let fontSize = 17;
 const readingStyles = [
-  { id: 'folio', name: 'Folio', description: 'Warm & spacious' },
+  { id: 'folio', name: 'Folio', description: 'Calm & spacious' },
   { id: 'code', name: 'VS Code', description: 'Compact & technical' },
   { id: 'writer', name: 'iA Writer', description: 'Classic serif' },
   { id: 'github', name: 'GitHub', description: 'Familiar & structured' },
 ] as const;
 let readingStyle: string = 'folio';
+let tint: string | null = null;
+const tintSwatches = [
+  { name: 'Blue', color: '#5776c8' }, { name: 'Purple', color: '#9365b8' },
+  { name: 'Rose', color: '#b96683' }, { name: 'Amber', color: '#bd8844' },
+  { name: 'Sage', color: '#638568' },
+];
 interface EditorInfo { name: string; path: string }
 let preferredEditor: EditorInfo | null = null;
 let editorBusy = false;
@@ -58,6 +65,7 @@ try {
   const settings = JSON.parse(localStorage.getItem('folio:settings') || '{}');
   if (['light','dark','system'].includes(settings.theme)) theme = settings.theme;
   if (readingStyles.some(style => style.id === settings.readingStyle)) readingStyle = settings.readingStyle;
+  tint = normalizeTint(settings.tint);
   if (Number.isFinite(settings.fontSize)) fontSize = Math.min(23, Math.max(14, settings.fontSize));
 } catch { /* Browser storage is optional. */ }
 
@@ -84,7 +92,7 @@ $('#app').innerHTML = `
       <footer class="statusbar"><div><span class="status-dot"></span><span id="file-status">Sample document</span><button id="reload" class="small-button" title="Reload from disk" aria-label="Reload from disk" hidden>${icon('refresh')}</button></div><div><span id="word-count"></span><span class="status-separator">·</span><span id="reading-time"></span><span class="status-separator">·</span><span id="reading-progress">0%</span></div></footer>
     </main>
   </div>
-  <div id="settings" class="settings-popover" hidden><div class="eyebrow">READING STYLE</div><div class="reading-styles">${readingStyles.map(style => `<button data-reading-style-option="${style.id}" aria-pressed="false"><span>${style.name}</span><small>${style.description}</small></button>`).join('')}</div><p class="settings-note">Inspired styles. Your Markdown stays unchanged.</p><div class="settings-divider"></div><div class="eyebrow">APPEARANCE</div><div class="theme-options">${['light','dark','system'].map((t,i) => `<button data-theme-option="${t}" aria-pressed="false">${icon(['sun','moon','monitor'][i])}<span>${t[0].toUpperCase()+t.slice(1)}</span></button>`).join('')}</div><div class="settings-divider"></div><div class="size-control"><span>Reading size</span><div><button id="smaller" aria-label="Decrease reading size">A−</button><output id="font-size"></output><button id="larger" aria-label="Increase reading size">A+</button></div></div><button id="reset-size" class="reset-button">Reset to default</button><div id="editor-settings" hidden><div class="settings-divider"></div><div class="eyebrow">EXTERNAL EDITOR</div><button id="choose-editor" class="editor-choice"><span id="editor-name">Choose an editor…</span>${icon('open')}</button><p class="settings-note">Save there. Folio refreshes here.</p></div></div>
+  <div id="settings" class="settings-popover" hidden><div class="eyebrow">READING STYLE</div><div class="reading-styles">${readingStyles.map(style => `<button data-reading-style-option="${style.id}" aria-pressed="false"><span>${style.name}</span><small>${style.description}</small></button>`).join('')}</div><p class="settings-note">Inspired styles. Your Markdown stays unchanged.</p><div class="settings-divider"></div><div class="eyebrow">APPEARANCE</div><div class="theme-options">${['light','dark','system'].map((t,i) => `<button data-theme-option="${t}" aria-pressed="false">${icon(['sun','moon','monitor'][i])}<span>${t[0].toUpperCase()+t.slice(1)}</span></button>`).join('')}</div><div class="settings-divider"></div><div class="eyebrow">TINT</div><div class="tint-controls"><label class="tint-picker"><input id="tint-picker" type="color" value="#5776c8" aria-label="Custom tint color" /><span>Custom color<output id="tint-value">Neutral</output></span></label><button id="neutral-tint" class="tint-neutral" aria-pressed="true">Neutral</button></div><div class="tint-swatches" role="group" aria-label="Tint presets">${tintSwatches.map(swatch => `<button class="tint-swatch" data-tint="${swatch.color}" style="--swatch:${swatch.color}" aria-label="${swatch.name} tint" title="${swatch.name}" aria-pressed="false"></button>`).join('')}</div><p class="settings-note">Choose a color for accents and a subtle page tint.</p><div class="settings-divider"></div><div class="size-control"><span>Reading size</span><div><button id="smaller" aria-label="Decrease reading size">A−</button><output id="font-size"></output><button id="larger" aria-label="Increase reading size">A+</button></div></div><button id="reset-size" class="reset-button">Reset to default</button><div id="editor-settings" hidden><div class="settings-divider"></div><div class="eyebrow">EXTERNAL EDITOR</div><button id="choose-editor" class="editor-choice"><span id="editor-name">Choose an editor…</span>${icon('open')}</button><p class="settings-note">Save there. Folio refreshes here.</p></div></div>
   <div id="drop-overlay" class="drop-overlay" hidden><div>${icon('open')}<h2>A good place for your words.</h2><p>Drop a Markdown file to start reading.</p></div></div>
   <div id="toast" class="toast" role="status" hidden></div>
   <input id="file-input" type="file" accept=".md,.markdown,.mdown,.mkd,text/markdown" hidden />
@@ -95,6 +103,11 @@ function settings() {
   const position = capturePosition($('#reading-scroll'), sourceMode ? $('#source-content') : $('#reader'));
   document.documentElement.dataset.theme = theme;
   document.documentElement.dataset.readingStyle = readingStyle;
+  applyTint(document.documentElement, tint);
+  if (tint) ($<HTMLInputElement>('#tint-picker')).value = tint;
+  $('#tint-value').textContent = tint ? tint.toUpperCase() : 'Neutral';
+  $('#neutral-tint').setAttribute('aria-pressed', String(tint === null));
+  document.querySelectorAll<HTMLButtonElement>('[data-tint]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.tint === tint)));
   document.documentElement.style.setProperty('--reading-size', `${fontSize}px`);
   $('#font-size').textContent = `${fontSize}`;
   document.querySelectorAll<HTMLButtonElement>('[data-theme-option]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.themeOption === theme)));
@@ -102,7 +115,7 @@ function settings() {
   restorePosition($('#reading-scroll'), sourceMode ? $('#source-content') : $('#reader'), position);
   $('#smaller').toggleAttribute('disabled', fontSize <= 14);
   $('#larger').toggleAttribute('disabled', fontSize >= 23);
-  try { localStorage.setItem('folio:settings', JSON.stringify({ theme, fontSize, readingStyle })); } catch { /* Optional. */ }
+  try { localStorage.setItem('folio:settings', JSON.stringify({ theme, fontSize, readingStyle, tint })); } catch { /* Optional. */ }
 }
 function notify(message: string) {
   const toast = $('#toast'); toast.textContent = message; toast.hidden = false;
@@ -318,6 +331,14 @@ $('#appearance').addEventListener('click', toggleSettings); $('#type').addEventL
 $('#settings').addEventListener('click', event => { const style = (event.target as Element).closest<HTMLElement>('[data-reading-style-option]')?.dataset.readingStyleOption; if (readingStyles.some(item => item.id === style)) { readingStyle = style!; settings(); } const option = (event.target as Element).closest<HTMLElement>('[data-theme-option]')?.dataset.themeOption; if (option) { theme = option as typeof theme; settings(); } });
 $('#smaller').addEventListener('click', () => { fontSize = Math.max(14,fontSize-1); settings(); });
 $('#larger').addEventListener('click', () => { fontSize = Math.min(23,fontSize+1); settings(); });
+for (const event of ['input', 'change']) $('#tint-picker').addEventListener(event, () => {
+  tint = normalizeTint($<HTMLInputElement>('#tint-picker').value); settings();
+});
+$('#neutral-tint').addEventListener('click', () => { tint = null; settings(); });
+$('.tint-swatches').addEventListener('click', event => {
+  const color = (event.target as Element).closest<HTMLElement>('[data-tint]')?.dataset.tint;
+  if (color) { tint = normalizeTint(color); settings(); }
+});
 $('#reset-size').addEventListener('click', () => { fontSize = 17; settings(); });
 $('#reload').addEventListener('click', () => { void refreshDocument(); });
 $('#edit-external').addEventListener('click', () => attempt(editExternally));
