@@ -16,7 +16,7 @@ Your AI agent writes the Markdown. Select a file in Finder, press **Space**, and
 <details>
 <summary>▶ Watch here · 42 seconds, with music</summary>
 
-https://github.com/user-attachments/assets/8860fbcd-5be0-4572-ae07-6e19bad00aee
+https://github.com/user-attachments/assets/f57c1998-6762-4e90-8b9f-efa5350801e9
 
 </details>
 
