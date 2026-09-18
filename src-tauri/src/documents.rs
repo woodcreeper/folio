@@ -29,10 +29,25 @@ impl DocumentStore {
     pub fn open(&mut self, path: &Path) -> Result<Document, String> {
         let canonical = canonical_document(path)?;
         let document = read_document(&canonical)?;
+        self.authorized.clear();
         self.authorized.insert(canonical);
         self.current = Some(document.clone());
         self.error = None;
         Ok(document)
+    }
+
+    pub fn close(&mut self, path: &Path) {
+        // The frontend uses the canonical path returned by open(). Avoid
+        // canonicalizing again: a deleted file must still be closable.
+        self.authorized.remove(path);
+        if self
+            .current
+            .as_ref()
+            .is_some_and(|doc| Path::new(&doc.path) == path)
+        {
+            self.current = None;
+            self.error = None;
+        }
     }
 
     pub fn reload(&mut self, path: &Path) -> Result<Document, String> {
@@ -207,6 +222,27 @@ fn raster_mime(extension: &str, bytes: &[u8]) -> Option<&'static str> {
 mod tests {
     use super::*;
     use std::fs;
+
+    #[test]
+    fn replacing_and_closing_releases_the_previous_document() {
+        let temp = tempfile::tempdir().unwrap();
+        let first = temp.path().join("first.md");
+        let second = temp.path().join("second.md");
+        fs::write(&first, "# First").unwrap();
+        fs::write(&second, "# Second").unwrap();
+        let mut store = DocumentStore::default();
+        let old = store.open(&first).unwrap();
+        let current = store.open(&second).unwrap();
+        assert!(store.reload(&first).is_err());
+        store.close(Path::new(&old.path));
+        assert_eq!(store.initial().unwrap().unwrap().path, current.path);
+        fs::remove_file(&second).unwrap();
+        store.close(Path::new(&current.path));
+        assert!(store.initial().unwrap().is_none());
+        fs::write(&second, "# Restored").unwrap();
+        assert!(store.reload(&second).is_err());
+        assert_eq!(store.open(&second).unwrap().content, "# Restored");
+    }
 
     #[test]
     fn opening_authorizes_reload_and_strips_utf8_bom() {

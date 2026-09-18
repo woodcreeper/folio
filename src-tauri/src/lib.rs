@@ -1,5 +1,7 @@
 mod documents;
 mod editor;
+#[cfg(desktop)]
+mod menu;
 mod watcher;
 
 use documents::{is_markdown, Document, DocumentStore};
@@ -82,6 +84,15 @@ async fn open_path(app: AppHandle, path: String) -> Result<Document, String> {
 #[tauri::command]
 fn get_initial_document(store: State<'_, Store>) -> Result<Option<Document>, String> {
     store.lock().map_err(|_| STORE_ERROR.to_owned())?.initial()
+}
+
+#[tauri::command]
+fn close_document(store: State<'_, Store>, path: String) -> Result<(), String> {
+    store
+        .lock()
+        .map_err(|_| STORE_ERROR.to_owned())?
+        .close(Path::new(&path));
+    Ok(())
 }
 
 #[tauri::command]
@@ -205,6 +216,7 @@ pub fn run() {
             open_document,
             open_path,
             get_initial_document,
+            close_document,
             reload_document,
             read_image,
             open_link,
@@ -214,6 +226,8 @@ pub fn run() {
             watch_document
         ])
         .setup(|app| {
+            #[cfg(desktop)]
+            menu::install(app.handle())?;
             let cwd = std::env::current_dir().unwrap_or_default();
             if let Some(path) = argument_path(std::env::args().skip(1), &cwd) {
                 // Store it before the webview subscribes so no startup event is lost.

@@ -7,11 +7,12 @@ Folio is a desktop-first Markdown viewer with a shared rendering core. Mobile is
 - `src/renderer.ts`: synchronous Markdown → HTML, headings, approximate reading statistics. No DOM, file access, or native API. Bundles to `FolioRenderer` for JavaScriptCore.
 - `src/reader.css`: common typography, code colors, and themes. App chrome is separate in `src/style.css`.
 - `src/tint.ts`: optional color tint over the CSS palette for both app chrome and reading surfaces. Reads each preset’s default tokens, prepares light/dark variants, and adjusts accent contrast against their backgrounds. Preferences store only the chosen hex color (or `null` for neutral), alongside style, theme, and size.
-- `src/main.ts`: document selection, outline, source view, search, style/theme/tint/size controls, and presentation. Keeps original source separate from rendered HTML.
+- `src/main.ts`: one current document (or an empty reader), outline, source view, search, style/theme/tint/size controls, and presentation. Opening replaces the current preview; Close invalidates pending refresh/image work and clears the reader. Keeps original source separate from rendered HTML.
 - `src/reading-position.ts`: captures the visible block and nearby headings, restores that anchor after document changes, and falls back to proportional position when no matching block survives. Explicit navigation invalidates late image restoration.
 - `src/platform.ts`: browser/desktop boundary and common document shape `{ name, path, content }`.
 - `src-tauri/src/documents.rs`: read-only local document session and bounded local image loading. Canonical paths constrain image access to an opened document’s directory tree.
 - `src-tauri/src/lib.rs`: native picker, OS open events, file associations, and external web/email links. Startup documents stay available until the frontend subscribes.
+- `src-tauri/src/menu.rs`: native Open and Close Document commands. Cmd/Ctrl+W closes the document; Cmd/Ctrl+Shift+W closes the window. The webview handles these shortcuts only in browser mode, preventing duplicate native handling.
 - `src-tauri/src/editor.rs`: validated application selection and preference persistence. Launches only the selected app with the authorized document as a literal argument. Prevents opening Folio recursively.
 - `src-tauri/src/watcher.rs`: one native parent-directory subscription for the current document; handles atomic saves, debounces events, and stops its worker on replacement. No idle polling.
 - `macos/QuickLook`: sandboxed native data-based preview provider. Reads the selected UTF-8 file and uses JavaScriptCore to run the same packaged renderer. No app backend or web bridge exists in the preview process.
@@ -26,16 +27,17 @@ Markdown files are neither uploaded nor written by Folio; the external editor ow
 
 Add an explicit editor pane which changes the source string and reuses `renderMarkdown`. Add saving as a separate native command with a document revision/mtime check and conflict handling. Keep the read-only Quick Look provider independent. The current source viewer is not an editor; no save API or filesystem write permission is present.
 
-Do not add a plugin framework until a concrete feature requires it. Reasonable next increments are local Markdown links, closing open documents, a persistent recent-file list (paths only, after a privacy decision), and opt-in math/diagram rendering.
+Do not add a plugin framework until a concrete feature requires it. Reasonable next increments are local Markdown links, a persistent recent-file list (paths only, after a privacy decision), and opt-in math/diagram rendering.
 
 ## Verification recorded through 2026-09-18
 
 - TypeScript and production frontend build pass.
 - 8 renderer tests pass: syntax, tasks/footnotes, IDs, Unicode, escaping, safe links/images, and reading statistics.
-- 13 browser interaction tests pass: baseline viewing, style/tint persistence, accent contrast, editor selection/cancellation, automatic save refresh, temporary disappearance, source position, stale-response protection, and late-image navigation.
-- Earlier validation: 19 Rust tests pass for document/security checks, editor validation and persistence, literal launch arguments, actual in-place and atomic saves, debounce timing, and worker shutdown. Rust behavior is unchanged by the tint feature.
+- 15 browser interaction tests pass: baseline viewing, style/tint persistence, accent contrast, editor selection/cancellation, automatic save refresh, temporary disappearance, source position, stale-response protection, late-image navigation, single-document replacement, and closing/reopening while a refresh is in flight.
+- 20 Rust tests pass for document/security checks, single-document authorization and closing deleted files, editor validation and persistence, literal launch arguments, actual in-place and atomic saves, debounce timing, and worker shutdown. Real macOS watcher tests need execution outside the filesystem sandbox.
 - Universal native Quick Look compile and JavaScriptCore smoke tests pass.
 - Complete Mac app and nested Quick Look extension pass strict code-signature verification using ad-hoc signing.
+- The rebuilt single-document Mac app was checked with ⌘W, the filename’s close button, and ⌘O from the empty reader. Closing leaves the window open; opening a real Markdown file renders it and resumes live preview. Windows/Linux native menu behavior still needs hands-on verification.
 - The rebuilt Mac app shows the new tint controls and opens the native macOS color picker. Browser tests verify immediate custom-color updates, persistence/reset, and readable link/control contrast across all four styles in both system color schemes.
 - macOS detects `net.daringfireball.markdown`; Folio’s Quick Look extension is registered and explicitly enabled.
 - On 2026-09-18, Finder Space-bar preview successfully rendered the public video demo plan with headings, paragraphs, a quote, task lists, and a table in light mode. Double-clicking the file opened it in Folio, and Open in Editor launched the same file in iA Writer. Only the demo file’s Open With association was changed.
@@ -57,4 +59,4 @@ The app persists reading style, theme, tint, and size independently. Four lightw
 
 ## Refresh and launch invariants
 
-Frontend selection and refresh counters reject stale results. Native watcher changes are serialized so delayed requests cannot reselect an earlier file. Recreating a subscription also recovers a failed same-path watcher. Backend reloads of previously authorized files do not replace a newer native startup document. A chooser cancellation launches nothing; files and app paths are passed as separate process arguments. Folio never invokes the shell with document content.
+Frontend selection and refresh counters reject stale results, including after Close. Native watcher changes are serialized so delayed requests cannot reselect an earlier file; an empty reader watches no path. Recreating a subscription also recovers a failed same-path watcher. Successfully opening a new document replaces the native authorization for the old one. Closing removes authorization even if the file was deleted, without clearing a newer startup document. A chooser cancellation launches nothing; files and app paths are passed as separate process arguments. Folio never invokes the shell with document content.
