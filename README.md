@@ -46,7 +46,7 @@ Filenames may vary slightly; choose the matching extension in the release assets
 
 **Double-click to open in Folio:** select a `.md` file in Finder, choose **Get Info → Open with → Folio → Change All**. Folio does not replace your current default automatically.
 
-Quick Look is still experimental: its native renderer and bundle checks pass, but Finder integration needs broader real-machine testing. See [Quick Look troubleshooting and acceptance checks](macos/README.md). Quick Look uses the default Folio reading style and shows placeholders for images.
+Finder’s Space-bar preview, double-clicking into Folio, and opening the same file in iA Writer were verified on the development Mac on September 18, 2026. Quick Look remains experimental pending broader testing across Macs. See [Quick Look troubleshooting and acceptance checks](macos/README.md). Quick Look uses the default Folio reading style and shows placeholders for images.
 
 ### Windows
 

@@ -1,7 +1,7 @@
 # Folio session handoff
 
 **Date:** 2026-09-18
-**Focus:** Tint feature merged and built successfully; screenshot-based product video saved on `codex/folio-product-video` at `07cdcb4`. The user has now confirmed Folio works on their adjacent Omarchy machine.
+**Focus:** Revise the product video around AI-generated Markdown → Finder Space bar → double-click into Folio → local editor, with more upbeat music. Work stays on `codex/folio-product-video`. The user has confirmed Folio works on Omarchy.
 
 ## Completed
 
@@ -37,7 +37,7 @@
 ## Known limitations
 
 - Preview Mac builds are ad-hoc signed, not Developer ID-signed/notarized. Windows installers are unsigned. Instructions explain OS warnings.
-- Mac Quick Look compiles, its renderer passes tests, and registration was observed. `qlmanage -p` crashed in Apple's ExtensionFoundation on the development machine before rendering. Actual Finder Space-bar acceptance still needs verification.
+- Actual Finder Space-bar preview succeeded on 2026-09-18 with the public video plan, rendering headings, a quote, tasks, and a table in light mode. Double-clicking the demo file opened Folio, and Open in Editor opened the same file in iA Writer. The earlier `qlmanage -p` crash is a separate tooling issue. Quick Look dark mode, missing images, and broader Mac coverage still need checks.
 - Windows/Linux installer interaction, desktop file associations, and actual external editor launches still need hands-on verification. Passing CI is not proof of complete desktop integration.
 - Native images are restricted to local raster images under the document directory. Remote images/raw HTML/SVG are inert. Quick Look uses the neutral default Folio style and image placeholders. App reading-style/tint/size preferences are not shared with the extension.
 - Built-in editing, annotations, mobile, Mermaid/math, and local Markdown-to-Markdown links remain future work.
@@ -53,6 +53,15 @@ Remaining compatibility checks:
 3. If appropriate, run the experimental workflow with successful build run ID `35278637065`. It attempts Arch dependency/desktop-file validation and native window startup under headless Weston. This does not prove Hyprland or actual document rendering.
 4. Record the installation method used for the successful hardware test and check any remaining desktop behaviors: file picker, file associations, typography, HiDPI, themes, external editors, atomic-save refresh, and uninstall. Terminal-only editors such as Neovim need a terminal wrapper; selecting the executable alone does not launch a terminal window.
 5. Document Folio as user-confirmed working on Omarchy 4.0.4-1 x86_64. Keep the separate Arch package/workflow marked experimental until verified. No Arch package, AUR listing, or Omarchy plugin is published.
+
+## Product video revision — 2026-09-18
+
+- Revised script: `video/SCRIPT.md`. New story: AI agent output → Finder file selection → Space bar Quick Look → double-click into Folio → outline/search/appearance → local editor.
+- New export: `video/out/Folio-From-Agent-Output-to-a-Beautiful-Read.mp4`, 42 seconds, 1080p, 30 fps, with original 120 BPM keys/bass/percussion music. Generated output/audio remain ignored; screenshot assets and source are versioned.
+- Native screenshots are in `video/public/screenshots/workflow-*.png`, using only the new public fixtures in `video/public/Agent workspace/`. Native Finder, Folio, and iA Writer workflow acceptance succeeded while capturing them.
+- Only PLAN.md was associated with Folio; the global Markdown default was not changed. Finder sidebar, Folio's GitHub/dark/blue/14 appearance, and iA Writer's window/preview mode were restored after capture.
+- Earlier 40-second export remains locally available under its original name. `npm run capture --prefix video` still captures legacy browser assets; current native screenshots are already committed for rendering.
+- This branch has not been pushed or merged. Published v0.1.0 release downloads are unchanged.
 
 ## Useful commands
 

@@ -1,37 +1,40 @@
-# Folio — Plain text. Beautifully read.
+# Folio — From agent output to a beautiful read
 
-**Format:** 40 seconds · 1920 × 1080 · 30 fps · screenshot-led product film.
+**Format:** 42 seconds · 1920 × 1080 · 30 fps · screenshot-led product film.
 
-**Tone:** Quiet confidence. Spacious typography, deliberate movement, a neutral paper palette, and a restrained violet accent. The interface is the hero. An original, soft instrumental bed supports the edit; no voiceover is required to follow it.
+**Story:** Your AI agent leaves you a folder of Markdown. You only need to read a file or two. Select one in Finder, press Space, and read it beautifully. Double-click for Folio’s full reading tools. When it is time to change something, use your own editor.
+
+**Feel:** Elegant, direct, and quick. Keep the generous type and neutral/violet palette, but give the cuts a brighter 120 BPM instrumental groove: warm keys, plucked bass, light kick, clap, and shakers. No voiceover is required.
 
 | Time | On-screen copy | Picture and motion |
 | --- | --- | --- |
-| 00–04 | **Plain text.** → **Beautifully read.** | Open on an actual Folio source-view screenshot, moving gently through the frame. A clean reveal changes the same document into Folio’s rendered reading view. |
-| 04–10 | **Open it. Settle in.** / A clear, comfortable view of your Markdown. | The full reading window settles into a spacious composition. A slow push draws attention to the heading, paragraphs, and blockquote. |
-| 10–15 | **Find your place.** / An outline to explore. Search when you need it. | Close-up of the real outline, then the actual search interface and highlighted result. A subtle focus frame guides the eye. |
-| 15–23 | **Four styles. One file.** / Folio · VS Code · iA Writer · GitHub | Match-cut the same document through all four reading presets, two seconds per style. Keep the document in the same position so the typography change is clear. Label each style outside the captured interface. |
-| 23–30 | **Make it yours.** / Your color. Your light. Your reading rhythm. | Real Appearance controls, first neutral, then violet in light mode, then blue in dark mode. Cut from the controls to the clean tinted reading view. |
-| 30–35 | **Your files. Your space.** / No account. No upload. Just open and read. | Return to the uncluttered neutral reader. Emphasize the actual local-only footer with a gentle close-up. |
-| 35–40 | **folio.** / A little room to read. / Mac · Windows · Linux / github.com/woodcreeper/folio | Resolve to a typographic end card with a small screenshot behind the wordmark. Hold the repository address long enough to read. |
+| 00–04 | **Your agent writes.** / Plans. READMEs. Research. | The names of the actual demo documents arrive in time with the beat. This is typography introducing the workflow, not a simulated agent conversation. |
+| 04–08 | **You just need to read.** / Select a Markdown file in Finder. | Real Finder screenshot with PLAN.md selected. Move the focus to the selected row. A Space key appears and presses at the transition. |
+| 08–16 | **Space. And there it is.** / Beautiful Markdown. Right in Finder. | The edit reveals the real native Quick Look screenshot. Hold long enough to read the headings, quote, and task list. The actual “Open with Folio” action stays visible. Small label: macOS Quick Look. |
+| 16–22 | **Want to go deeper?** / Double-click. Open in Folio. | Brief return to the same selected file with an animated double-click indicator, then the real Folio app showing the same plan. Small setup note: Set Folio as your Markdown opener. |
+| 22–28 | **More room. More control.** / Outline. Search. Your reading style. | Match-cut real native Folio screenshots: reader with outline, active search, then Appearance controls with a violet tint. The full app is the next layer of the same workflow. |
+| 28–36 | **Ready to make a change?** / Choose your local editor. | Zoom into Folio’s actual external editor setting, then its Open in Editor button. Cut to the same PLAN.md open as editable Markdown in iA Writer. Label the example clearly: iA Writer · your original file. |
+| 36–42 | **folio.** / From agent output to a beautiful read. / Preview. Explore. Edit in your own app. | Quiet end card with the real Quick Look screenshot beside the wordmark. Mac · Windows · Linux, plus a separate “Space bar preview on Mac” line and repository address. |
 
-## Optional voiceover script
+## Optional voiceover
 
-Your Markdown already has the words. Give them a little room.
+Your AI agent writes the plan. The README. The research.
 
-Meet Folio. Open a file and settle into a clearer view.
+You just need to read one.
 
-Find your place with the outline. Find a thought with search.
+Select it in Finder. Press Space. And there it is—beautifully formatted.
 
-Choose a reading style. Set the color and light to suit you.
+Want to go deeper? Double-click to open Folio. Explore the outline, search the document, and choose your reading style.
 
-Your files stay yours. No account. No upload. Just open and read.
+Ready to change something? Open the original file in your favorite local editor.
 
-Folio. A little room to read.
+Folio. From agent output to a beautiful read.
 
-## Capture and claim boundaries
+## Capture notes
 
-- Screenshots come from the actual Folio frontend at the merged tint revision, using a new, non-private Markdown fixture.
-- Screenshots show real UI states; motion, crop, labels, and transitions are added in Remotion. This is a product film, not a live screen recording or speed benchmark.
-- Finder Quick Look is omitted because its real-machine acceptance remains unverified.
-- Custom tint is demonstrated in the app. Published v0.1.0 downloads predate that feature; the end card links to the repository.
-- Reading styles are original implementations inspired by the named editors, not affiliations or exact replicas.
+- Finder, Quick Look, Folio, and iA Writer screenshots were captured from the real Mac apps on September 18, 2026. Only the prepared public documents in `public/Agent workspace/` are shown.
+- Finder Space bar rendering, double-clicking into Folio, and Folio launching the same file in iA Writer were observed successfully. The demo file alone was associated with Folio; the Mac’s global Markdown default was not changed.
+- Crops, pointer/key illustrations, transitions, and timing are added in Remotion. The video is an edited screenshot demonstration, not a live recording or launch-speed benchmark.
+- Space bar Quick Look is a macOS feature. The desktop reader also runs on Windows and Linux; the user has separately confirmed it on Omarchy.
+- Editing happens in the selected external app. Folio is the viewer. No built-in editing or annotation feature is implied.
+- Custom tint is from current source; published v0.1.0 downloads predate it. The end card links to the repository.

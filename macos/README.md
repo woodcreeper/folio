@@ -56,4 +56,8 @@ Select a Markdown file in Finder and press Space. Test headings, tables, code, t
 
 ## Current local verification
 
-The containing app and embedded extension pass strict code-signature verification. macOS has registered Folio’s extension and it has been enabled with `pluginkit`. The command-line `qlmanage -p` tool crashes inside Apple’s ExtensionFoundation on this machine before rendering; use Finder’s Space-bar preview to verify the actual user workflow. The native JavaScriptCore smoke test passes independently.
+The containing app and embedded extension pass strict code-signature verification. macOS has registered Folio’s extension and it has been enabled with `pluginkit`. The native JavaScriptCore smoke test passes independently.
+
+On September 18, 2026, actual Finder Space-bar preview was verified on the development Mac using `video/public/Agent workspace/PLAN.md`: headings, paragraphs, a quote, task lists, and a table rendered correctly in light mode. After associating that demo file with Folio, Quick Look showed “Open with Folio”; closing the preview and double-clicking the file opened the same document in Folio. Folio’s Open in Editor action then opened it in iA Writer. Screenshots are saved in `video/public/screenshots/workflow-*.png`.
+
+The earlier command-line `qlmanage -p` crash in Apple’s ExtensionFoundation remains a separate tooling issue; it does not describe the successful Finder test. Dark-mode Quick Look, missing images, and the broader acceptance matrix above still need individual checks.

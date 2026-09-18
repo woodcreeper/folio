@@ -12,7 +12,7 @@
 - Folio’s default page and app controls use a neutral palette in place of the green tint. The shared Quick Look default is neutral too; custom app preferences are not shared with Quick Look.
 - Refreshed the README screenshot and appearance instructions.
 
-Validation: 8 renderer tests, 13 browser interaction tests, the local Mac build, the Swift Quick Look smoke test, and strict bundle signature checks pass. The macOS color picker was opened in the rebuilt app. Cross-platform automated checks and package builds are tracked in [GitHub Actions](https://github.com/woodcreeper/folio/actions/runs/35304846135). On September 18, 2026, the user confirmed Folio works on an x86_64 Omarchy 4.0.4-1 machine. Windows/Linux installer behavior, file associations, and external-editor launching have not been individually verified.
+Validation: 8 renderer tests, 13 browser interaction tests, the local Mac build, the Swift Quick Look smoke test, and strict bundle signature checks pass. The macOS color picker was opened in the rebuilt app. On September 18, Finder Space-bar rendering, double-click opening in Folio, and opening the same file in iA Writer were verified with the public video demo. Cross-platform automated checks and package builds are tracked in [GitHub Actions](https://github.com/woodcreeper/folio/actions/runs/35304846135). On September 18, 2026, the user confirmed Folio works on an x86_64 Omarchy 4.0.4-1 machine. Windows/Linux installer behavior, file associations, and external-editor launching have not been individually verified.
 
 ## 0.1.0 — 2026-09-17
 
