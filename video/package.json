@@ -8,6 +8,7 @@
     "studio": "remotion studio src/index.tsx",
     "stills": "node scripts/render.mjs --stills",
     "poster": "node scripts/render.mjs --poster",
+    "social": "node scripts/social.mjs",
     "render": "node scripts/render.mjs",
     "verify": "node scripts/verify.mjs"
   },
