@@ -7,6 +7,14 @@
   <p><a href="https://github.com/woodcreeper/folio/actions/workflows/build.yml"><img src="https://github.com/woodcreeper/folio/actions/workflows/build.yml/badge.svg" alt="Build status"></a> <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-sage" alt="MIT license"></a></p>
 </div>
 
+## From agent output to a beautiful read
+
+Your AI agent writes the Markdown. Select a file in Finder, press **Space**, and read it beautifully formatted. Double-click for Folio’s full reader, then open the same file in your favorite editor when you want to make a change.
+
+https://github.com/user-attachments/assets/b93b3f6e-6f92-49df-b3a7-1643db71c045
+
+*42 seconds, with music. [Video script and Remotion source](video/README.md).*
+
 ![Folio displaying its sample document, with a heading outline and a quiet reading layout](docs/images/folio.png)
 
 ## Read first. Edit where you like.
