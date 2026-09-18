@@ -15,8 +15,8 @@
 
 ## Git and release state
 
-- Working branch: `codex/custom-tint`, tracking `origin/codex/custom-tint`; created from `ca334ca`.
-- `6459638`: neutral palette and custom tint feature, approved by the user and pushed. A follow-up documentation commit records the current state. These changes have not been merged to `main` or published as new release downloads.
+- Integration target: `main`. The tint feature was developed on `codex/custom-tint`, created from `ca334ca`. The user approved merging the feature and documentation on 2026-09-17.
+- `6459638`: neutral palette and custom tint feature. `1978858`: README, changelog, platform notes, and handoff updates. Both are pushed; the approved integration into `main` includes them. No new release downloads have been published.
 - `730a5e08fc228858b918ff94562cb9707faeb0f9`: full app, README, license, and build workflow. All three platform build jobs passed at this exact commit.
 - `a7d5623`: installation clarifications and package author/license metadata.
 - `ac57f31`: saved Omarchy experiment and documentation. This was the last packaging-only change before the tint feature.
@@ -44,7 +44,7 @@
 
 ## Omarchy work on the other machine
 
-The user has resumed with an adjacent **x86_64 Omarchy machine, version 4.0.4-1**, and is working on that side independently. They reported that the existing Space-bar preview and OmaWrite displayed unformatted Markdown; this is not yet a Folio compatibility test. They want Omarchy support and consideration of its plugin model. Coordinate through Git without overwriting work from that machine. The tint changes currently live on `codex/custom-tint`, so checking out only `main` will not include them.
+The user has resumed with an adjacent **x86_64 Omarchy machine, version 4.0.4-1**, and is working on that side independently. They reported that the existing Space-bar preview and OmaWrite displayed unformatted Markdown; this is not yet a Folio compatibility test. They want Omarchy support and consideration of its plugin model. Coordinate through Git without overwriting work from that machine. After the approved merge, pull the latest `main` to include the tint feature and documentation. Check for local changes before syncing the Omarchy checkout.
 
 Remaining compatibility checks:
 
