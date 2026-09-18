@@ -59,6 +59,8 @@ Review the actual MP4, including the style-to-editor boundary and each edit/save
 
 ## GitHub and X
 
+The repository’s sharing graphic is `docs/images/folio-social.png`: an opaque 1280 × 640 PNG under 1 MB, sized for GitHub’s social preview. Run `npm run social` here to rebuild it from `src/FolioSocial.tsx` and the existing, unmodified Quick Look screenshot. Copy, logo, layout, and export size are set in source. Upload the result under repository **Settings → General → Social preview**; committing the image alone does not update the preview. It is also suitable as a standalone image attachment. The Mac-specific Space-bar wording distinguishes Quick Look from the cross-platform reader.
+
 The README shows the finished video directly in GitHub’s inline attachment player, with the splash baked into its first frame. Production notes stay here rather than being linked beside the public demo. The separate cover export remains available for publishing elsewhere.
 
 Upload `out/Folio-Final.mp4` directly to X as a video attachment. The landscape layout is 16:9, 1920 × 1080, 30 fps, H.264 High Profile with AAC-LC stereo audio and fast-start metadata. See [X’s upload limits](https://help.x.com/en/using-x/x-videos) and [encoding guidance](https://docs.x.com/x-api/media/quickstart/best-practices). X may transcode the upload. The cover is available for publishing flows that accept a custom thumbnail; it is also baked into the first frame. These scripts do not post to X.
