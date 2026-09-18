@@ -9,14 +9,14 @@
 
 ## From agent output to a beautiful read
 
-Your AI agent writes the Markdown. Select a file in Finder, press **Space**, and read it beautifully formatted. Double-click for Folio’s full reader, then open the same file in your favorite editor when you want to make a change.
+Your AI agent writes the Markdown. Select a file in Finder, press **Space**, and read it beautifully formatted. Double-click for Folio’s full reader, then open the same file in your favorite editor when you want to make a change. Save there, and Folio updates automatically.
 
 ![Folio — Markdown. Beautifully read. Select. Space. Read.](docs/images/folio-video-poster.png)
 
 <details>
-<summary>▶ Watch here · 42 seconds, with music</summary>
+<summary>▶ Watch here · 30 seconds, with music</summary>
 
-https://github.com/user-attachments/assets/f57c1998-6762-4e90-8b9f-efa5350801e9
+https://github.com/user-attachments/assets/efac994a-534f-4c66-8c75-b9e16c432c21
 
 </details>
 
@@ -60,6 +60,8 @@ Filenames may vary slightly; choose the matching extension in the release assets
 **Space-bar preview:** open Folio once, then enable its Quick Look extension in System Settings if needed. On recent macOS versions, look under **General → Login Items & Extensions → Quick Look**; older versions may use **Privacy & Security → Extensions → Quick Look**, or **System Preferences → Extensions** on macOS Monterey. Select a Markdown file in Finder and press **Space**. Other Markdown Quick Look extensions may take precedence.
 
 **Double-click to open in Folio:** select a `.md` file in Finder, choose **Get Info → Open with → Folio → Change All**. Folio does not replace your current default automatically.
+
+**If macOS says a Markdown file “could not be verified”:** choose **Done** to keep the file, then open it from inside Folio with **⌘O**. A file-specific Finder “Open With” override combined with quarantine metadata can trigger this warning even for plain text; [Apple documents the interaction](https://developer.apple.com/forums/thread/795994). This is separate from an unsigned-app warning. Folio does not remove quarantine metadata or disable macOS security checks.
 
 Finder’s Space-bar preview, double-clicking into Folio, and opening the same file in iA Writer were verified on the development Mac on September 18, 2026. Quick Look remains experimental pending broader testing across Macs. See [Quick Look troubleshooting and acceptance checks](macos/README.md). Quick Look uses the default Folio reading style and shows placeholders for images.
 
