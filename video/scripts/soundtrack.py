@@ -9,7 +9,7 @@ import math
 import random
 import wave
 
-RATE, SECONDS, BPM = 48000, 42, 120
+RATE, SECONDS, BPM = 48000, 30, 120
 LENGTH = RATE * SECONDS
 BEAT = 60 / BPM
 rng = random.Random(42)
@@ -74,7 +74,7 @@ harmonies = [
     (41, [53, 60, 65, 69], [72, 69, 72]),  # F
     (43, [55, 59, 62, 67], [71, 74, 71]),  # G
 ]
-for phrase in range(9):
+for phrase in range(6):
     start = phrase * 4
     root, chord, melody = harmonies[phrase % 4]
     # A gentle broken chord, then a quiet answer. Space between gestures.
@@ -99,9 +99,9 @@ for phrase in range(9):
             add_note(start + time, midi, 1.15, .015, .53)
 
 # At the end card, gently resolve F -> G -> C with no percussive punctuation.
-for start, root, chord in [(36, 41, [53, 60, 65, 69]),
-                           (38, 43, [55, 59, 62, 67]),
-                           (40, 48, [55, 60, 64, 67])]:
+for start, root, chord in [(24, 41, [53, 60, 65, 69]),
+                           (26, 43, [55, 59, 62, 67]),
+                           (28, 48, [55, 60, 64, 67])]:
     add_note(start, root, 1.8, .047, bass=True)
     for index, midi in enumerate(chord):
         add_note(start + .035 * index, midi, min(2.4, SECONDS - start - .035 * index),

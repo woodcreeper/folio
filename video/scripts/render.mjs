@@ -1,12 +1,13 @@
 import {bundle} from '@remotion/bundler';
 import {renderMedia, renderStill, selectComposition} from '@remotion/renderer';
-import {mkdir, rename} from 'node:fs/promises';
+import {mkdir, rename, readFile} from 'node:fs/promises';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {execFileSync} from 'node:child_process';
 
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const output=path.join(root,'out');
+const timeline=JSON.parse(await readFile(path.join(root,'src/timeline.json'),'utf8'));
 await mkdir(output,{recursive:true});
 const browserExecutable=process.env.REMOTION_BROWSER || (process.platform==='darwin'?'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome':undefined);
 // The previous parallel JPEG capture produced isolated tiled frames on this Mac.
@@ -18,7 +19,7 @@ if(process.argv.includes('--poster')) {
   await renderStill({serveUrl,composition,browserExecutable,chromiumOptions,frame:0,output:path.join(output,'Folio-Cover.png')});
   console.log(path.join(output,'Folio-Cover.png'));
 } else if(process.argv.includes('--stills')) {
-  const selectedFrames=process.env.FOLIO_FRAMES?.split(',').map(Number) || [0,35,41,60,105,192,231,300,435,508,600,690,734,779,824,870,936,1005,1190];
+  const selectedFrames=process.env.FOLIO_FRAMES?.split(',').map(Number) || timeline.reviewFrames;
   for(const frame of selectedFrames) {
     await renderStill({serveUrl,composition,browserExecutable,chromiumOptions,frame,output:path.join(output,`frame-${frame}.png`),scale:.75});
     console.log(`Rendered frame ${frame}`);
