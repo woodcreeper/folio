@@ -5,7 +5,7 @@
 ### Added
 
 - Close the current document with the × beside its name, File → Close Document, or ⌘W / Ctrl+W. Folio stays open with an empty reader and an Open button.
-- A playable 42-second walkthrough in the GitHub README, with its Remotion source in `video/`.
+- A playable 30-second walkthrough in the GitHub README, with its Remotion source in `video/`.
 - Custom tint in Appearance: five preset swatches, the system color picker, and a Neutral reset. Changes preview immediately and persist across restarts.
 - Automatic accent contrast adjustment for custom colors in light and dark mode, across all four reading styles.
 
