@@ -27,8 +27,7 @@ const icon = (name: string) => `<svg width="18" height="18" viewBox="0 0 24 24" 
 const $ = <T extends HTMLElement = HTMLElement>(selector: string) => document.querySelector<T>(selector)!;
 const escape = (value: string) => value.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]!));
 const demo: MarkdownDocument = { name: 'Welcome to Folio.md', path: 'sample:welcome', content: sample };
-let current = demo;
-let documents = [demo];
+let current: MarkdownDocument | null = demo;
 let sourceMode = false;
 let sequence = 0;
 let searchIndex = 0;
@@ -72,13 +71,12 @@ try {
 $('#app').innerHTML = `
   <header class="titlebar">
     <div class="brand"><span class="brand-mark">${icon('book')}</span><span>folio<span class="brand-dot">.</span></span><span class="brand-description">MARKDOWN VIEWER</span></div>
-    <div class="document-title">${icon('file')}<span id="filename"></span><span id="sample-badge" class="badge">SAMPLE</span></div>
+    <div class="document-title">${icon('file')}<span id="filename"></span><span id="sample-badge" class="badge">SAMPLE</span><button id="close-document" class="icon-button" title="Close document (⌘W / Ctrl+W)" aria-label="Close document">${icon('close')}</button></div>
     <button id="appearance" class="icon-button" title="Appearance" aria-label="Appearance settings" aria-expanded="false">${icon('sun')}</button>
   </header>
   <div class="workspace">
     <aside class="sidebar" aria-label="Document navigation">
       <button class="open-button" id="open">${icon('open')}<span>Open a file</span><kbd id="open-key">⌘ O</kbd></button>
-      <div class="sidebar-section"><div class="eyebrow">OPEN DOCUMENTS</div><nav id="documents" aria-label="Open documents"></nav></div>
       <div class="sidebar-section outline-section"><div class="eyebrow">IN THIS DOCUMENT</div><nav id="outline" aria-label="Table of contents"></nav></div>
       <div class="sidebar-footer"><span class="privacy-dot"></span><span>Just your files. Just for you.</span></div>
     </aside>
@@ -88,8 +86,8 @@ $('#app').innerHTML = `
         <div class="toolbar-end"><button id="edit-external" class="text-button" title="Open in your editor (⌘⇧E / Ctrl+Shift+E)" aria-label="Open in Editor" hidden>${icon('edit')}<span>Open in Editor</span></button><span id="editor-divider" class="toolbar-divider" hidden></span><button id="find" class="icon-button" title="Find in document (⌘F / Ctrl+F)" aria-label="Find in document">${icon('search')}</button><button id="source" class="text-button" title="Toggle Markdown source" aria-pressed="false">${icon('code')}<span>Source</span></button><span class="toolbar-divider"></span><button id="type" class="type-button" title="Reading size" aria-label="Reading size settings" aria-expanded="false">Aa ${icon('down')}</button></div>
       </div>
       <div id="searchbar" class="searchbar" hidden><label class="search-field">${icon('search')}<input id="search-input" type="search" placeholder="Find in this document…" aria-label="Search document" autocomplete="off" /></label><span id="search-count" role="status"></span><button id="previous-match" class="icon-button" aria-label="Previous match">${icon('up')}</button><button id="next-match" class="icon-button" aria-label="Next match">${icon('down')}</button><button id="close-find" class="icon-button" aria-label="Close search">${icon('close')}</button></div>
-      <div class="reading-scroll" id="reading-scroll"><div class="reading-wrap"><div class="document-kicker"><span class="kicker-line"></span><span id="document-kicker">A QUIETER WAY TO READ</span></div><article id="reader" class="markdown-body" aria-label="Rendered Markdown"></article><pre id="source-content" class="source-content" aria-label="Markdown source" hidden></pre><div class="end-mark" aria-hidden="true"><span></span>${icon('book')}<span></span></div></div></div>
-      <footer class="statusbar"><div><span class="status-dot"></span><span id="file-status">Sample document</span><button id="reload" class="small-button" title="Reload from disk" aria-label="Reload from disk" hidden>${icon('refresh')}</button></div><div><span id="word-count"></span><span class="status-separator">·</span><span id="reading-time"></span><span class="status-separator">·</span><span id="reading-progress">0%</span></div></footer>
+      <div class="reading-scroll" id="reading-scroll"><div id="empty-state" class="empty-state" hidden><span class="empty-mark">${icon('book')}</span><h1>A little room to read.</h1><p>Open a Markdown file or drop one here.</p><button id="empty-open" class="open-button">${icon('open')}<span>Open a file</span></button></div><div class="reading-wrap"><div class="document-kicker"><span class="kicker-line"></span><span id="document-kicker">A QUIETER WAY TO READ</span></div><article id="reader" class="markdown-body" aria-label="Rendered Markdown"></article><pre id="source-content" class="source-content" aria-label="Markdown source" hidden></pre><div class="end-mark" aria-hidden="true"><span></span>${icon('book')}<span></span></div></div></div>
+      <footer class="statusbar"><div><span class="status-dot"></span><span id="file-status">Sample document</span><button id="reload" class="small-button" title="Reload from disk" aria-label="Reload from disk" hidden>${icon('refresh')}</button></div><div id="document-stats"><span id="word-count"></span><span class="status-separator">·</span><span id="reading-time"></span><span class="status-separator">·</span><span id="reading-progress">0%</span></div></footer>
     </main>
   </div>
   <div id="settings" class="settings-popover" hidden><div class="eyebrow">READING STYLE</div><div class="reading-styles">${readingStyles.map(style => `<button data-reading-style-option="${style.id}" aria-pressed="false"><span>${style.name}</span><small>${style.description}</small></button>`).join('')}</div><p class="settings-note">Inspired styles. Your Markdown stays unchanged.</p><div class="settings-divider"></div><div class="eyebrow">APPEARANCE</div><div class="theme-options">${['light','dark','system'].map((t,i) => `<button data-theme-option="${t}" aria-pressed="false">${icon(['sun','moon','monitor'][i])}<span>${t[0].toUpperCase()+t.slice(1)}</span></button>`).join('')}</div><div class="settings-divider"></div><div class="eyebrow">TINT</div><div class="tint-controls"><label class="tint-picker"><input id="tint-picker" type="color" value="#5776c8" aria-label="Custom tint color" /><span>Custom color<output id="tint-value">Neutral</output></span></label><button id="neutral-tint" class="tint-neutral" aria-pressed="true">Neutral</button></div><div class="tint-swatches" role="group" aria-label="Tint presets">${tintSwatches.map(swatch => `<button class="tint-swatch" data-tint="${swatch.color}" style="--swatch:${swatch.color}" aria-label="${swatch.name} tint" title="${swatch.name}" aria-pressed="false"></button>`).join('')}</div><p class="settings-note">Choose a color for accents and a subtle page tint.</p><div class="settings-divider"></div><div class="size-control"><span>Reading size</span><div><button id="smaller" aria-label="Decrease reading size">A−</button><output id="font-size"></output><button id="larger" aria-label="Increase reading size">A+</button></div></div><button id="reset-size" class="reset-button">Reset to default</button><div id="editor-settings" hidden><div class="settings-divider"></div><div class="eyebrow">EXTERNAL EDITOR</div><button id="choose-editor" class="editor-choice"><span id="editor-name">Choose an editor…</span>${icon('open')}</button><p class="settings-note">Save there. Folio refreshes here.</p></div></div>
@@ -124,8 +122,39 @@ function notify(message: string) {
 async function attempt(action: () => Promise<unknown>) {
   try { await action(); } catch (error) { notify(error instanceof Error ? error.message : String(error)); }
 }
-function updateDocuments() {
-  $('#documents').innerHTML = documents.map(doc => `<button class="document-item ${doc.path === current.path ? 'active' : ''}" data-document="${escape(doc.path)}" title="${escape(doc.name)}" ${doc.path === current.path ? 'aria-current="page"' : ''}>${icon('file')}<span>${escape(doc.name.replace(/\.(md|markdown|mdown|mkd)$/i,''))}</span><span class="document-extension">${escape(doc.name.split('.').pop() || '')}</span></button>`).join('');
+function updateDocumentControls() {
+  const empty = current === null;
+  $('#empty-state').hidden = !empty;
+  $('.reading-wrap').hidden = empty;
+  $('#document-stats').hidden = empty;
+  for (const id of ['#close-document', '#source', '#find']) $(id).toggleAttribute('disabled', empty);
+  updateEditor();
+}
+function closeDocument() {
+  if (!current) return;
+  const path = current.path;
+  selection++; refreshRequest++; sequence++; scrollIntent++;
+  clearTimeout(refreshTimer);
+  clearMatches();
+  current = null; sourceMode = false; activeHeading = '';
+  $('#searchbar').hidden = true;
+  $<HTMLInputElement>('#search-input').value = '';
+  $('#search-count').textContent = '';
+  $('#filename').textContent = 'No document open';
+  document.title = 'Folio';
+  $('#sample-badge').hidden = true;
+  $('#reader').replaceChildren();
+  $('#source-content').textContent = '';
+  $('#outline').innerHTML = '<p class="outline-empty">Open a file to see its outline.</p>';
+  $('#file-status').textContent = 'Ready to read';
+  $('#reload').hidden = true;
+  $('#word-count').textContent = ''; $('#reading-time').textContent = '';
+  $('#reading-progress').textContent = '';
+  updateDocumentControls(); updateView();
+  scrollInstantly($('#reading-scroll'), 0);
+  $('#empty-open').focus();
+  if (desktopReady) void syncWatch();
+  if (isDesktop && path !== demo.path) void attempt(() => native('close_document', { path }));
 }
 async function showDocument(doc: MarkdownDocument, preservePosition = false) {
   const position = preservePosition ? capturePosition($('#reading-scroll'), sourceMode ? $('#source-content') : $('#reader')) : null;
@@ -135,7 +164,6 @@ async function showDocument(doc: MarkdownDocument, preservePosition = false) {
   const restore = () => {
     if (position && sequence === ownSequence && scrollIntent === intent) restorePosition($('#reading-scroll'), sourceMode ? $('#source-content') : $('#reader'), position);
   };
-  documents = [doc, ...documents.filter(item => item.path !== doc.path)].slice(0,12);
   const rendered = renderMarkdown(doc.content);
   $('#filename').textContent = doc.name;
   document.title = `${doc.name} — Folio`;
@@ -149,7 +177,7 @@ async function showDocument(doc: MarkdownDocument, preservePosition = false) {
   updateEditor();
   $('#reload').hidden = !isDesktop || doc.path === demo.path;
   $('#outline').innerHTML = rendered.headings.length ? rendered.headings.map(h => `<a href="#${escape(h.id)}" data-heading="${escape(h.id)}" style="--level:${Math.min(h.level-1,3)}">${escape(h.text)}</a>`).join('') : '<p class="outline-empty">Headings will appear here.</p>';
-  updateDocuments(); updateView();
+  updateDocumentControls(); updateView();
   if (position) restore(); else scrollInstantly($('#reading-scroll'), 0);
   activeHeading = ''; updateScroll();
   if (!preservePosition && desktopReady) void syncWatch();
@@ -179,7 +207,7 @@ function updateEditor() {
   $('#edit-external').hidden = !isDesktop;
   $('#editor-divider').hidden = !isDesktop;
   $('#editor-settings').hidden = !isDesktop;
-  $('#edit-external').toggleAttribute('disabled', !editorReady || editorBusy || current.path === demo.path);
+  $('#edit-external').toggleAttribute('disabled', !editorReady || editorBusy || !current || current.path === demo.path);
   $('#choose-editor').toggleAttribute('disabled', !editorReady || editorBusy);
   $('#editor-name').textContent = preferredEditor?.name || 'Choose an editor…';
   $('#editor-name').title = preferredEditor?.path || '';
@@ -192,16 +220,16 @@ async function chooseEditor() {
   finally { editorBusy = false; updateEditor(); }
 }
 async function editExternally() {
-  if (!isDesktop || !editorReady || current.path === demo.path || editorBusy) return;
-  const path = current.path;
+  if (!isDesktop || !editorReady || !current || current.path === demo.path || editorBusy) return;
+  const path = current.path; const selected = selection;
   if (!preferredEditor) await chooseEditor();
-  if (!preferredEditor) return;
+  if (!preferredEditor || selected !== selection) return;
   editorBusy = true; updateEditor();
   try { preferredEditor = await native<EditorInfo>('open_in_editor', { path }); }
   finally { editorBusy = false; updateEditor(); }
 }
 function syncWatch() {
-  const path = current.path === demo.path ? null : current.path;
+  const path = !current || current.path === demo.path ? null : current.path;
   const selected = selection;
   // Queue native replacements so a slower previous request cannot reselect an old file.
   watchQueue = watchQueue.then(async () => {
@@ -220,14 +248,14 @@ function syncWatch() {
   return watchQueue;
 }
 async function refreshDocument(quiet = false) {
-  if (!isDesktop || current.path === demo.path) return;
+  if (!isDesktop || !current || current.path === demo.path) return;
   const path = current.path; const selected = selection; const request = ++refreshRequest;
-  const stillCurrent = () => selected === selection && path === current.path && request === refreshRequest;
+  const stillCurrent = () => selected === selection && path === current?.path && request === refreshRequest;
   for (let retry = 0; retry < 3; retry++) {
     try {
       const doc = await native<MarkdownDocument>('reload_document', { path });
       if (!stillCurrent()) return;
-      if (doc.content !== current.content) await showDocument(doc, true);
+      if (doc.content !== current?.content) await showDocument(doc, true);
       if (!stillCurrent()) return;
       $('#file-status').textContent = watchHealthy ? 'Live preview' : 'Refresh paused';
       if (!quiet) notify('Updated from disk.');
@@ -241,7 +269,7 @@ async function refreshDocument(quiet = false) {
   }
 }
 function scheduleRefresh(path: string) {
-  if (path !== current.path) return;
+  if (path !== current?.path) return;
   clearTimeout(refreshTimer);
   const selected = selection;
   refreshTimer = setTimeout(() => { if (selected === selection) void refreshDocument(true); }, 100);
@@ -249,7 +277,7 @@ function scheduleRefresh(path: string) {
 function updateView() {
   $('#reader').hidden = sourceMode; $('#source-content').hidden = !sourceMode;
   $('#source').setAttribute('aria-pressed', String(sourceMode));
-  $('#view-label').textContent = sourceMode ? 'Markdown source' : 'Reading view';
+  $('#view-label').textContent = !current ? 'Ready when you are' : sourceMode ? 'Markdown source' : 'Reading view';
   if (!$('#searchbar').hidden) search();
 }
 async function openDocument() {
@@ -257,6 +285,7 @@ async function openDocument() {
   else $('#file-input').click();
 }
 function updateScroll() {
+  if (!current) return;
   const scroll = $('#reading-scroll');
   const total = scroll.scrollHeight - scroll.clientHeight;
   $('#reading-progress').textContent = `${total > 0 ? Math.round(scroll.scrollTop / total * 100) : 100}%`;
@@ -303,15 +332,15 @@ function selectMatch(scroll = true) {
   if (scroll) scrollIntent++;
   if (scroll) searchMatches[searchIndex]?.scrollIntoView({ block: 'center', behavior: 'smooth' });
 }
-function find() { scrollIntent++; $('#searchbar').hidden = false; search(); ($('#search-input') as HTMLInputElement).focus(); ($('#search-input') as HTMLInputElement).select(); }
+function find() { if (!current) return; scrollIntent++; $('#searchbar').hidden = false; search(); ($('#search-input') as HTMLInputElement).focus(); ($('#search-input') as HTMLInputElement).select(); }
 function closeFind() { scrollIntent++; $('#searchbar').hidden = true; clearMatches(); $('#find').focus(); }
 function moveMatch(direction: number) { if (searchMatches.length) { searchIndex = (searchIndex + direction + searchMatches.length) % searchMatches.length; selectMatch(); } }
 function toggleSettings() { const panel = $('#settings'); panel.hidden = !panel.hidden; for (const id of ['#appearance','#type']) $(id).setAttribute('aria-expanded',String(!panel.hidden)); }
 function closeSettings() { $('#settings').hidden = true; for (const id of ['#appearance','#type']) $(id).setAttribute('aria-expanded','false'); }
 
-$('#open').addEventListener('click', () => attempt(openDocument));
+for (const id of ['#open', '#empty-open']) $(id).addEventListener('click', () => attempt(openDocument));
+$('#close-document').addEventListener('click', closeDocument);
 $('#file-input').addEventListener('change', () => { const input = $('#file-input') as HTMLInputElement; const file = input.files?.[0]; if (file) void attempt(async () => showDocument(await documentFromFile(file))); input.value = ''; });
-$('#documents').addEventListener('click', event => { const path = (event.target as Element).closest<HTMLElement>('[data-document]')?.dataset.document; const doc = documents.find(doc => doc.path === path); if (doc) void showDocument(doc); });
 $('#outline').addEventListener('click', event => { const link = (event.target as Element).closest<HTMLAnchorElement>('a'); if (!link) return; event.preventDefault(); scrollIntent++; if (sourceMode) { sourceMode = false; updateView(); } document.getElementById(link.dataset.heading!)?.scrollIntoView({ block: 'start', behavior: 'smooth' }); });
 $('#reader').addEventListener('click', event => {
   const link = (event.target as Element).closest<HTMLAnchorElement>('a'); if (!link) return;
@@ -350,7 +379,8 @@ document.addEventListener('keydown', event => {
   const mod = event.metaKey || event.ctrlKey;
   if (['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' '].includes(event.key)) scrollIntent++;
   if (mod && event.shiftKey && event.key.toLowerCase() === 'e') { event.preventDefault(); void attempt(editExternally); }
-  if (mod && event.key.toLowerCase() === 'o') { event.preventDefault(); void attempt(openDocument); }
+  if (!isDesktop && mod && event.key.toLowerCase() === 'o') { event.preventDefault(); void attempt(openDocument); }
+  if (!isDesktop && mod && !event.shiftKey && event.key.toLowerCase() === 'w') { event.preventDefault(); closeDocument(); }
   if (mod && event.key.toLowerCase() === 'f') { event.preventDefault(); find(); }
   if (event.key === 'Escape') { closeSettings(); if (!$('#searchbar').hidden) closeFind(); }
   if (mod && ['+','=','-','0'].includes(event.key)) { event.preventDefault(); fontSize = event.key === '0' ? 17 : Math.max(14,Math.min(23,fontSize + (event.key === '-' ? -1 : 1))); settings(); }
@@ -368,10 +398,12 @@ if (isDesktop) void attempt(async () => {
   const bootSelection = selection;
   const { listen } = await import('@tauri-apps/api/event');
   await listen<MarkdownDocument>('document-opened', event => { void showDocument(event.payload); });
+  await listen('document-close-requested', closeDocument);
+  await listen('document-open-requested', () => { void attempt(openDocument); });
   await listen<string>('document-error', event => notify(event.payload));
   await listen<string>('document-changed', event => scheduleRefresh(event.payload));
   await listen<{path: string; message: string}>('document-watch-error', event => {
-    if (event.payload.path === current.path) { watchHealthy = false; $('#file-status').textContent = 'Refresh paused'; notify(event.payload.message); }
+    if (event.payload.path === current?.path) { watchHealthy = false; $('#file-status').textContent = 'Refresh paused'; notify(event.payload.message); }
   });
   const { getCurrentWebview } = await import('@tauri-apps/api/webview');
   await getCurrentWebview().onDragDropEvent(event => {

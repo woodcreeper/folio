@@ -1,7 +1,7 @@
 # Folio session handoff
 
 **Date:** 2026-09-18
-**Focus:** Revise the product video around AI-generated Markdown → Finder Space bar → double-click into Folio → local editor, with more upbeat music. Work stays on `codex/folio-product-video`. The user has confirmed Folio works on Omarchy.
+**Focus:** Publish the approved video on GitHub and simplify Folio to one file at a time, as requested by the user. Current branch: `codex/folio-single-document`.
 
 ## Completed
 
@@ -61,7 +61,15 @@ Remaining compatibility checks:
 - Native screenshots are in `video/public/screenshots/workflow-*.png`, using only the new public fixtures in `video/public/Agent workspace/`. Native Finder, Folio, and iA Writer workflow acceptance succeeded while capturing them.
 - Only PLAN.md was associated with Folio; the global Markdown default was not changed. Finder sidebar, Folio's GitHub/dark/blue/14 appearance, and iA Writer's window/preview mode were restored after capture.
 - Earlier 40-second export remains locally available under its original name. `npm run capture --prefix video` still captures legacy browser assets; current native screenshots are already committed for rendering.
-- This branch has not been pushed or merged. Published v0.1.0 release downloads are unchanged.
+- The approved video source and README embed are pushed in PR #1: https://github.com/woodcreeper/folio/pull/1. The native GitHub attachment is https://github.com/user-attachments/assets/b93b3f6e-6f92-49df-b3a7-1643db71c045; the README video player was verified in the browser. Published v0.1.0 downloads are unchanged.
+
+## Single-document reader — 2026-09-18
+
+- User chose one file at a time. Opening replaces the current preview; the sidebar now focuses on the outline. Close with the × beside the filename, File → Close Document, or Cmd/Ctrl+W. Empty state offers Open and supports dropping another file. Cmd/Ctrl+Shift+W closes the window.
+- Close clears rendered/source/search data, invalidates refresh/image results, releases native document authorization, and stops watching. Opening another file replaces the previous native authorization. Native menu commands own Open/Close shortcuts to avoid macOS closing the window before the webview sees Cmd+W.
+- Verified: 8 renderer tests, 15 Playwright tests, 20 Rust tests (outside sandbox for real macOS FSEvents), production build, complete Mac app build/Quick Look smoke test, and strict nested signatures. Actual Mac Cmd+W, close button on PLAN.md, and Cmd+O reopening from empty all passed.
+- Updated Mac app is running from `src-tauri/target/release/bundle/macos/Folio.app`, currently in the empty state. The separate Applications copy, old ZIP, and v0.1.0 release downloads have not been updated. Cross-platform native Close shortcuts still need physical checks.
+- README, changelog, and architecture docs describe the new behavior and distinguish it from v0.1.0. No new app runtime dependency.
 
 ## Useful commands
 

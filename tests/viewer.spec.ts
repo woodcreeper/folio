@@ -53,6 +53,25 @@ test('changes appearance and size without losing document', async ({ page }) => 
   await expect(page.locator('#font-size')).toHaveText('18');
 });
 
+test('one file replaces the previous file and close works with the sidebar hidden', async ({ page }) => {
+  for (const name of ['first', 'second']) {
+    await page.locator('#file-input').setInputFiles({ name: `${name}.md`, mimeType: 'text/markdown', buffer: Buffer.from(`# ${name}`) });
+    await expect(page.locator('#reader h1')).toHaveText(name);
+  }
+  await expect(page.getByRole('navigation', { name: 'Open documents' })).toHaveCount(0);
+  await page.getByRole('button', { name: 'Toggle sidebar', exact: true }).click();
+  await page.getByRole('button', { name: 'Close document', exact: true }).click();
+  await expect(page.locator('#empty-state')).toBeVisible();
+  await expect(page.locator('#reader')).toBeEmpty();
+  await expect(page.locator('#empty-open')).toBeFocused();
+  const picker = page.waitForEvent('filechooser');
+  await page.locator('#empty-open').click();
+  await (await picker).setFiles({ name: 'again.md', mimeType: 'text/markdown', buffer: Buffer.from('# Again') });
+  await expect(page.locator('#reader h1')).toHaveText('Again');
+  await page.keyboard.press('Control+w');
+  await expect(page.locator('#empty-state')).toBeVisible();
+});
+
 test('tint previews live, persists independently and resets without changing the document', async ({ page }) => {
   await page.emulateMedia({ colorScheme: 'light' });
   const original = await page.locator('#reader').innerText();

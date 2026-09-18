@@ -98,12 +98,61 @@ test('a slow refresh never replaces a newly selected document', async ({ page })
     host.emit('document-changed', host.doc.path);
   });
   await expect.poll(() => page.evaluate(() => (window as any).testHost.calls.filter((call: any) => call.command === 'reload_document').length)).toBeGreaterThan(1);
-  await page.getByRole('button', { name: 'Welcome to Folio md', exact: true }).click();
+  await page.evaluate(() => {
+    const host = (window as any).testHost;
+    host.doc = { name: 'next.md', path: '/documents/next.md', content: '# Next document' };
+    host.reloadDelay = 0;
+    host.emit('document-opened', host.doc);
+  });
   // Wait for the controlled old response, not for an arbitrary production delay.
   await page.waitForTimeout(650);
-  await expect(page.locator('#reader h1')).toHaveText('A little room to read.');
-  await expect(page.locator('#file-status')).toHaveText('Sample document');
-  await expect(page.getByRole('button', { name: 'Open in Editor', exact: true })).toBeDisabled();
+  await expect(page.locator('#reader h1')).toHaveText('Next document');
+  await expect(page.locator('#filename')).toHaveText('next.md');
+  await expect(page.locator('#file-status')).toHaveText('Live preview');
+});
+
+test('closing clears the reader, stops watching, and ignores late refreshes until another open', async ({ page }) => {
+  await mockDesktop(page);
+  await page.getByRole('button', { name: 'Find in document', exact: true }).click();
+  await page.getByRole('searchbox', { name: 'Search document' }).fill('Paragraph');
+  await page.evaluate(() => {
+    const host = (window as any).testHost;
+    host.reloadDelay = 500;
+    host.doc.content = '# Late result';
+    host.emit('document-changed', host.doc.path);
+  });
+  await expect.poll(() => page.evaluate(() => (window as any).testHost.calls.filter((call: any) => call.command === 'reload_document').length)).toBeGreaterThan(1);
+  // Native File > Close Document / Cmd+W / Ctrl+W all send this event.
+  await page.evaluate(() => (window as any).testHost.emit('document-close-requested', null));
+  await expect(page.locator('#empty-state')).toBeVisible();
+  await expect.poll(() => page.evaluate(() => (window as any).testHost.calls.filter((call: any) => call.command === 'watch_document').at(-1)?.args.path)).toBeNull();
+  expect(await page.evaluate(() => (window as any).testHost.calls.filter((call: any) => call.command === 'close_document'))).toEqual([{ command: 'close_document', args: { path: '/documents/notes.md' } }]);
+  const reloads = await page.evaluate(() => (window as any).testHost.calls.filter((call: any) => call.command === 'reload_document').length);
+  await page.evaluate(() => {
+    const host = (window as any).testHost;
+    host.emit('document-changed', host.doc.path);
+    host.emit('document-watch-error', { path: host.doc.path, message: 'Old watcher error' });
+    window.dispatchEvent(new Event('focus'));
+  });
+  await page.waitForTimeout(650);
+  await expect(page.locator('#reader')).toBeEmpty();
+  await expect(page.locator('#source-content')).toBeEmpty();
+  await expect(page.locator('#searchbar')).toBeHidden();
+  await expect(page.locator('#file-status')).toHaveText('Ready to read');
+  for (const name of ['Open in Editor', 'Source', 'Find in document', 'Close document']) {
+    await expect(page.getByRole('button', { name, exact: true })).toBeDisabled();
+  }
+  expect(await page.evaluate(() => (window as any).testHost.calls.filter((call: any) => call.command === 'reload_document').length)).toBe(reloads);
+  await page.evaluate(() => {
+    const host = (window as any).testHost;
+    host.reloadDelay = 0;
+    host.doc.content = '# Opened again';
+    host.emit('document-opened', host.doc);
+  });
+  await expect(page.locator('#empty-state')).toBeHidden();
+  await expect(page.locator('#reader h1')).toHaveText('Opened again');
+  await expect(page.locator('#search-input')).toHaveValue('');
+  await expect(page.getByRole('button', { name: 'Open in Editor', exact: true })).toBeEnabled();
 });
 
 test('manual reload keeps source mode and reading position', async ({ page }) => {

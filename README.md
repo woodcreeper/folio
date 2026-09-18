@@ -24,6 +24,7 @@ Open a Markdown file and get straight to the words. Folio keeps your source unto
 - **Four reading styles:** Folio, VS Code-inspired, iA Writer Classic-inspired, and GitHub-inspired.
 - **Your preferred appearance:** light, dark, or system, with a neutral default, custom color tint, adjustable text size, and remembered settings.
 - **Easy navigation:** a heading outline, document search, and a read-only source view.
+- **One file at a time:** opening another file replaces the current preview. Close it with the × beside its name or **⌘W / Ctrl+W**, and Folio stays ready for the next file.
 - **Markdown essentials:** tables, highlighted code, task lists, footnotes, and local raster images.
 - **Mac Quick Look:** an included native extension for Finder’s Space-bar preview.
 - **Local by design:** no accounts, uploads, or analytics. Built with Tauri and platform webviews.
@@ -32,7 +33,7 @@ Open a Markdown file and get straight to the words. Folio keeps your source unto
 
 **Folio is an early preview.** Get packages from the [Releases page](https://github.com/woodcreeper/folio/releases). The release workflow produces the following files after all platform builds and automated tests pass. If a release is still building, you can [build from source](docs/DEVELOPMENT.md).
 
-The neutral palette and custom tint controls described below are newer than the published **v0.1.0** downloads. They are available in the updated source; see the [changelog](CHANGELOG.md).
+The neutral palette, custom tint controls, and single-document Close command are newer than the published **v0.1.0** downloads. They are available in the updated source; see the [changelog](CHANGELOG.md).
 
 | Computer | Download | Requirements |
 | --- | --- | --- |
@@ -104,6 +105,8 @@ Choose **Open in Editor** to pick your editor once. On Mac, select its `.app`; o
 | Action | Mac | Windows / Linux |
 | --- | --- | --- |
 | Open a file | ⌘O | Ctrl+O |
+| Close the current file | ⌘W | Ctrl+W |
+| Close the app window | ⌘⇧W | Ctrl+Shift+W |
 | Find in document | ⌘F | Ctrl+F |
 | Open in your editor | ⌘⇧E | Ctrl+Shift+E |
 | Increase / decrease text size | ⌘+ / ⌘− | Ctrl+ / Ctrl+− |
