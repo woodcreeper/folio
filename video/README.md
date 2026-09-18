@@ -59,6 +59,6 @@ Review the actual MP4, including the style-to-editor boundary and each edit/save
 
 ## GitHub and X
 
-The README shows the splash image above an expandable inline GitHub attachment player. GitHub strips custom video poster attributes and can turn video-linked images into players, so keep the poster and attachment separate.
+The README shows the finished video directly in GitHub’s inline attachment player, with the splash baked into its first frame. Production notes stay here rather than being linked beside the public demo. The separate cover export remains available for publishing elsewhere.
 
 Upload `out/Folio-Final.mp4` directly to X as a video attachment. The landscape layout is 16:9, 1920 × 1080, 30 fps, H.264 High Profile with AAC-LC stereo audio and fast-start metadata. See [X’s upload limits](https://help.x.com/en/using-x/x-videos) and [encoding guidance](https://docs.x.com/x-api/media/quickstart/best-practices). X may transcode the upload. The cover is available for publishing flows that accept a custom thumbnail; it is also baked into the first frame. These scripts do not post to X.
