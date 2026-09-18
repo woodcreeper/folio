@@ -33,6 +33,7 @@ Local builds are signed ad hoc. The host configuration also sets `signingIdentit
 
 ## Scope and limitations
 
+- Quick Look uses the neutral default Folio palette and follows system light/dark appearance. The app’s selected reading style, custom tint, and text size are not shared with the extension.
 - UTF-8 `.md` and `.markdown` documents resolved by macOS as `net.daringfireball.markdown` are supported. The host app should import that existing type, not invent an incompatible Markdown UTI. Quick Look matches the exact UTI list.
 - Documents over 10 MiB return a readable error instead of starting a large rendering job.
 - Raw HTML is disabled in the shared renderer. A restrictive HTML Content Security Policy prevents document scripts and network requests. The shared renderer shows image placeholders in Quick Look. Relative images need a separate, sandbox-aware resource strategy before enabling them; the CSP permits only inline data images if a future resolver provides them.

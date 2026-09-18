@@ -24,6 +24,8 @@ Open a Markdown file and get straight to the words. Folio keeps your source unto
 
 **Folio is an early preview.** Get packages from the [Releases page](https://github.com/woodcreeper/folio/releases). The release workflow produces the following files after all platform builds and automated tests pass. If a release is still building, you can [build from source](docs/DEVELOPMENT.md).
 
+The neutral palette and custom tint controls described below are newer than the published **v0.1.0** downloads. They are available in the updated source; see the [changelog](CHANGELOG.md).
+
 | Computer | Download | Requirements |
 | --- | --- | --- |
 | Mac — Apple Silicon or Intel | `Folio-macOS-universal.zip` | macOS 12 or later |
@@ -84,6 +86,8 @@ Omarchy support is being investigated. The Linux AppImage is a candidate, and an
 ## Make it yours
 
 Open **Appearance** (the **Aa** button) to choose a reading style, theme, tint, or text size. Under **Tint**, pick a swatch or click **Custom color** to open your system’s color picker. Changes preview immediately and are remembered. **Neutral** restores the selected style’s original palette. Tint affects accents and adds a subtle wash to the page; it leaves your Markdown unchanged. These preferences apply to the app; Quick Look uses the neutral Folio default.
+
+On Mac, choose **Show Colors…** in the picker for the full macOS color panel, including the color wheel. Tint works independently of your reading style, light/dark theme, and text size. Very bright or dark selections are adjusted for readable accent text.
 
 The styles use local system fonts, so details vary by platform. They are original CSS inspired by familiar reading experiences, not exact replicas or affiliated products.
 

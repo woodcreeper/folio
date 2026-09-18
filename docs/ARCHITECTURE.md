@@ -7,7 +7,7 @@ Folio is a desktop-first Markdown viewer with a shared rendering core. Mobile is
 - `src/renderer.ts`: synchronous Markdown → HTML, headings, approximate reading statistics. No DOM, file access, or native API. Bundles to `FolioRenderer` for JavaScriptCore.
 - `src/reader.css`: common typography, code colors, and themes. App chrome is separate in `src/style.css`.
 - `src/tint.ts`: optional color tint over the CSS palette for both app chrome and reading surfaces. Reads each preset’s default tokens, prepares light/dark variants, and adjusts accent contrast against their backgrounds. Preferences store only the chosen hex color (or `null` for neutral), alongside style, theme, and size.
-- `src/main.ts`: document selection, outline, source view, search, theme/size controls, and presentation. Keeps original source separate from rendered HTML.
+- `src/main.ts`: document selection, outline, source view, search, style/theme/tint/size controls, and presentation. Keeps original source separate from rendered HTML.
 - `src/reading-position.ts`: captures the visible block and nearby headings, restores that anchor after document changes, and falls back to proportional position when no matching block survives. Explicit navigation invalidates late image restoration.
 - `src/platform.ts`: browser/desktop boundary and common document shape `{ name, path, content }`.
 - `src-tauri/src/documents.rs`: read-only local document session and bounded local image loading. Canonical paths constrain image access to an opened document’s directory tree.
@@ -32,10 +32,11 @@ Do not add a plugin framework until a concrete feature requires it. Reasonable n
 
 - TypeScript and production frontend build pass.
 - 8 renderer tests pass: syntax, tasks/footnotes, IDs, Unicode, escaping, safe links/images, and reading statistics.
-- Browser interaction tests cover baseline viewing, style/tint persistence, accent contrast, editor selection/cancellation, automatic save refresh, temporary disappearance, source position, stale-response protection, and late-image navigation.
-- 19 Rust tests pass: document/security checks, editor validation and persistence, literal launch arguments, actual in-place and atomic saves, debounce timing, and worker shutdown.
+- 13 browser interaction tests pass: baseline viewing, style/tint persistence, accent contrast, editor selection/cancellation, automatic save refresh, temporary disappearance, source position, stale-response protection, and late-image navigation.
+- Earlier validation: 19 Rust tests pass for document/security checks, editor validation and persistence, literal launch arguments, actual in-place and atomic saves, debounce timing, and worker shutdown. Rust behavior is unchanged by the tint feature.
 - Universal native Quick Look compile and JavaScriptCore smoke tests pass.
 - Complete Mac app and nested Quick Look extension pass strict code-signature verification using ad-hoc signing.
+- The rebuilt Mac app shows the new tint controls and opens the native macOS color picker. Browser tests verify immediate custom-color updates, persistence/reset, and readable link/control contrast across all four styles in both system color schemes.
 - macOS detects `net.daringfireball.markdown`; Folio’s Quick Look extension is registered and explicitly enabled.
 - Native app launch and opening a real Markdown file were observed. The updated native UI was visually observed with Open in Editor, Live preview, and the VS Code-inspired style. Actual external-editor launch still has no manual end-to-end acceptance record; native argument/validation tests and mocked frontend picker/launch tests pass.
 - `qlmanage -p` crashes in Apple’s ExtensionFoundation (`key cannot be nil`) before preview rendering on this machine. That command cannot establish Finder success or extension failure. Direct Finder spacebar acceptance remains a separate check.
@@ -45,13 +46,13 @@ Do not add a plugin framework until a concrete feature requires it. Reasonable n
 
 `npm run desktop:build` builds/tests the Quick Look extension automatically on macOS, embeds it, then signs the outer app. The extension must be signed first: Tauri’s extra-file mapping does not independently sign nested extensions. The default identity `-` is for local development; Developer ID signing/notarization is needed for trusted Mac distribution without unidentified-developer warnings; the first public preview is ad-hoc signed. Override host signing settings and `FOLIO_SIGNING_IDENTITY` together for distribution.
 
-The app output is `src-tauri/target/release/bundle/macos/Folio.app`. A zip is available at `build/Folio-macOS-arm64.zip`. Current host architecture is Apple Silicon; the bundled extension contains both Intel and Apple Silicon slices.
+The current app output is `src-tauri/target/release/bundle/macos/Folio.app`. The earlier zip at `build/Folio-macOS-arm64.zip` has not been regenerated for the tint change; rebuild packages before distributing updated binaries. Current host architecture is Apple Silicon; the bundled extension contains both Intel and Apple Silicon slices.
 
 Source and installation documentation are published at https://github.com/woodcreeper/folio under the MIT license. The GitHub Actions workflow builds universal Mac, Windows x64, and Linux x64 packages; manual release runs publish only after every platform succeeds. See DEVELOPMENT.md for the release procedure and the Releases page for available binaries.
 
 ## Reading-style scope
 
-The app persists `data-reading-style` independently of theme and size. Four lightweight CSS presets share the same rendering output. No parser changes, remote fonts, or extra JS rendering packages are needed. Quick Look keeps the default Folio styling; sharing user preferences with its sandbox is a separate future integration.
+The app persists reading style, theme, tint, and size independently. Four lightweight CSS presets share the same rendering output. Tint starts from each preset’s stylesheet palette; clearing the tint restores that palette. Computed hex colors avoid requiring CSS `color-mix()` on older platform webviews. No parser changes, remote fonts, or extra JS rendering packages are needed. Quick Look keeps the neutral default Folio styling; sharing user preferences with its sandbox is a separate future integration.
 
 ## Refresh and launch invariants
 

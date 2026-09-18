@@ -82,10 +82,10 @@ On Mac, `npm run build:quicklook -- --test` exercises the bundled renderer in Ja
 
 ## Releases
 
-The [Build and release workflow](../.github/workflows/build.yml) tests and builds on Mac, Windows, and Linux. Pushes and pull requests produce build artifacts. To publish a preview:
+The [Build and release workflow](../.github/workflows/build.yml) tests and builds on Mac, Windows, and Linux. Pushes to `main` and pull requests produce build artifacts; a feature-branch push alone does not start this workflow. Manual runs with an empty version also build without publishing. Unreleased changes are tracked in the [changelog](../CHANGELOG.md). To publish a preview:
 
 1. Keep the version in `package.json`, `package-lock.json`, `src-tauri/Cargo.toml`, `src-tauri/Cargo.lock`, `src-tauri/tauri.conf.json`, and the Quick Look `Info.plist` consistent.
-2. Update [release notes](RELEASE_NOTES.md), then commit and push to `main`.
+2. Move the relevant changelog entries under the new version and update [release notes](RELEASE_NOTES.md), then commit and push to `main`. Use a new version; existing releases are immutable.
 3. Run the workflow manually on `main`, entering the version (such as `0.1.0`). Leave it blank for a build without publishing.
 4. After every platform succeeds, the workflow validates versions, gathers four packages, computes SHA-256 checksums, and creates a prerelease/tag at the exact built commit. It refuses to overwrite an existing release.
 
