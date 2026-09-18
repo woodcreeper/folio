@@ -8,7 +8,7 @@
 
 | Time | On-screen copy | Picture and motion |
 | --- | --- | --- |
-| 00–01.2 | **folio.** / Markdown. Beautifully read. / Select. Space. Read. | Fully visible splash from frame zero beside the real Quick Look preview. Also the downloadable cover and GitHub poster. |
+| 00–01.2 | **folio.** / Markdown. Beautifully read. / Select. Space. Read. | Fully visible splash from frame zero beside the real Quick Look preview. Also the downloadable cover and opening frame in GitHub’s player. |
 | 01.2–03.2 | **Your agent writes.** / Plans. READMEs. Research. | Demo document names arrive in quick succession. Typography introduces the workflow; it is not a simulated agent conversation. |
 | 03.2–05.5 | **You just need to read.** / Select a Markdown file in Finder. | Real Finder screenshot with PLAN.md selected. Pointer selects the row; the Space key presses just before the cut. |
 | 05.5–09 | **Space. And there it is.** / Beautiful Markdown. Right in Finder. | Real Quick Look preview shows headings, quote, and task list. “Open with Folio” remains visible. Label the feature macOS Quick Look. |

@@ -11,16 +11,7 @@
 
 Your AI agent writes the Markdown. Select a file in Finder, press **Space**, and read it beautifully formatted. Double-click for Folio’s full reader, then open the same file in your favorite editor when you want to make a change. Save there, and Folio updates automatically.
 
-![Folio — Markdown. Beautifully read. Select. Space. Read.](docs/images/folio-video-poster.png)
-
-<details>
-<summary>▶ Watch here · 30 seconds, with music</summary>
-
 https://github.com/user-attachments/assets/efac994a-534f-4c66-8c75-b9e16c432c21
-
-</details>
-
-*[Video script, Remotion source, and X export notes](video/README.md).*
 
 ![Folio displaying its sample document, with a heading outline and a quiet reading layout](docs/images/folio.png)
 
