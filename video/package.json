@@ -7,7 +7,9 @@
     "audio": "python3 scripts/soundtrack.py",
     "studio": "remotion studio src/index.tsx",
     "stills": "node scripts/render.mjs --stills",
-    "render": "node scripts/render.mjs"
+    "poster": "node scripts/render.mjs --poster",
+    "render": "node scripts/render.mjs",
+    "verify": "node scripts/verify.mjs"
   },
   "dependencies": {
     "@remotion/bundler": "4.0.526",

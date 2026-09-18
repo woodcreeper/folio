@@ -1,49 +1,64 @@
 # Folio product film
 
-A 42-second, 1080p Remotion film about the reason Folio exists: your AI agent creates Markdown files, and you want to read them quickly. The [script and storyboard](SCRIPT.md) follow Finder selection → Space bar Quick Look → double-click into Folio → your local editor.
+A 30-second, 1080p Remotion film about the reason Folio exists: your AI agent creates Markdown files, and you want to read them quickly. The [script and storyboard](SCRIPT.md) follow Finder selection → Space-bar Quick Look → double-click into Folio → edit in your own app → automatic refresh.
 
-The film uses real Mac screenshots captured on September 18, 2026, an original warm 120 BPM instrumental score with a relaxed half-time groove, and on-screen copy. An optional voiceover is included in the script; the export has no narration.
+The film uses real Mac screenshots captured on September 18, 2026, an original warm 120 BPM instrumental score with a relaxed half-time groove, and on-screen copy. There is no narration.
 
-## Render the current film
+## Reproduce the film
 
-The native screenshots are committed, so no running app or screenshot capture is required to reproduce the edit:
+The screenshots are committed. No running Folio or iA Writer instance is required to render:
 
 ```sh
 cd video
 npm ci
 npm run audio
+npm run poster
 npm run stills
 npm run render
+npm run verify
 ```
 
-Rendering uses installed Google Chrome on Mac; set `REMOTION_BROWSER` to an alternate Chromium executable if needed. Python 3 generates the original score. Typography uses local Iowan Old Style/Baskerville with Georgia fallback; reproduce on Mac for matching type.
+Rendering uses installed Google Chrome on Mac; set `REMOTION_BROWSER` to another Chromium executable if needed. Python 3 generates the score. FFmpeg and FFprobe must be on PATH, or set `FFMPEG` and `FFPROBE`. Typography uses local Iowan Old Style/Baskerville with Georgia fallback; reproduce on Mac for matching type.
 
-- `public/Agent workspace/`: the public demonstration files created for this film.
-- `public/screenshots/workflow-*.png`: real Finder, Quick Look, Folio, and iA Writer screenshots.
-- `src/FolioFilm.tsx`: scenes, on-screen copy, screenshot crops, timing, and transitions.
-- `scripts/soundtrack.py`: deterministic soft keys, rounded bass, and restrained brushed percussion; no external samples or licensed recordings.
-- `out/Folio-Final.mp4`: revised H.264/AAC export.
+The renderer uses lossless PNG frames, one rendering page, and software `swangle` rendering. It scans the candidate MP4 before replacing `out/Folio-Final.mp4`; a failed check leaves the previous final in place. `npm run verify -- out/another-export.mp4` checks an export independently.
 
-Earlier exports remain available locally. The final cut adds a visible VS Code/blue → iA Writer/amber preset cycle to the 22–28 second feature section and retains the approved warm soundtrack. `npm run capture` is the **legacy browser screenshot workflow**, requiring the root app's dependencies and `npm run dev`; it does not overwrite the new native `workflow-*` captures.
+- `src/FolioFilm.tsx`: scenes, captions, crops, and animation.
+- `src/timeline.json`: the shared 900-frame timeline, review frames, and static intervals checked by the verifier.
+- `public/Agent workspace/`: public demo documents.
+- `public/screenshots/workflow-*.png`: native Finder, Quick Look, Folio, and iA Writer captures.
+- `scripts/soundtrack.py`: deterministic soft keys, rounded bass, and brushed percussion; no external samples. This cut keeps the approved sound and removes three repeated four-second phrases, with the same F → G → C ending.
+- `scripts/verify.mjs`: verifies duration, decodes audio and every video frame, checks for blank frames and short corruption bursts, and compares deliberately static intervals. Visual review remains necessary.
+- `out/Folio-Final.mp4`: H.264/AAC export.
+- `out/Folio-Cover.png`: fully visible frame-zero splash, also used at `docs/images/folio-video-poster.png`.
+
+`npm run capture` is the legacy browser capture workflow; it requires the root app’s dependencies and development server, and does not replace the native `workflow-*` captures. Generated audio and exports are ignored in Git.
+
+`FOLIO_AUDIO_FROM` can preserve encoded audio from a separate approved MP4 of the **same duration**. Do not use the previous 42-second film as its input for this 30-second cut: the verification step rejects mismatched stream lengths.
+
+## What changed in this cut
+
+The film is 12 seconds shorter while showing more of the real workflow. Quick Look, app-opening, and end-card holds are tighter. Clean scene cuts keep old captions and settings from lingering over the next instruction.
+
+Appearance stays in its own section: VS Code with blue tint → iA Writer with rose tint → iA Writer with amber tint. All Folio captures share the same window dimensions. The editing section starts with Appearance closed and directs attention to **Open in Editor**. In iA Writer, the heading changes from “A little room to read” to “A plan worth sharing.” After saving, Folio shows the new heading in both the document and outline.
 
 ## Native capture record
 
-1. Open `public/Agent workspace/` in Finder and select PLAN.md. Hide the sidebar for the capture so personal locations are excluded.
-2. Press Space. Wait for the rendered preview, including headings, the quote, task list, and table. Capture the native Quick Look window.
-3. In Finder Get Info, choose Folio under Open With for this demo file only. Do not click Change All. The captured Quick Look action reads “Open with Folio.”
-4. Close Quick Look and double-click PLAN.md. The same document opens in the native Folio app.
-5. Capture the reader in the neutral Folio style and its real “review” search match. Capture Appearance with VS Code + blue and iA Writer + amber in light mode, at size 17 with the document at the top. These two states cycle in the feature scene; Folio + purple remains in the editor handoff. Windowed captures crop the OS title strip; the two additional preset captures use the expanded native window. Product UI remains unchanged.
-6. Capture the selected iA Writer setting, then use Open in Editor. Confirm iA Writer shows the same file path and Markdown content. Capture its source editing view.
-7. Restore temporary Finder sidebar, Folio appearance, and editor window/view changes after capture.
+Only the prepared public PLAN.md is shown. The editor was opened through Folio’s actual Open in Editor button. Screenshots record the original heading, selection, three intermediate typing states (including macOS’s inline completion), and completed heading. Saving in iA Writer updated Folio’s heading and outline automatically; no Reload action or document reopen was used. The app was brought forward afterward to capture the already-updated document.
 
-Finder rendering, double-click opening, and the external-editor launch all succeeded. No private documents appear in the captured images. Document association is a setup prerequisite for the double-click behavior and is noted on-screen. Space bar preview is labeled as a Mac feature.
+The original demo text was restored after filming and verified against Git. Temporary reader preferences were restored. Native Folio screenshots crop the OS title strip; editor screenshots crop to the Markdown text so the heading change stays readable. The source and content of the product UI are not composited or rewritten.
 
-The intro document labels, pointer/key illustrations, crops, transitions, and timing are created in Remotion. This is an edited screenshot demonstration, not a continuous recording or a launch-speed measurement. Folio's app source and dependencies were not changed.
+A capture setup issue exposed a macOS interaction: a file-specific Finder “Open With” override combined with quarantine metadata added by iA Writer caused a “PLAN.md Not Opened” warning. The public demo exactly matched its committed contents. Removing only that filming-specific association restored the editor handoff; quarantine metadata and system security settings were left intact. [Apple documents the same behavior for plain text files](https://developer.apple.com/forums/thread/795994). For future capture, avoid assigning a default to this individual demo file; use the user’s existing Markdown association, or demonstrate a one-time Open With choice.
 
-## Export verification
+Pointer/key illustrations, crops, cuts, and timing are added in Remotion. This is an edited screenshot demonstration, not a continuous recording or a launch-speed measurement. Space-bar preview is labeled as a Mac feature; Windows and Linux support refers to the desktop reader. The user separately confirmed Folio on Omarchy. No built-in editor is implied.
 
-The final composition contains 1,260 frames at 1920 × 1080 and 30 fps. The two new style/tint shots were rendered separately and visually checked before the complete export. TypeScript validation passes. Storyboard frames covering all scenes and selected frames decoded from the completed MP4 were visually inspected. Full video and audio decoding completed without errors. The revised audio averages −24.9 dBFS and peaks at −10.6 dBFS, with no clipping. Compared with the first workflow-film soundtrack, the arrangement removes the bright bell line and claps, softens note attacks, simplifies harmony, and leaves more space between phrases. The final MP4 is exactly 42 seconds, 5.27 MB, with H.264 picture and 48 kHz stereo AAC audio. A complete decode passed, and both new preset shots were inspected from the encoded file. Matching SHA-256 hashes of the audio streams confirm that the final export contains the exact approved warm soundtrack.
+## Export review
 
-Outputs and generated audio are ignored in Git; all screenshot assets, fixtures, source, and reproduction instructions are versioned.
+The verified export contains exactly 900 frames at 1920 × 1080, 30 fps, and 30 seconds, with `yuv420p` H.264 picture and 48 kHz stereo AAC audio. The file is 2.42 MB; AAC packet padding brings container duration to 30.059 seconds. MP4 metadata precedes picture data for fast start. Full audio/video decoding and the scan of all 900 frames passed. Decoded storyboards, frames on both sides of every appearance/edit/save/refresh cut, and full-resolution handoff and refreshed-reader frames were visually reviewed. Audio measured −24.9 dBFS mean and −10.9 dBFS peak, with no clipping.
 
-API references: [Remotion rendering](https://www.remotion.dev/docs/renderer/render-media), [bundler](https://www.remotion.dev/docs/bundler), and [still-frame checks](https://www.remotion.dev/docs/renderer/render-still).
+Review the actual MP4, including the style-to-editor boundary and each edit/save/refresh stage. The regression scanner was introduced after an earlier parallel JPEG render produced isolated tiled frames and one blank frame that normal codec checks missed. Serial PNG rendering and all-frame scanning remain enabled for this revision.
+
+## GitHub and X
+
+The README shows the splash image above an expandable inline GitHub attachment player. GitHub strips custom video poster attributes and can turn video-linked images into players, so keep the poster and attachment separate.
+
+Upload `out/Folio-Final.mp4` directly to X as a video attachment. The landscape layout is 16:9, 1920 × 1080, 30 fps, H.264 High Profile with AAC-LC stereo audio and fast-start metadata. See [X’s upload limits](https://help.x.com/en/using-x/x-videos) and [encoding guidance](https://docs.x.com/x-api/media/quickstart/best-practices). X may transcode the upload. The cover is available for publishing flows that accept a custom thumbnail; it is also baked into the first frame. These scripts do not post to X.
