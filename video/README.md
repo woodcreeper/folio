@@ -28,7 +28,7 @@ Rendering uses installed Google Chrome on Mac; set `REMOTION_BROWSER` to an alte
 
 Earlier exports remain available locally. The final cut adds a visible VS Code/blue → iA Writer/amber preset cycle to the 22–28 second feature section and retains the approved warm soundtrack. `npm run capture` is the **legacy browser screenshot workflow**, requiring the root app's dependencies and `npm run dev`; it does not overwrite the new native `workflow-*` captures.
 
-The film now starts with a fully visible Folio splash for 1.2 seconds, then dissolves into the agent-output scene. All scene boundaries from four seconds onward remain unchanged; the total duration is still 42 seconds. GitHub strips custom video poster attributes, so the README uses the rendered cover linked to the film, plus an expandable inline player.
+The film now starts with a fully visible Folio splash for 1.2 seconds, then dissolves into the agent-output scene. All scene boundaries from four seconds onward remain unchanged; the total duration is still 42 seconds. GitHub strips custom video poster attributes and converts links to video attachments into players, even when those links wrap images. The README therefore shows the rendered cover above an expandable inline player.
 
 To preserve the exact encoded audio from an approved export, retain that MP4 under a separate name and run `FOLIO_AUDIO_FROM=out/Folio-Approved-Before-Splash.mp4 npm run render` from this directory. The script copies its AAC stream without re-encoding and writes the new picture to the canonical `Folio-Final.mp4`.
 
