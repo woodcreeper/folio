@@ -1,6 +1,12 @@
 # Changelog
 
-## Unreleased
+## 0.2.0 — Unreleased
+
+### Renamed
+
+- Folio is now **Riffdown**, including the app, native menus, Quick Look display name, and package names.
+- The application and extension identifiers, saved preferences, and default reading-style ID remain stable so existing installations retain their settings and Markdown associations.
+- Published v0.1.0 packages and the existing product video retain their original Folio name.
 
 ### Added
 

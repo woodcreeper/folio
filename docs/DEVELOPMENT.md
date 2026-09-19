@@ -1,6 +1,6 @@
-# Building Folio
+# Building Riffdown
 
-Folio is a Tauri 2 desktop application with a TypeScript frontend and a separate Swift Quick Look extension on macOS. Build packages on the operating system they target. There is no server or database to configure.
+Riffdown is a Tauri 2 desktop application with a TypeScript frontend and a separate Swift Quick Look extension on macOS. Build packages on the operating system they target. There is no server or database to configure.
 
 ## Common prerequisites
 
@@ -25,7 +25,7 @@ sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
 npm run desktop:build -- --bundles app
 ```
 
-The output is `src-tauri/target/release/bundle/macos/Folio.app`. Copy it into Applications. The build wrapper compiles, smoke-tests, and embeds the Quick Look extension before Tauri seals the app bundle. Local builds use ad-hoc signing.
+The output is `src-tauri/target/release/bundle/macos/Riffdown.app`. Copy it into Applications. The build wrapper compiles, smoke-tests, and embeds the Quick Look extension before Tauri seals the app bundle. Local builds use ad-hoc signing.
 
 For one app supporting both Apple Silicon and Intel:
 
@@ -86,7 +86,7 @@ The [Build and release workflow](../.github/workflows/build.yml) tests and build
 
 1. Keep the version in `package.json`, `package-lock.json`, `src-tauri/Cargo.toml`, `src-tauri/Cargo.lock`, `src-tauri/tauri.conf.json`, and the Quick Look `Info.plist` consistent.
 2. Move the relevant changelog entries under the new version and update [release notes](RELEASE_NOTES.md), then commit and push to `main`. Use a new version; existing releases are immutable.
-3. Run the workflow manually on `main`, entering the version (such as `0.1.0`). Leave it blank for a build without publishing.
+3. Run the workflow manually on `main`, entering the version (such as `0.2.0`). Leave it blank for a build without publishing.
 4. After every platform succeeds, the workflow validates versions, gathers four packages, computes SHA-256 checksums, and creates a prerelease/tag at the exact built commit. It refuses to overwrite an existing release.
 
 No signing credentials are stored in the repository. The current Mac and Windows packages are preview builds without trusted publisher signatures. The workflow pins its third-party actions to commit hashes; review those pins when updating build infrastructure.

@@ -14,7 +14,7 @@ use tauri_plugin_dialog::DialogExt;
 
 const SETTINGS_FILE: &str = "editor.json";
 const MAX_SETTINGS_BYTES: u64 = 64 * 1024;
-const SELF_ERROR: &str = "Folio is a viewer. Choose a different application for editing.";
+const SELF_ERROR: &str = "Riffdown is a viewer. Choose a different application for editing.";
 static TEMP_SEQUENCE: AtomicU64 = AtomicU64::new(0);
 
 #[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
@@ -51,7 +51,7 @@ pub async fn choose_editor(app: AppHandle) -> Result<Option<EditorInfo>, String>
             .into_path()
             .map_err(|_| "Choose an application installed on this computer.".to_owned())?;
         let current_executable = std::env::current_exe()
-            .map_err(|error| format!("Folio could not check the selected application: {error}"))?;
+            .map_err(|error| format!("Riffdown could not check the selected application: {error}"))?;
         let editor = validate_editor(&path, &current_executable, &app.config().identifier)?;
         // Do not report success or launch until this choice has been saved.
         write_settings(&settings_path(&app)?, &editor)?;
@@ -67,7 +67,7 @@ pub fn launch_editor(app: &AppHandle, document: &Path) -> Result<EditorInfo, Str
     let saved = read_settings(&settings_path(app)?)?
         .ok_or("Choose an editor before opening this document for editing.")?;
     let current_executable = std::env::current_exe()
-        .map_err(|error| format!("Folio could not check the selected application: {error}"))?;
+        .map_err(|error| format!("Riffdown could not check the selected application: {error}"))?;
     let editor = validate_editor(
         Path::new(&saved.path),
         &current_executable,
@@ -113,7 +113,7 @@ fn settings_path(app: &AppHandle) -> Result<PathBuf, String> {
     app.path()
         .app_config_dir()
         .map(|folder| folder.join(SETTINGS_FILE))
-        .map_err(|error| format!("Folio's preferences folder could not be located: {error}"))
+        .map_err(|error| format!("Riffdown's preferences folder could not be located: {error}"))
 }
 
 fn read_settings(path: &Path) -> Result<Option<EditorInfo>, String> {
@@ -476,7 +476,7 @@ mod tests {
         assert!(validate_executable_file(&file).is_err());
         assert!(validate_executable_file(folder.path()).is_err());
         let current = std::env::current_exe().unwrap();
-        let alias = folder.path().join("Renamed Folio");
+        let alias = folder.path().join("Renamed Riffdown");
         symlink(&current, &alias).unwrap();
         assert_eq!(
             validate_editor(&alias, &current, "dev.mdquickviewer.folio").unwrap_err(),

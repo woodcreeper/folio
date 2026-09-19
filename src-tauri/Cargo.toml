@@ -1,6 +1,6 @@
 [package]
-name = "folio"
-version = "0.1.0"
+name = "riffdown"
+version = "0.2.0"
 description = "A quiet, lightweight Markdown reader"
 authors = ["David La Puma"]
 license = "MIT"
@@ -9,7 +9,7 @@ edition = "2021"
 rust-version = "1.88"
 
 [lib]
-name = "folio_lib"
+name = "riffdown_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]

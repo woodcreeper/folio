@@ -10,11 +10,11 @@ enum PreviewError: LocalizedError {
 
     var errorDescription: String? {
         switch self {
-        case .missingResource(let name): return "Folio's preview resource is missing: \(name)."
+        case .missingResource(let name): return "Riffdown's preview resource is missing: \(name)."
         case .unreadableDocument: return "This Markdown document could not be read."
-        case .documentTooLarge: return "This document exceeds Folio's 10 MB preview limit. Open it in the app instead."
-        case .invalidEncoding: return "Folio previews Markdown documents saved as UTF-8."
-        case .rendererFailed(let message): return "Folio could not render this document: \(message)"
+        case .documentTooLarge: return "This document exceeds Riffdown's 10 MB preview limit. Open it in the app instead."
+        case .invalidEncoding: return "Riffdown previews Markdown documents saved as UTF-8."
+        case .rendererFailed(let message): return "Riffdown could not render this document: \(message)"
         }
     }
 }
