@@ -1,12 +1,10 @@
-# Folio product film
+# SlayDown product film
 
-A 30-second, 1080p Remotion film about the reason Folio exists: your AI agent creates Markdown files, and you want to read them quickly. The [script and storyboard](SCRIPT.md) follow Finder selection → Space-bar Quick Look → double-click into Folio → edit in your own app → automatic refresh.
+A 30-second, 1080p Remotion walkthrough: your AI agent creates Markdown → select a file in Finder → press Space → double-click into SlayDown → edit in your own app → see the saved change. The [script and storyboard](SCRIPT.md) describe every shot. Production notes live here; the main README presents the finished demo.
 
-The film uses real Mac screenshots captured on September 18, 2026, an original warm 120 BPM instrumental score with a relaxed half-time groove, and on-screen copy. There is no narration.
+The SlayDown cut uses the bundled Metal Mania wordmark and an original 120 BPM metal instrumental: stereo power-chord guitars, palm-muted riffs, bass, and drums. The score uses plucked-string synthesis, contains no outside samples or recordings, and resolves on a sustained E5 chord. There is no narration.
 
-## Reproduce the film
-
-The screenshots are committed. No running Folio or iA Writer instance is required to render:
+## Reproduce
 
 ```sh
 cd video
@@ -16,55 +14,53 @@ npm run poster
 npm run stills
 npm run render
 npm run verify
+npm run social
 ```
 
-Rendering uses installed Google Chrome on Mac; set `REMOTION_BROWSER` to another Chromium executable if needed. Python 3 generates the score. FFmpeg and FFprobe must be on PATH, or set `FFMPEG` and `FFPROBE`. Typography uses local Iowan Old Style/Baskerville with Georgia fallback; reproduce on Mac for matching type.
+The screenshots are committed, so rendering needs no running SlayDown or editor instance. Rendering uses installed Google Chrome on Mac; set `REMOTION_BROWSER` to another Chromium executable if needed. Python 3 generates the score using only its standard library. FFmpeg and FFprobe must be on PATH, or set `FFMPEG` and `FFPROBE`. Metal Mania is loaded from the bundled font. Other titles use local Iowan Old Style/Baskerville with Georgia fallback; render on Mac for matching typography.
 
-The renderer uses lossless PNG frames, one rendering page, and software `swangle` rendering. It scans the candidate MP4 before replacing `out/Folio-Final.mp4`; a failed check leaves the previous final in place. `npm run verify -- out/another-export.mp4` checks an export independently.
-
-- `src/FolioFilm.tsx`: scenes, captions, crops, and animation.
-- `src/timeline.json`: the shared 900-frame timeline, review frames, and static intervals checked by the verifier.
+- `src/SlayDownFilm.tsx`: scenes, copy, crops, and animation.
+- `src/timeline.json`: the shared 900-frame timeline, review frames, and static intervals.
 - `public/Agent workspace/`: public demo documents.
-- `public/screenshots/workflow-*.png`: native Finder, Quick Look, Folio, and iA Writer captures.
-- `scripts/soundtrack.py`: deterministic soft keys, rounded bass, and brushed percussion; no external samples. This cut keeps the approved sound and removes three repeated four-second phrases, with the same F → G → C ending.
-- `scripts/verify.mjs`: verifies duration, decodes audio and every video frame, checks for blank frames and short corruption bursts, and compares deliberately static intervals. Visual review remains necessary.
-- `out/Folio-Final.mp4`: H.264/AAC export.
-- `out/Folio-Cover.png`: fully visible frame-zero splash, also used at `docs/images/folio-video-poster.png`.
+- `public/screenshots/slaydown-*.png`: the walkthrough captures.
+- `scripts/soundtrack.py`: reproducible original metal score.
+- `scripts/soundtrack-warm.py`: the previous warm score, retained as an optional alternative.
+- `out/SlayDown-Final.mp4`: H.264/AAC export.
+- `out/SlayDown-Cover.png`: fully visible frame-zero splash.
+- `src/SlayDownSocial.tsx`: the 1280 × 640 social card.
 
-`npm run capture` is the legacy browser capture workflow; it requires the root app’s dependencies and development server, and does not replace the native `workflow-*` captures. Generated audio and exports are ignored in Git.
+Generated audio and working exports are ignored. The approved distribution MP4 belongs in `docs/media/SlayDownDemo.mp4`, with its cover in `docs/images/slaydown-video-poster.png`. Replace those files only after reviewing the rendered candidate.
 
-`FOLIO_AUDIO_FROM` can preserve encoded audio from a separate approved MP4 of the **same duration**. Do not use the previous 42-second film as its input for this 30-second cut: the verification step rejects mismatched stream lengths.
+`SLAYDOWN_FRAMES=0,490,759 npm run stills` selects specific review frames. `SLAYDOWN_AUDIO_FROM=/absolute/path/approved.mp4 npm run render` preserves encoded audio from a separate approved MP4 of the **same duration**. The old `FOLIO_FRAMES` and `FOLIO_AUDIO_FROM` names remain accepted. Do not reuse the old 42-second film’s audio in this 30-second cut.
 
-## What changed in this cut
+## Story and capture
 
-The film is 12 seconds shorter while showing more of the real workflow. Quick Look, app-opening, and end-card holds are tighter. Clean scene cuts keep old captions and settings from lingering over the next instruction.
+Appearance has its own section: VS Code with blue tint → iA Writer with rose tint → Omarchy with amber tint. The editing section begins with Appearance closed and directs attention to **Open in Editor**. The external editor changes “A little room to read” to “A plan worth sharing.” The refreshed reader shows the new heading in both the document and outline.
 
-Appearance stays in its own section: VS Code with blue tint → iA Writer with rose tint → iA Writer with amber tint. All Folio captures share the same window dimensions. The editing section starts with Appearance closed and directs attention to **Open in Editor**. In iA Writer, the heading changes from “A little room to read” to “A plan worth sharing.” After saving, Folio shows the new heading in both the document and outline.
+Captured on September 18, 2026, using the installed SlayDown 0.2.0 app and iA Writer. All reader shots share a 1224 × 768 capture surface. Finder and Quick Look are native captures; the latter visibly offers **Open with SlayDown**. The editor was launched through SlayDown. Saving the changed heading updated the document and outline without a reload or reopen. The demo heading and appearance preferences were restored afterward.
 
-## Native capture record
+Only the public PLAN.md is used. Preserve the demo’s original heading after capturing, and restore temporary reader preferences. Do not set a file-specific Finder association on the demo: an earlier capture exposed a macOS interaction between that override and quarantine metadata. [Apple documents the behavior for plain text](https://developer.apple.com/forums/thread/795994). Leave quarantine and system security settings intact.
 
-Only the prepared public PLAN.md is shown. The editor was opened through Folio’s actual Open in Editor button. Screenshots record the original heading, selection, three intermediate typing states (including macOS’s inline completion), and completed heading. Saving in iA Writer updated Folio’s heading and outline automatically; no Reload action or document reopen was used. The app was brought forward afterward to capture the already-updated document.
+Pointer/key illustrations, crops, cuts, and timing are added in Remotion. This is an edited screenshot demonstration, not a continuous recording or a launch-speed measurement. Space-bar preview is labeled as a Mac feature; Windows and Linux refer to the desktop reader. The user separately confirmed the earlier Folio build on Omarchy. No built-in editor is implied.
 
-The original demo text was restored after filming and verified against Git. Temporary reader preferences were restored. Native Folio screenshots crop the OS title strip; editor screenshots crop to the Markdown text so the heading change stays readable. The source and content of the product UI are not composited or rewritten.
+The `workflow-*` screenshots and old `FolioSocial.tsx` remain historical source assets. `npm run capture` is the legacy browser capture utility; it does not replace the native walkthrough captures.
 
-A capture setup issue exposed a macOS interaction: a file-specific Finder “Open With” override combined with quarantine metadata added by iA Writer caused a “PLAN.md Not Opened” warning. The public demo exactly matched its committed contents. Removing only that filming-specific association restored the editor handoff; quarantine metadata and system security settings were left intact. [Apple documents the same behavior for plain text files](https://developer.apple.com/forums/thread/795994). For future capture, avoid assigning a default to this individual demo file; use the user’s existing Markdown association, or demonstrate a one-time Open With choice.
+## Export verification
 
-Pointer/key illustrations, crops, cuts, and timing are added in Remotion. This is an edited screenshot demonstration, not a continuous recording or a launch-speed measurement. Space-bar preview is labeled as a Mac feature; Windows and Linux support refers to the desktop reader. The user separately confirmed Folio on Omarchy. No built-in editor is implied.
+The renderer uses lossless PNG frames, a single rendering page, and software `swangle` rendering. It verifies a candidate before replacing the final MP4; a failed check preserves the previous final.
 
-## Export review
+`npm run verify -- out/another-export.mp4` checks another export. The verifier decodes the complete audio/video, requires 900 frames and 30-second streams, scans for blank frames and short corruption bursts, and compares deliberately static intervals. It was introduced after a parallel JPEG render produced tiled and blank frames despite valid codecs. These checks do not replace watching the actual MP4 and inspecting both sides of each appearance, editor, save, and refresh cut.
 
-The verified export contains exactly 900 frames at 1920 × 1080, 30 fps, and 30 seconds, with `yuv420p` H.264 picture and 48 kHz stereo AAC audio. The file is 2.42 MB; AAC packet padding brings container duration to 30.059 seconds. MP4 metadata precedes picture data for fast start. Full audio/video decoding and the scan of all 900 frames passed. Decoded storyboards, frames on both sides of every appearance/edit/save/refresh cut, and full-resolution handoff and refreshed-reader frames were visually reviewed. Audio measured −24.9 dBFS mean and −10.9 dBFS peak, with no clipping.
-
-Review the actual MP4, including the style-to-editor boundary and each edit/save/refresh stage. The regression scanner was introduced after an earlier parallel JPEG render produced isolated tiled frames and one blank frame that normal codec checks missed. Serial PNG rendering and all-frame scanning remain enabled for this revision.
+The September 18 SlayDown export passed the complete 900-frame scan and audio/video decoding. It is 1920 × 1080, 30 fps, H.264 High Profile / `yuv420p`, with 48 kHz stereo AAC-LC. Picture duration is 30 seconds; AAC padding brings the container to 30.059 seconds. The file is 2.34 MB. Encoded audio measures −20.0 dBFS mean and −6.9 dBFS peak. Both sides of the appearance/editor/save/refresh cuts were inspected from the encoded MP4.
 
 ## GitHub and X
 
-The repository’s sharing graphic is `docs/images/folio-social.png`: an opaque 1280 × 640 PNG under 1 MB, sized for GitHub’s social preview. Run `npm run social` here to rebuild it from `src/FolioSocial.tsx` and the existing, unmodified Quick Look screenshot. Copy, logo, layout, and export size are set in source. Upload the result under repository **Settings → General → Social preview**; committing the image alone does not update the preview. It is also suitable as a standalone image attachment. The Mac-specific Space-bar wording distinguishes Quick Look from the cross-platform reader.
+Use the finished demo and its cover on the public README, without production instructions beside it. For an inline GitHub attachment player, upload the MP4 in GitHub’s Markdown editor and use the resulting attachment URL. A cover linking to the committed MP4 also works without an attachment upload.
 
-The README shows the finished video directly in GitHub’s inline attachment player, with the splash baked into its first frame. Production notes stay here rather than being linked beside the public demo. The separate cover export remains available for publishing elsewhere.
+Upload `out/SlayDown-Final.mp4` directly to X. It is 16:9, 1920 × 1080, 30 fps, H.264 with `yuv420p`, stereo AAC, and fast-start metadata. The first frame is a complete cover; a separate PNG is available for flows that accept a thumbnail. X may transcode the upload. These scripts do not publish posts.
 
-Upload `out/Folio-Final.mp4` directly to X as a video attachment. The landscape layout is 16:9, 1920 × 1080, 30 fps, H.264 High Profile with AAC-LC stereo audio and fast-start metadata. See [X’s upload limits](https://help.x.com/en/using-x/x-videos) and [encoding guidance](https://docs.x.com/x-api/media/quickstart/best-practices). X may transcode the upload. The cover is available for publishing flows that accept a custom thumbnail; it is also baked into the first frame. These scripts do not post to X.
+`npm run social` writes `docs/images/slaydown-social.png`, an opaque 1280 × 640 PNG under 1 MB. Upload it under repository **Settings → General → Social preview**; committing the image alone does not update GitHub’s link preview. It also works as a standalone image attachment. The repository remains `woodcreeper/folio`, so existing links continue to work.
 
-## SlayDown rename
+Current GitHub attachment: https://github.com/user-attachments/assets/b025dee5-04a4-4a88-9c04-39b0a81a428e
 
-The approved walkthrough is a historical Folio recording. Its captured screenshots and film source keep that name until a new capture is made. The current social card uses `src/SlayDownSocial.tsx`; `npm run social` renders `docs/images/slaydown-social.png` using a new SlayDown app screenshot.
+Distribution MP4 SHA-256: `cd575c207aec8b8a357c228ba887399a2f521f3add1de7524db2acc5aa11221f`.

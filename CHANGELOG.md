@@ -6,7 +6,8 @@
 
 - Folio is now **SlayDown**, including the app, native menus, Quick Look display name, and package names.
 - The application and extension identifiers, saved preferences, and default reading-style ID remain stable so existing installations retain their settings and Markdown associations.
-- Published v0.1.0 packages and the existing product video retain their original Folio name.
+- Published v0.1.0 packages retain their original Folio name.
+- Refreshed the 30-second product film, native screenshots, sample documents, and sharing graphics for SlayDown. The film shows the Omarchy style and uses an original metal guitar soundtrack.
 
 ### Added
 

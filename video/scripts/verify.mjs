@@ -5,7 +5,7 @@ import {fileURLToPath} from 'node:url';
 
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const timeline=JSON.parse(readFileSync(path.join(root,'src/timeline.json'),'utf8'));
-const input=process.argv[2] || path.join(root,'out/Folio-Final.mp4');
+const input=process.argv[2] || path.join(root,'out/SlayDown-Final.mp4');
 const ffmpeg=process.env.FFMPEG || 'ffmpeg';
 const metadata=JSON.parse(execFileSync(process.env.FFPROBE || 'ffprobe',['-v','error','-show_streams','-show_format','-of','json',input],{encoding:'utf8'}));
 const expectedSeconds=timeline.durationInFrames/timeline.fps;
@@ -49,7 +49,7 @@ for(let f=1;f<count-1;f++) {
     }
   }
 }
-// These intervals are intentionally motionless in FolioFilm.tsx. Compare every
+// These intervals are intentionally motionless in SlayDownFilm.tsx. Compare every
 // frame in each hold so a multi-frame flash cannot hide between spot checks.
 const holds=timeline.staticHolds;
 for(const [first,last] of holds) {

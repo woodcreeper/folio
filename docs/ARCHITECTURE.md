@@ -49,7 +49,7 @@ Do not add a plugin framework until a concrete feature requires it. Reasonable n
 
 `npm run desktop:build` builds/tests the Quick Look extension automatically on macOS, embeds it, then signs the outer app. The extension must be signed first: Tauri’s extra-file mapping does not independently sign nested extensions. The default identity `-` is for local development; Developer ID signing/notarization is needed for trusted Mac distribution without unidentified-developer warnings; the first public preview is ad-hoc signed. Override host signing settings and `FOLIO_SIGNING_IDENTITY` together for distribution.
 
-The current app output is `src-tauri/target/release/bundle/macos/SlayDown.app`. The earlier zip at `build/Folio-macOS-arm64.zip` has not been regenerated for the tint change; rebuild packages before distributing updated binaries. Current host architecture is Apple Silicon; the bundled extension contains both Intel and Apple Silicon slices.
+The current app output is `src-tauri/target/release/bundle/macos/SlayDown.app`. Old Folio/Riffdown bundles under the ignored `build/` directory are historical local backups. Build packages from current source before distributing binaries; do not distribute those backups. Current host architecture is Apple Silicon; the bundled extension contains both Intel and Apple Silicon slices.
 
 Source and installation documentation are published at https://github.com/woodcreeper/folio under the MIT license. The GitHub Actions workflow builds universal Mac, Windows x64, and Linux x64 packages; manual release runs publish only after every platform succeeds. See DEVELOPMENT.md for the release procedure and the Releases page for available binaries.
 

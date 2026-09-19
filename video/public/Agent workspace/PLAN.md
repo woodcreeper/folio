@@ -18,7 +18,7 @@ Build a quieter way to review the Markdown your AI agent leaves behind. Open the
 | Step | What happens |
 | --- | --- |
 | Preview | Select a Markdown file and press Space on Mac. |
-| Explore | Open Folio for an outline, search, and reading styles. |
+| Explore | Open SlayDown for an outline, search, and reading styles. |
 | Edit | Send the original file to your favorite local editor. |
 
 ## Keep the flow

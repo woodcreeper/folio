@@ -1,6 +1,6 @@
 # A clearer view of your words
 
-Welcome to **Folio**. This is a real Markdown file you can select in Finder and preview with the Space bar.
+Welcome to **SlayDown**. This is a real Markdown file you can select in Finder and preview with the Space bar.
 
 ## The small details
 
@@ -13,7 +13,7 @@ Welcome to **Folio**. This is a real Markdown file you can select in Finder and 
 | Feature | Try it |
 | --- | --- |
 | Quick Look | Select this file and press Space |
-| Full app | Open With → Folio |
+| Full app | Open With → SlayDown |
 | Outline | Jump to a heading |
 
 ```python
@@ -31,4 +31,4 @@ print(notes)
 
 That is all you need to get started.[^1]
 
-[^1]: This file is included with the Folio project for testing.
+[^1]: This file is included with the SlayDown project for testing.
