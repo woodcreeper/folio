@@ -1,11 +1,11 @@
 {
-  "name": "folio-product-video",
+  "name": "slaydown-product-video",
   "private": true,
   "type": "module",
   "scripts": {
     "capture": "node scripts/capture.mjs",
     "audio": "python3 scripts/soundtrack.py",
-    "studio": "remotion studio src/index.tsx",
+    "studio": "node scripts/studio-props.mjs && remotion studio src/index.tsx --props=.cache/studio-props.json",
     "stills": "node scripts/render.mjs --stills",
     "poster": "node scripts/render.mjs --poster",
     "social": "node scripts/social.mjs",

@@ -13,9 +13,7 @@
 
 Your AI agent writes the Markdown. Select a file in Finder, press **Space**, and read it beautifully formatted. Double-click for SlayDown’s full reader, then open the same file in your favorite editor when you want to make a change. Save there, and SlayDown updates automatically.
 
-The walkthrough was recorded under the original Folio name; the workflow is unchanged.
-
-https://github.com/user-attachments/assets/efac994a-534f-4c66-8c75-b9e16c432c21
+https://github.com/user-attachments/assets/b025dee5-04a4-4a88-9c04-39b0a81a428e
 
 ![SlayDown displaying its sample document, with a heading outline and a quiet reading layout](docs/images/slaydown.png)
 
@@ -106,7 +104,7 @@ Open **Appearance** (the **Aa** button) to choose a reading style, theme, tint, 
 
 On Mac, choose **Show Colors…** in the picker for the full macOS color panel, including the color wheel. Tint works independently of your reading style, light/dark theme, and text size. Very bright or dark selections are adjusted for readable accent text.
 
-The styles use local system fonts, so details vary by platform. They are original CSS inspired by familiar reading experiences, not exact replicas or affiliated products.
+Most reading styles use local system fonts, so details vary by platform; Omarchy’s heading font is bundled. They are original CSS inspired by familiar reading experiences, not exact replicas or affiliated products.
 
 Choose **Open in Editor** to pick your editor once. On Mac, select its `.app`; on Windows, its `.exe`; on Linux, its executable. Change that choice under **Appearance → External Editor**. SlayDown watches the current file, including editors that save by replacing it, and preserves the visible paragraph when it refreshes. Source view keeps its proportional scroll position.
 
