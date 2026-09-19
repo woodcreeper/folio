@@ -1,6 +1,6 @@
-# Building Riffdown
+# Building SlayDown
 
-Riffdown is a Tauri 2 desktop application with a TypeScript frontend and a separate Swift Quick Look extension on macOS. Build packages on the operating system they target. There is no server or database to configure.
+SlayDown is a Tauri 2 desktop application with a TypeScript frontend and a separate Swift Quick Look extension on macOS. Build packages on the operating system they target. There is no server or database to configure.
 
 ## Common prerequisites
 
@@ -25,7 +25,7 @@ sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
 npm run desktop:build -- --bundles app
 ```
 
-The output is `src-tauri/target/release/bundle/macos/Riffdown.app`. Copy it into Applications. The build wrapper compiles, smoke-tests, and embeds the Quick Look extension before Tauri seals the app bundle. Local builds use ad-hoc signing.
+The output is `src-tauri/target/release/bundle/macos/SlayDown.app`. Copy it into Applications. The build wrapper compiles, smoke-tests, and embeds the Quick Look extension before Tauri seals the app bundle. Local builds use ad-hoc signing.
 
 For one app supporting both Apple Silicon and Intel:
 

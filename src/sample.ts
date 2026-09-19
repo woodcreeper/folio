@@ -1,6 +1,6 @@
 export const sample = `# A little room to read.
 
-A good document deserves a little breathing room. **Riffdown** turns plain Markdown into a calm, considered reading experience — and gets out of the way.
+A good document deserves a little breathing room. **SlayDown** turns plain Markdown into a calm, considered reading experience — and gets out of the way.
 
 Open a file, settle in, and follow the words.
 
@@ -24,7 +24,7 @@ Thoughtful typography. A comfortable line length. A place for everything from a 
 
 A small app, with room for the things that matter.
 
-| In your document | In Riffdown |
+| In your document | In SlayDown |
 | :--- | :--- |
 | Headings & paragraphs | A clear, easy rhythm |
 | Code & tables | Every detail in its place |

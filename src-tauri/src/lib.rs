@@ -14,7 +14,7 @@ use tauri_plugin_dialog::DialogExt;
 use tauri_plugin_opener::OpenerExt;
 
 type Store = Mutex<DocumentStore>;
-const STORE_ERROR: &str = "The document session could not be accessed. Please reopen Riffdown.";
+const STORE_ERROR: &str = "The document session could not be accessed. Please reopen SlayDown.";
 
 fn read_into_session(app: &AppHandle, path: &Path) -> Result<Document, String> {
     app.state::<Store>()
@@ -236,7 +236,7 @@ pub fn run() {
             Ok(())
         })
         .build(tauri::generate_context!())
-        .expect("Riffdown could not start");
+        .expect("SlayDown could not start");
 
     app.run(|app, event| {
         #[cfg(target_os = "macos")]

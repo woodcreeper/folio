@@ -110,7 +110,7 @@ impl DocumentStore {
             "This document is no longer available. Open it again to continue.".to_owned()
         })?;
         if !self.authorized.contains(&canonical) {
-            return Err("Open this document in Riffdown before accessing it.".to_owned());
+            return Err("Open this document in SlayDown before accessing it.".to_owned());
         }
         Ok(canonical)
     }
@@ -174,7 +174,7 @@ fn read_bounded(path: &Path, limit: u64, label: &str) -> Result<Vec<u8>, String>
     }
     if metadata.len() > limit {
         return Err(format!(
-            "{label} is too large. Riffdown supports files up to {} MiB.",
+            "{label} is too large. SlayDown supports files up to {} MiB.",
             limit / 1024 / 1024
         ));
     }
@@ -185,7 +185,7 @@ fn read_bounded(path: &Path, limit: u64, label: &str) -> Result<Vec<u8>, String>
         .map_err(|error| format!("Couldn't read this file: {error}"))?;
     if bytes.len() as u64 > limit {
         return Err(format!(
-            "{label} is too large. Riffdown supports files up to {} MiB.",
+            "{label} is too large. SlayDown supports files up to {} MiB.",
             limit / 1024 / 1024
         ));
     }

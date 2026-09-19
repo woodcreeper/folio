@@ -7,9 +7,9 @@ FOLIO_VERSION="$(node -p 'JSON.parse(require("fs").readFileSync(process.argv[1])
 [[ "$FOLIO_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]
 FOLIO_STAGE="$(mktemp -d)"
 trap 'rm -rf "$FOLIO_STAGE"' EXIT
-cp "$FOLIO_DEB" "$FOLIO_STAGE/riffdown.deb"
+cp "$FOLIO_DEB" "$FOLIO_STAGE/slaydown.deb"
 cp "$FOLIO_ROOT/LICENSE" "$FOLIO_STAGE/LICENSE"
-FOLIO_DEB_SHA="$(sha256sum "$FOLIO_STAGE/riffdown.deb" | cut -d ' ' -f 1)"
+FOLIO_DEB_SHA="$(sha256sum "$FOLIO_STAGE/slaydown.deb" | cut -d ' ' -f 1)"
 FOLIO_LICENSE_SHA="$(sha256sum "$FOLIO_STAGE/LICENSE" | cut -d ' ' -f 1)"
 sed -e "s/@VERSION@/$FOLIO_VERSION/g" -e "s/@DEB_SHA256@/$FOLIO_DEB_SHA/g" -e "s/@LICENSE_SHA256@/$FOLIO_LICENSE_SHA/g" \
   "$FOLIO_ROOT/packaging/arch/PKGBUILD.in" > "$FOLIO_STAGE/PKGBUILD"

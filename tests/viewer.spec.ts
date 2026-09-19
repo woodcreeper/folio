@@ -8,7 +8,7 @@ test('renders sample, outline, source and accessible search', async ({ page }) =
   await expect(page.locator('#reader h1')).toHaveText('A little room to read.');
   await expect(page.locator('#outline a')).toHaveCount(6);
   await page.getByRole('button', { name: 'Find in document', exact: true }).click();
-  await page.getByRole('searchbox', { name: 'Search document' }).fill('Riffdown');
+  await page.getByRole('searchbox', { name: 'Search document' }).fill('SlayDown');
   await expect(page.locator('#search-count')).toHaveText('1 of 2');
   await page.getByRole('button', { name: 'Next match' }).click();
   await expect(page.locator('#search-count')).toHaveText('2 of 2');
@@ -161,7 +161,7 @@ test('reading styles change presentation, retain source and persist independentl
   await page.getByRole('button', { name: 'Increase reading size' }).click();
   const original = await page.locator('#reader').innerText();
   const fonts: string[] = [];
-  for (const [id, name] of [['code','VS Code'],['writer','iA Writer'],['github','GitHub'],['folio','Riffdown']]) {
+  for (const [id, name] of [['code','VS Code'],['writer','iA Writer'],['github','GitHub'],['folio','SlayDown']]) {
     await page.locator(`[data-reading-style-option="${id}"]`).click();
     await expect(page.locator('html')).toHaveAttribute('data-reading-style', id);
     await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');

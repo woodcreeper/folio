@@ -10,7 +10,7 @@ export async function native<T>(command: string, args?: Record<string, unknown>)
 
 export async function documentFromFile(file: File): Promise<MarkdownDocument> {
   if (!extensions.test(file.name)) throw new Error('Choose a Markdown file (.md, .markdown, .mdown, or .mkd).');
-  if (file.size > MAX_FILE_BYTES) throw new Error('This file is too large. Riffdown currently opens files up to 10 MB.');
+  if (file.size > MAX_FILE_BYTES) throw new Error('This file is too large. SlayDown currently opens files up to 10 MB.');
   const content = new TextDecoder('utf-8', { fatal: true }).decode(await file.arrayBuffer());
   return { name: file.name, path: `browser:${file.name}:${file.lastModified}:${file.size}`, content };
 }

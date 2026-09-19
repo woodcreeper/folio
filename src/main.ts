@@ -26,7 +26,7 @@ const icons: Record<string, string> = {
 const icon = (name: string) => `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icons[name] || ''}</svg>`;
 const $ = <T extends HTMLElement = HTMLElement>(selector: string) => document.querySelector<T>(selector)!;
 const escape = (value: string) => value.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]!));
-const demo: MarkdownDocument = { name: 'Welcome to Riffdown.md', path: 'sample:welcome', content: sample };
+const demo: MarkdownDocument = { name: 'Welcome to SlayDown.md', path: 'sample:welcome', content: sample };
 let current: MarkdownDocument | null = demo;
 let sourceMode = false;
 let sequence = 0;
@@ -36,7 +36,7 @@ let activeHeading = '';
 let toastTimer: ReturnType<typeof setTimeout>;
 let fontSize = 17;
 const readingStyles = [
-  { id: 'folio', name: 'Riffdown', description: 'Calm & spacious' },
+  { id: 'folio', name: 'SlayDown', description: 'Calm & spacious' },
   { id: 'code', name: 'VS Code', description: 'Compact & technical' },
   { id: 'writer', name: 'iA Writer', description: 'Classic serif' },
   { id: 'github', name: 'GitHub', description: 'Familiar & structured' },
@@ -70,7 +70,7 @@ try {
 
 $('#app').innerHTML = `
   <header class="titlebar">
-    <div class="brand"><span class="brand-mark">${icon('book')}</span><span>riffdown<span class="brand-dot">.</span></span><span class="brand-description">MARKDOWN VIEWER</span></div>
+    <div class="brand"><span class="brand-mark">${icon('book')}</span><span>SlayDown<span class="brand-dot">.</span></span><span class="brand-description">MARKDOWN VIEWER</span></div>
     <div class="document-title">${icon('file')}<span id="filename"></span><span id="sample-badge" class="badge">SAMPLE</span><button id="close-document" class="icon-button" title="Close document (⌘W / Ctrl+W)" aria-label="Close document">${icon('close')}</button></div>
     <button id="appearance" class="icon-button" title="Appearance" aria-label="Appearance settings" aria-expanded="false">${icon('sun')}</button>
   </header>
@@ -90,7 +90,7 @@ $('#app').innerHTML = `
       <footer class="statusbar"><div><span class="status-dot"></span><span id="file-status">Sample document</span><button id="reload" class="small-button" title="Reload from disk" aria-label="Reload from disk" hidden>${icon('refresh')}</button></div><div id="document-stats"><span id="word-count"></span><span class="status-separator">·</span><span id="reading-time"></span><span class="status-separator">·</span><span id="reading-progress">0%</span></div></footer>
     </main>
   </div>
-  <div id="settings" class="settings-popover" hidden><div class="eyebrow">READING STYLE</div><div class="reading-styles">${readingStyles.map(style => `<button data-reading-style-option="${style.id}" aria-pressed="false"><span>${style.name}</span><small>${style.description}</small></button>`).join('')}</div><p class="settings-note">Inspired styles. Your Markdown stays unchanged.</p><div class="settings-divider"></div><div class="eyebrow">APPEARANCE</div><div class="theme-options">${['light','dark','system'].map((t,i) => `<button data-theme-option="${t}" aria-pressed="false">${icon(['sun','moon','monitor'][i])}<span>${t[0].toUpperCase()+t.slice(1)}</span></button>`).join('')}</div><div class="settings-divider"></div><div class="eyebrow">TINT</div><div class="tint-controls"><label class="tint-picker"><input id="tint-picker" type="color" value="#5776c8" aria-label="Custom tint color" /><span>Custom color<output id="tint-value">Neutral</output></span></label><button id="neutral-tint" class="tint-neutral" aria-pressed="true">Neutral</button></div><div class="tint-swatches" role="group" aria-label="Tint presets">${tintSwatches.map(swatch => `<button class="tint-swatch" data-tint="${swatch.color}" style="--swatch:${swatch.color}" aria-label="${swatch.name} tint" title="${swatch.name}" aria-pressed="false"></button>`).join('')}</div><p class="settings-note">Choose a color for accents and a subtle page tint.</p><div class="settings-divider"></div><div class="size-control"><span>Reading size</span><div><button id="smaller" aria-label="Decrease reading size">A−</button><output id="font-size"></output><button id="larger" aria-label="Increase reading size">A+</button></div></div><button id="reset-size" class="reset-button">Reset to default</button><div id="editor-settings" hidden><div class="settings-divider"></div><div class="eyebrow">EXTERNAL EDITOR</div><button id="choose-editor" class="editor-choice"><span id="editor-name">Choose an editor…</span>${icon('open')}</button><p class="settings-note">Save there. Riffdown refreshes here.</p></div></div>
+  <div id="settings" class="settings-popover" hidden><div class="eyebrow">READING STYLE</div><div class="reading-styles">${readingStyles.map(style => `<button data-reading-style-option="${style.id}" aria-pressed="false"><span>${style.name}</span><small>${style.description}</small></button>`).join('')}</div><p class="settings-note">Inspired styles. Your Markdown stays unchanged.</p><div class="settings-divider"></div><div class="eyebrow">APPEARANCE</div><div class="theme-options">${['light','dark','system'].map((t,i) => `<button data-theme-option="${t}" aria-pressed="false">${icon(['sun','moon','monitor'][i])}<span>${t[0].toUpperCase()+t.slice(1)}</span></button>`).join('')}</div><div class="settings-divider"></div><div class="eyebrow">TINT</div><div class="tint-controls"><label class="tint-picker"><input id="tint-picker" type="color" value="#5776c8" aria-label="Custom tint color" /><span>Custom color<output id="tint-value">Neutral</output></span></label><button id="neutral-tint" class="tint-neutral" aria-pressed="true">Neutral</button></div><div class="tint-swatches" role="group" aria-label="Tint presets">${tintSwatches.map(swatch => `<button class="tint-swatch" data-tint="${swatch.color}" style="--swatch:${swatch.color}" aria-label="${swatch.name} tint" title="${swatch.name}" aria-pressed="false"></button>`).join('')}</div><p class="settings-note">Choose a color for accents and a subtle page tint.</p><div class="settings-divider"></div><div class="size-control"><span>Reading size</span><div><button id="smaller" aria-label="Decrease reading size">A−</button><output id="font-size"></output><button id="larger" aria-label="Increase reading size">A+</button></div></div><button id="reset-size" class="reset-button">Reset to default</button><div id="editor-settings" hidden><div class="settings-divider"></div><div class="eyebrow">EXTERNAL EDITOR</div><button id="choose-editor" class="editor-choice"><span id="editor-name">Choose an editor…</span>${icon('open')}</button><p class="settings-note">Save there. SlayDown refreshes here.</p></div></div>
   <div id="drop-overlay" class="drop-overlay" hidden><div>${icon('open')}<h2>A good place for your words.</h2><p>Drop a Markdown file to start reading.</p></div></div>
   <div id="toast" class="toast" role="status" hidden></div>
   <input id="file-input" type="file" accept=".md,.markdown,.mdown,.mkd,text/markdown" hidden />
@@ -141,7 +141,7 @@ function closeDocument() {
   $<HTMLInputElement>('#search-input').value = '';
   $('#search-count').textContent = '';
   $('#filename').textContent = 'No document open';
-  document.title = 'Riffdown';
+  document.title = 'SlayDown';
   $('#sample-badge').hidden = true;
   $('#reader').replaceChildren();
   $('#source-content').textContent = '';
@@ -166,7 +166,7 @@ async function showDocument(doc: MarkdownDocument, preservePosition = false) {
   };
   const rendered = renderMarkdown(doc.content);
   $('#filename').textContent = doc.name;
-  document.title = `${doc.name} — Riffdown`;
+  document.title = `${doc.name} — SlayDown`;
   $('#sample-badge').hidden = doc.path !== demo.path;
   $('#document-kicker').textContent = doc.path === demo.path ? 'A QUIETER WAY TO READ' : 'YOUR WORDS, WITH ROOM TO BREATHE';
   $('#reader').innerHTML = rendered.html;

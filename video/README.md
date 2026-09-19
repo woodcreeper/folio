@@ -65,6 +65,6 @@ The README shows the finished video directly in GitHub’s inline attachment pla
 
 Upload `out/Folio-Final.mp4` directly to X as a video attachment. The landscape layout is 16:9, 1920 × 1080, 30 fps, H.264 High Profile with AAC-LC stereo audio and fast-start metadata. See [X’s upload limits](https://help.x.com/en/using-x/x-videos) and [encoding guidance](https://docs.x.com/x-api/media/quickstart/best-practices). X may transcode the upload. The cover is available for publishing flows that accept a custom thumbnail; it is also baked into the first frame. These scripts do not post to X.
 
-## Riffdown rename
+## SlayDown rename
 
-The approved walkthrough is a historical Folio recording. Its captured screenshots and film source keep that name until a new capture is made. The current social card uses `src/RiffdownSocial.tsx`; `npm run social` renders `docs/images/riffdown-social.png` using a new Riffdown app screenshot.
+The approved walkthrough is a historical Folio recording. Its captured screenshots and film source keep that name until a new capture is made. The current social card uses `src/SlayDownSocial.tsx`; `npm run social` renders `docs/images/slaydown-social.png` using a new SlayDown app screenshot.

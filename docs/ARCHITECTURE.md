@@ -1,6 +1,6 @@
 # Architecture and continuation
 
-Riffdown is a desktop-first Markdown viewer with a shared rendering core. Mobile is intentionally deferred. The working name and colors are provisional; neither affects the file format or native integration.
+SlayDown is a desktop-first Markdown viewer with a shared rendering core. Mobile is intentionally deferred. The working name and colors are provisional; neither affects the file format or native integration.
 
 ## Boundaries
 
@@ -13,7 +13,7 @@ Riffdown is a desktop-first Markdown viewer with a shared rendering core. Mobile
 - `src-tauri/src/documents.rs`: read-only local document session and bounded local image loading. Canonical paths constrain image access to an opened document’s directory tree.
 - `src-tauri/src/lib.rs`: native picker, OS open events, file associations, and external web/email links. Startup documents stay available until the frontend subscribes.
 - `src-tauri/src/menu.rs`: native Open and Close Document commands. Cmd/Ctrl+W closes the document; Cmd/Ctrl+Shift+W closes the window. The webview handles these shortcuts only in browser mode, preventing duplicate native handling.
-- `src-tauri/src/editor.rs`: validated application selection and preference persistence. Launches only the selected app with the authorized document as a literal argument. Prevents opening Riffdown recursively.
+- `src-tauri/src/editor.rs`: validated application selection and preference persistence. Launches only the selected app with the authorized document as a literal argument. Prevents opening SlayDown recursively.
 - `src-tauri/src/watcher.rs`: one native parent-directory subscription for the current document; handles atomic saves, debounces events, and stops its worker on replacement. No idle polling.
 - `macos/QuickLook`: sandboxed native data-based preview provider. Reads the selected UTF-8 file and uses JavaScriptCore to run the same packaged renderer. No app backend or web bridge exists in the preview process.
 
@@ -21,7 +21,7 @@ Riffdown is a desktop-first Markdown viewer with a shared rendering core. Mobile
 
 The app uses the OS webview through Tauri. It does not include Electron, React, an editor, or a background service. Linux AppImage packaging may include additional runtime libraries for portability. The shared renderer includes only eleven common highlighting grammars. The local Apple Silicon Mac app is approximately 3.8 MB installed (universal and other platform builds differ); build dependencies and caches are much larger and are excluded from the app.
 
-Markdown files are neither uploaded nor written by Riffdown; the external editor owns edits. Riffdown writes only its own editor preference, and the frontend stores display preferences. Remote images are placeholders; web and mail links open only after a click. Raw HTML is displayed as text. This makes the rendering behavior predictable for untrusted Markdown, with the same output in the app and Quick Look.
+Markdown files are neither uploaded nor written by SlayDown; the external editor owns edits. SlayDown writes only its own editor preference, and the frontend stores display preferences. Remote images are placeholders; web and mail links open only after a click. Raw HTML is displayed as text. This makes the rendering behavior predictable for untrusted Markdown, with the same output in the app and Quick Look.
 
 ## Editing path
 
@@ -39,28 +39,28 @@ Do not add a plugin framework until a concrete feature requires it. Reasonable n
 - Complete Mac app and nested Quick Look extension pass strict code-signature verification using ad-hoc signing.
 - The rebuilt single-document Mac app was checked with ⌘W, the filename’s close button, and ⌘O from the empty reader. Closing leaves the window open; opening a real Markdown file renders it and resumes live preview. Windows/Linux native menu behavior still needs hands-on verification.
 - The rebuilt Mac app shows the new tint controls and opens the native macOS color picker. Browser tests verify immediate custom-color updates, persistence/reset, and readable link/control contrast across all four styles in both system color schemes.
-- macOS detects `net.daringfireball.markdown`; Riffdown’s Quick Look extension is registered and explicitly enabled.
-- On 2026-09-18, Finder Space-bar preview successfully rendered the public video demo plan with headings, paragraphs, a quote, task lists, and a table in light mode. Double-clicking the file opened it in Riffdown, and Open in Editor launched the same file in iA Writer. Only the demo file’s Open With association was changed.
+- macOS detects `net.daringfireball.markdown`; SlayDown’s Quick Look extension is registered and explicitly enabled.
+- On 2026-09-18, Finder Space-bar preview successfully rendered the public video demo plan with headings, paragraphs, a quote, task lists, and a table in light mode. Double-clicking the file opened it in SlayDown, and Open in Editor launched the same file in iA Writer. Only the demo file’s Open With association was changed.
 - The earlier `qlmanage -p` crash in Apple’s ExtensionFoundation (`key cannot be nil`) is separate from the successful Finder test. Quick Look dark mode, missing images, and broader Mac coverage still need individual checks.
 - Windows/Linux native tests pass in GitHub Actions. Packaged file associations, installer interaction, and actual external-editor launching still need manual verification on those platforms.
-- On 2026-09-18, the user confirmed Riffdown works on their physical x86_64 Omarchy 4.0.4-1 machine. The installation method and individual desktop integration checks were not specified; this does not establish validation of the experimental Arch package or Wayland workflow.
+- On 2026-09-18, the user confirmed the previous Folio build works on their physical x86_64 Omarchy 4.0.4-1 machine. The installation method and individual desktop integration checks were not specified; this does not establish validation of the experimental Arch package or Wayland workflow.
 
 ## Local operations
 
 `npm run desktop:build` builds/tests the Quick Look extension automatically on macOS, embeds it, then signs the outer app. The extension must be signed first: Tauri’s extra-file mapping does not independently sign nested extensions. The default identity `-` is for local development; Developer ID signing/notarization is needed for trusted Mac distribution without unidentified-developer warnings; the first public preview is ad-hoc signed. Override host signing settings and `FOLIO_SIGNING_IDENTITY` together for distribution.
 
-The current app output is `src-tauri/target/release/bundle/macos/Riffdown.app`. The earlier zip at `build/Folio-macOS-arm64.zip` has not been regenerated for the tint change; rebuild packages before distributing updated binaries. Current host architecture is Apple Silicon; the bundled extension contains both Intel and Apple Silicon slices.
+The current app output is `src-tauri/target/release/bundle/macos/SlayDown.app`. The earlier zip at `build/Folio-macOS-arm64.zip` has not been regenerated for the tint change; rebuild packages before distributing updated binaries. Current host architecture is Apple Silicon; the bundled extension contains both Intel and Apple Silicon slices.
 
 Source and installation documentation are published at https://github.com/woodcreeper/folio under the MIT license. The GitHub Actions workflow builds universal Mac, Windows x64, and Linux x64 packages; manual release runs publish only after every platform succeeds. See DEVELOPMENT.md for the release procedure and the Releases page for available binaries.
 
 ## Reading-style scope
 
-The app persists reading style, theme, tint, and size independently. Four lightweight CSS presets share the same rendering output. Tint starts from each preset’s stylesheet palette; clearing the tint restores that palette. Computed hex colors avoid requiring CSS `color-mix()` on older platform webviews. No parser changes, remote fonts, or extra JS rendering packages are needed. Quick Look keeps the neutral default Riffdown styling; sharing user preferences with its sandbox is a separate future integration.
+The app persists reading style, theme, tint, and size independently. Four lightweight CSS presets share the same rendering output. Tint starts from each preset’s stylesheet palette; clearing the tint restores that palette. Computed hex colors avoid requiring CSS `color-mix()` on older platform webviews. No parser changes, remote fonts, or extra JS rendering packages are needed. Quick Look keeps the neutral default SlayDown styling; sharing user preferences with its sandbox is a separate future integration.
 
 ## Refresh and launch invariants
 
-Frontend selection and refresh counters reject stale results, including after Close. Native watcher changes are serialized so delayed requests cannot reselect an earlier file; an empty reader watches no path. Recreating a subscription also recovers a failed same-path watcher. Successfully opening a new document replaces the native authorization for the old one. Closing removes authorization even if the file was deleted, without clearing a newer startup document. A chooser cancellation launches nothing; files and app paths are passed as separate process arguments. Riffdown never invokes the shell with document content.
+Frontend selection and refresh counters reject stale results, including after Close. Native watcher changes are serialized so delayed requests cannot reselect an earlier file; an empty reader watches no path. Recreating a subscription also recovers a failed same-path watcher. Successfully opening a new document replaces the native authorization for the old one. Closing removes authorization even if the file was deleted, without clearing a newer startup document. A chooser cancellation launches nothing; files and app paths are passed as separate process arguments. SlayDown never invokes the shell with document content.
 
 ## Product rename compatibility
 
-Riffdown 0.2.0 was previously Folio. The executable is now `riffdown`, but the host identifier remains `dev.mdquickviewer.folio` and the extension identifier remains `dev.mdquickviewer.folio.QuickLook`. The `folio:settings` storage key, `folio` default-style ID, `folio-` heading IDs, `FolioRenderer` JavaScript namespace, and `FolioQuickLook` Swift module are intentionally stable. This preserves preferences, document fragments, and OS associations instead of treating the rename as a different app. Existing `FOLIO_*` build overrides remain supported.
+SlayDown 0.2.0 was previously Folio. The executable is now `slaydown`, but the host identifier remains `dev.mdquickviewer.folio` and the extension identifier remains `dev.mdquickviewer.folio.QuickLook`. The `folio:settings` storage key, `folio` default-style ID, `folio-` heading IDs, `FolioRenderer` JavaScript namespace, and `FolioQuickLook` Swift module are intentionally stable. This preserves preferences, document fragments, and OS associations instead of treating the rename as a different app. Existing `FOLIO_*` build overrides remain supported.

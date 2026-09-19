@@ -10,11 +10,11 @@ enum PreviewError: LocalizedError {
 
     var errorDescription: String? {
         switch self {
-        case .missingResource(let name): return "Riffdown's preview resource is missing: \(name)."
+        case .missingResource(let name): return "SlayDown's preview resource is missing: \(name)."
         case .unreadableDocument: return "This Markdown document could not be read."
-        case .documentTooLarge: return "This document exceeds Riffdown's 10 MB preview limit. Open it in the app instead."
-        case .invalidEncoding: return "Riffdown previews Markdown documents saved as UTF-8."
-        case .rendererFailed(let message): return "Riffdown could not render this document: \(message)"
+        case .documentTooLarge: return "This document exceeds SlayDown's 10 MB preview limit. Open it in the app instead."
+        case .invalidEncoding: return "SlayDown previews Markdown documents saved as UTF-8."
+        case .rendererFailed(let message): return "SlayDown could not render this document: \(message)"
         }
     }
 }

@@ -12,7 +12,7 @@ pub fn install(app: &AppHandle) -> tauri::Result<()> {
             #[cfg(target_os = "macos")]
             &Submenu::with_items(
                 app,
-                "Riffdown",
+                "SlayDown",
                 true,
                 &[
                     &Item::about(app, None, None)?,

@@ -1,5 +1,5 @@
 [package]
-name = "riffdown"
+name = "slaydown"
 version = "0.2.0"
 description = "A quiet, lightweight Markdown reader"
 authors = ["David La Puma"]
@@ -9,7 +9,7 @@ edition = "2021"
 rust-version = "1.88"
 
 [lib]
-name = "riffdown_lib"
+name = "slaydown_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]
