@@ -1,6 +1,6 @@
 # macOS Quick Look
 
-Folio includes a separate Swift Quick Look extension so Finder can render Markdown when a file is selected and Space is pressed. The desktop app does not need to be running. This is Quick Look, not the Preview application.
+SlayDown includes a separate Swift Quick Look extension so Finder can render Markdown when a file is selected and Space is pressed. The desktop app does not need to be running. This is Quick Look, not the Preview application.
 
 The extension targets macOS 12 and later and uses `QLPreviewProvider` to return HTML. JavaScriptCore runs the same `FolioRenderer.renderMarkdown(source, { preview: true })` bundle as the app, with the same reading stylesheet. The render function must be synchronous and return an object with an `html` string. JavaScriptCore receives no filesystem, network, DOM, or Tauri APIs.
 
@@ -33,7 +33,7 @@ Local builds are signed ad hoc. The host configuration also sets `signingIdentit
 
 ## Scope and limitations
 
-- Quick Look uses the neutral default Folio palette and follows system light/dark appearance. The app’s selected reading style, custom tint, and text size are not shared with the extension.
+- Quick Look uses the neutral default SlayDown palette and follows system light/dark appearance. The app’s selected reading style, custom tint, and text size are not shared with the extension.
 - UTF-8 `.md` and `.markdown` documents resolved by macOS as `net.daringfireball.markdown` are supported. The host app should import that existing type, not invent an incompatible Markdown UTI. Quick Look matches the exact UTI list.
 - Documents over 10 MiB return a readable error instead of starting a large rendering job.
 - Raw HTML is disabled in the shared renderer. A restrictive HTML Content Security Policy prevents document scripts and network requests. The shared renderer shows image placeholders in Quick Look. Relative images need a separate, sandbox-aware resource strategy before enabling them; the CSP permits only inline data images if a future resolver provides them.
@@ -43,7 +43,7 @@ Local builds are signed ad hoc. The host configuration also sets `signingIdentit
 
 Once the containing app is installed and opened, check that its Quick Look extension is enabled in System Settings. Other Markdown preview extensions may compete for the same file type. Verify the actual file type with `mdls -name kMDItemContentType example.md`; inspect registered extensions with `pluginkit -m -v -p com.apple.quicklook.preview`.
 
-Select a Markdown file in Finder and press Space. Test headings, tables, code, task lists, Unicode, light/dark appearance, and missing images. Confirm the Quick Look “Open with Folio” action opens the same document in the app. Also test a file opened while the app is already running. These tests require the installed host application; the native smoke test alone cannot verify them.
+Select a Markdown file in Finder and press Space. Test headings, tables, code, task lists, Unicode, light/dark appearance, and missing images. Confirm the Quick Look “Open with SlayDown” action opens the same document in the app. Also test a file opened while the app is already running. These tests require the installed host application; the native smoke test alone cannot verify them.
 
 ## API references
 
@@ -56,8 +56,8 @@ Select a Markdown file in Finder and press Space. Test headings, tables, code, t
 
 ## Current local verification
 
-The containing app and embedded extension pass strict code-signature verification. macOS has registered Folio’s extension and it has been enabled with `pluginkit`. The native JavaScriptCore smoke test passes independently.
+The containing app and embedded extension pass strict code-signature verification. macOS has registered SlayDown’s extension and it has been enabled with `pluginkit`. The native JavaScriptCore smoke test passes independently.
 
-On September 18, 2026, actual Finder Space-bar preview was verified on the development Mac using `video/public/Agent workspace/PLAN.md`: headings, paragraphs, a quote, task lists, and a table rendered correctly in light mode. After associating that demo file with Folio, Quick Look showed “Open with Folio”; closing the preview and double-clicking the file opened the same document in Folio. Folio’s Open in Editor action then opened it in iA Writer. Screenshots are saved in `video/public/screenshots/workflow-*.png`.
+On September 18, 2026, actual Finder Space-bar preview was verified on the development Mac using `video/public/Agent workspace/PLAN.md`: headings, paragraphs, a quote, task lists, and a table rendered correctly in light mode. After associating that demo file with SlayDown, Quick Look showed “Open with SlayDown”; closing the preview and double-clicking the file opened the same document in SlayDown. SlayDown’s Open in Editor action then opened it in iA Writer. Screenshots are saved in `video/public/screenshots/workflow-*.png`.
 
 The earlier command-line `qlmanage -p` crash in Apple’s ExtensionFoundation remains a separate tooling issue; it does not describe the successful Finder test. Dark-mode Quick Look, missing images, and the broader acceptance matrix above still need individual checks.

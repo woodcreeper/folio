@@ -71,11 +71,11 @@ jobs:
         if: runner.os == 'macOS'
         run: |
           mkdir -p release-assets
-          codesign --verify --deep --strict src-tauri/target/universal-apple-darwin/release/bundle/macos/Folio.app
-          ditto -c -k --sequesterRsrc --keepParent src-tauri/target/universal-apple-darwin/release/bundle/macos/Folio.app release-assets/Folio-macOS-universal.zip
+          codesign --verify --deep --strict src-tauri/target/universal-apple-darwin/release/bundle/macos/SlayDown.app
+          ditto -c -k --sequesterRsrc --keepParent src-tauri/target/universal-apple-darwin/release/bundle/macos/SlayDown.app release-assets/SlayDown-macOS-universal.zip
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: Folio-${{ matrix.platform }}
+          name: SlayDown-${{ matrix.platform }}
           if-no-files-found: error
           path: |
             release-assets/*.zip
@@ -92,7 +92,7 @@ jobs:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
-          pattern: Folio-*
+          pattern: SlayDown-*
           path: artifacts
           merge-multiple: true
       - name: Validate version and collect packages
@@ -105,4 +105,4 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           RELEASE_VERSION: ${{ inputs.version }}
         run: |
-          gh release create "v$RELEASE_VERSION" release-assets/* --target "$GITHUB_SHA" --title "Folio $RELEASE_VERSION — Preview" --prerelease --notes-file docs/RELEASE_NOTES.md
+          gh release create "v$RELEASE_VERSION" release-assets/* --target "$GITHUB_SHA" --title "SlayDown $RELEASE_VERSION — Preview" --prerelease --notes-file docs/RELEASE_NOTES.md

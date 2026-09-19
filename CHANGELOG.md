@@ -1,8 +1,17 @@
 # Changelog
 
-## Unreleased
+## 0.2.0 — Unreleased
+
+### Renamed
+
+- Folio is now **SlayDown**, including the app, native menus, Quick Look display name, and package names.
+- The application and extension identifiers, saved preferences, and default reading-style ID remain stable so existing installations retain their settings and Markdown associations.
+- Published v0.1.0 packages and the existing product video retain their original Folio name.
 
 ### Added
+
+- Omarchy reading style with bundled Omarchy display headings and monospaced body text.
+- Metal Mania typography for the SlayDown wordmark; both font licenses ship with the app.
 
 - Close the current document with the × beside its name, File → Close Document, or ⌘W / Ctrl+W. Folio stays open with an empty reader and an Open button.
 - A playable 30-second walkthrough in the GitHub README, with its Remotion source in `video/`.

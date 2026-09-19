@@ -8,7 +8,7 @@ test('renders sample, outline, source and accessible search', async ({ page }) =
   await expect(page.locator('#reader h1')).toHaveText('A little room to read.');
   await expect(page.locator('#outline a')).toHaveCount(6);
   await page.getByRole('button', { name: 'Find in document', exact: true }).click();
-  await page.getByRole('searchbox', { name: 'Search document' }).fill('Folio');
+  await page.getByRole('searchbox', { name: 'Search document' }).fill('SlayDown');
   await expect(page.locator('#search-count')).toHaveText('1 of 2');
   await page.getByRole('button', { name: 'Next match' }).click();
   await expect(page.locator('#search-count')).toHaveText('2 of 2');
@@ -119,7 +119,7 @@ test('custom accents remain readable for extreme colors in every reading style a
   await page.getByRole('button', { name: 'System', exact: true }).click();
   for (const colorScheme of ['light', 'dark'] as const) {
     await page.emulateMedia({ colorScheme });
-    for (const style of ['folio', 'writer', 'code', 'github']) {
+    for (const style of ['folio', 'writer', 'code', 'github', 'omarchy']) {
       await page.locator(`[data-reading-style-option="${style}"]`).click();
       for (const color of ['#ffffff', '#000000', '#ffff00', '#00ff00', '#0000ff', '#ff0000']) {
         await page.locator('#tint-picker').evaluate((el: HTMLInputElement, value) => {
@@ -161,7 +161,7 @@ test('reading styles change presentation, retain source and persist independentl
   await page.getByRole('button', { name: 'Increase reading size' }).click();
   const original = await page.locator('#reader').innerText();
   const fonts: string[] = [];
-  for (const [id, name] of [['code','VS Code'],['writer','iA Writer'],['github','GitHub'],['folio','Folio']]) {
+  for (const [id, name] of [['code','VS Code'],['writer','iA Writer'],['github','GitHub'],['folio','SlayDown'],['omarchy','Omarchy']]) {
     await page.locator(`[data-reading-style-option="${id}"]`).click();
     await expect(page.locator('html')).toHaveAttribute('data-reading-style', id);
     await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
@@ -175,4 +175,30 @@ test('reading styles change presentation, retain source and persist independentl
   await expect(page.locator('html')).toHaveAttribute('data-reading-style', 'writer');
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
   await expect(page.locator('#font-size')).toHaveText('18');
+});
+
+
+test('bundled fonts load locally and Omarchy headings persist without changing source', async ({ page }) => {
+  const remoteFonts: string[] = [];
+  page.on('request', request => {
+    if (request.resourceType() === 'font' && new URL(request.url()).origin !== 'http://127.0.0.1:1420') remoteFonts.push(request.url());
+  });
+  await page.reload();
+  const original = await page.locator('#reader').innerText();
+  await page.getByRole('button', { name: 'Appearance settings' }).click();
+  await page.locator('[data-reading-style-option="omarchy"]').click();
+  const fonts = await page.evaluate(async () => {
+    const heading = await document.fonts.load('32px "Omarchy"');
+    const brand = await document.fonts.load('31px "Metal Mania"');
+    return [heading.length, brand.length, ...heading.map(face => face.status), ...brand.map(face => face.status)];
+  });
+  expect(fonts).toEqual([1, 1, 'loaded', 'loaded']);
+  await expect(page.locator('#reader h1')).toHaveCSS('font-family', /Omarchy/);
+  expect(await page.locator('#reader p').first().evaluate(el => getComputedStyle(el).fontFamily)).not.toContain('Omarchy');
+  expect(await page.locator('#reader').innerText()).toBe(original);
+  await page.reload();
+  await expect(page.locator('html')).toHaveAttribute('data-reading-style', 'omarchy');
+  await page.setViewportSize({width:560,height:800});
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  expect(remoteFonts).toEqual([]);
 });
