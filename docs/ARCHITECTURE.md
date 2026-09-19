@@ -51,7 +51,7 @@ Do not add a plugin framework until a concrete feature requires it. Reasonable n
 
 The current app output is `src-tauri/target/release/bundle/macos/SlayDown.app`. Old Folio/Riffdown bundles under the ignored `build/` directory are historical local backups. Build packages from current source before distributing binaries; do not distribute those backups. Current host architecture is Apple Silicon; the bundled extension contains both Intel and Apple Silicon slices.
 
-Source and installation documentation are published at https://github.com/woodcreeper/folio under the MIT license. The GitHub Actions workflow builds universal Mac, Windows x64, and Linux x64 packages; manual release runs publish only after every platform succeeds. See DEVELOPMENT.md for the release procedure and the Releases page for available binaries.
+Source and installation documentation are published at https://github.com/woodcreeper/slaydown under the MIT license. The GitHub Actions workflow builds universal Mac, Windows x64, and Linux x64 packages; manual release runs publish only after every platform succeeds. See DEVELOPMENT.md for the release procedure and the Releases page for available binaries.
 
 ## Reading-style scope
 

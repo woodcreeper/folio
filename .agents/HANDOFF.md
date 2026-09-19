@@ -1,4 +1,8 @@
-# Folio session handoff
+# SlayDown session handoff
+
+## Current update — September 19, 2026
+
+The app is now **SlayDown** (0.2.0 source), and the repository has been renamed to https://github.com/woodcreeper/slaydown at the user’s request. The local origin uses that URL. PRs 8 and 9 are merged; older sections below are historical. The user approved the recorded Eyesplit soundtrack after rejecting the synthesized metal experiment. See `video/MUSIC.md` for the CC BY 4.0 attribution and reproducible excerpt. Repository links, film intro/outro, and social graphic are being updated on `codex/slaydown-repo-soundtrack`. The installed Mac app is `/Applications/SlayDown.app`; published v0.1.0 packages remain Folio. Internal app identifiers retain `folio` to preserve settings and file associations. Preserve the unrelated untracked `Folio.png`.
 
 **Date:** 2026-09-18
 **Focus:** Publish the approved video on GitHub and simplify Folio to one file at a time, as requested by the user. Current branch: `codex/folio-single-document`.
@@ -9,7 +13,7 @@
 - Rebuilt and reopened the local Mac app; verified the native color picker opens. README instructions and screenshot, architecture notes, Quick Look scope, and the changelog reflect the change.
 
 - Built Folio: a lightweight Tauri/TypeScript Markdown reader with a Swift macOS Quick Look extension, four reading styles, appearance controls, outline/search/source view, external editor selection, and live refresh preserving position.
-- Connected the existing local project to the user's public repository, preserving its initial commit: https://github.com/woodcreeper/folio.
+- Connected the existing local project to the user's public repository, preserving its initial commit: https://github.com/woodcreeper/slaydown.
 - Added a screenshot-led README with Mac, Windows, and Linux installation instructions; build-from-source docs; MIT license approved by the user; pinned GitHub Actions; release asset/checksum preparation.
 - Saved experimental Arch packaging and a **manual-only** Arch/Wayland workflow separately from the main release pipeline. It is explicitly unverified and not included in the first release.
 
@@ -20,14 +24,14 @@
 - `730a5e08fc228858b918ff94562cb9707faeb0f9`: full app, README, license, and build workflow. All three platform build jobs passed at this exact commit.
 - `a7d5623`: installation clarifications and package author/license metadata.
 - `ac57f31`: saved Omarchy experiment and documentation. This was the last packaging-only change before the tint feature.
-- First preview is published at https://github.com/woodcreeper/folio/releases/tag/v0.1.0 with universal Mac ZIP, Windows NSIS installer, Linux DEB/AppImage, and SHA256SUMS.txt. Assets are from the successful build at `730a5e0`, not rebuilt from later metadata changes.
-- Build: https://github.com/woodcreeper/folio/actions/runs/35278637065.
+- First preview is published at https://github.com/woodcreeper/slaydown/releases/tag/v0.1.0 with universal Mac ZIP, Windows NSIS installer, Linux DEB/AppImage, and SHA256SUMS.txt. Assets are from the successful build at `730a5e0`, not rebuilt from later metadata changes.
+- Build: https://github.com/woodcreeper/slaydown/actions/runs/35278637065.
 - Pushes to `main` and pull requests build only; feature-branch pushes alone do not trigger CI. Manual main workflow runs with a version publish a prerelease after all builds pass. Avoid rerunning `0.1.0` after it exists.
 
 ## Validation
 
 - Tint feature: 8 renderer tests, 13 Playwright tests, production TypeScript/Vite builds, the Mac app build, Swift Quick Look smoke test, and strict native bundle signatures pass. Browser checks cover persistence/reset, unchanged document content, independent appearance preferences, and extreme-color contrast across all four styles in system light/dark mode.
-- Earlier local validation: 19 Rust tests pass; no Rust behavior changed. The merged source passed automated checks and package builds for Mac, Windows, and Linux in [build run 35304846135](https://github.com/woodcreeper/folio/actions/runs/35304846135). Build artifacts are available on that run; the published v0.1.0 release assets remain unchanged.
+- Earlier local validation: 19 Rust tests pass; no Rust behavior changed. The merged source passed automated checks and package builds for Mac, Windows, and Linux in [build run 35304846135](https://github.com/woodcreeper/slaydown/actions/runs/35304846135). Build artifacts are available on that run; the published v0.1.0 release assets remain unchanged.
 - GitHub Actions for the published v0.1.0 commit: Mac, Windows, and Linux native tests and release packaging **all passed**. Linux browser interaction tests passed. Mac package is universal (Apple Silicon + Intel); Windows/Linux are x64.
 - Release collector was checked with nested fixtures, four SHA-256 entries, and rejection of a mismatched version.
 - New experimental Arch shell scripts pass `bash -n`; workflow YAML parses. **No Arch package build or Wayland startup test has run.**
@@ -61,7 +65,7 @@ Remaining compatibility checks:
 - Native screenshots are in `video/public/screenshots/workflow-*.png`, using only the new public fixtures in `video/public/Agent workspace/`. Native Finder, Folio, and iA Writer workflow acceptance succeeded while capturing them.
 - Only PLAN.md was associated with Folio; the global Markdown default was not changed. Finder sidebar, Folio's GitHub/dark/blue/14 appearance, and iA Writer's window/preview mode were restored after capture.
 - Earlier 40-second export remains locally available under its original name. `npm run capture --prefix video` still captures legacy browser assets; current native screenshots are already committed for rendering.
-- The approved video source and README embed are pushed in PR #1: https://github.com/woodcreeper/folio/pull/1. The native GitHub attachment is https://github.com/user-attachments/assets/b93b3f6e-6f92-49df-b3a7-1643db71c045; the README video player was verified in the browser. Published v0.1.0 downloads are unchanged.
+- The approved video source and README embed are pushed in PR #1: https://github.com/woodcreeper/slaydown/pull/1. The native GitHub attachment is https://github.com/user-attachments/assets/b93b3f6e-6f92-49df-b3a7-1643db71c045; the README video player was verified in the browser. Published v0.1.0 downloads are unchanged.
 
 ## Single-document reader — 2026-09-18
 

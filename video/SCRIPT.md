@@ -4,7 +4,7 @@
 
 **Story:** Your AI agent leaves a folder of Markdown. Select a file in Finder, press Space, and read it beautifully. Double-click for SlayDown’s reading tools. Open the original file in your own editor, change its heading, and save. SlayDown automatically shows the new heading.
 
-**Feel:** Elegant, direct, and quick, with a metal edge. Original 120 BPM palm-muted guitar riffs, stereo power chords, electric bass, and a controlled drum groove. Keep the existing 30-second pacing. A final E5 chord resolves under the end card; no abrupt musical cut or piercing lead solo. No voiceover is required.
+**Feel:** Elegant, direct, and quick, with a metal edge. “Eyesplit” by Shane Ivers: a recorded 154 BPM metal instrumental with guitar chugs, bass, and drums. Keep the existing 30-second pacing. The approved excerpt fades over the last 1.5 seconds under the end card. See [music credits](MUSIC.md). No voiceover is required.
 
 | Time | On-screen copy | Picture and motion |
 | --- | --- | --- |

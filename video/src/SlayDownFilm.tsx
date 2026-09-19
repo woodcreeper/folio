@@ -138,7 +138,7 @@ function Splash() {
   </div>
   <Screen name="quicklook" width={730} style={{left:1080,top:173,boxShadow:'0 28px 75px #0006'}}/>
   <div style={{position:'absolute',left:108,bottom:66,color:'#b5aabd',fontSize:18,letterSpacing:2.3}}>MAC · WINDOWS · LINUX</div>
-  <div style={{position:'absolute',right:110,bottom:66,color:'#b5aabd',fontSize:20}}>github.com/woodcreeper/folio</div>
+  <div style={{position:'absolute',right:110,bottom:66,color:'#b5aabd',fontSize:20}}>github.com/woodcreeper/slaydown</div>
  </AbsoluteFill>;
 }
 function AgentOutput() {
@@ -195,7 +195,7 @@ function Refresh() {
  </Base>;
 }
 function Outro() {
- return <Base dark><Brand dark label="READ IT. THEN KEEP BUILDING."/><div style={{position:'absolute',left:106,top:235,width:910}}><div style={{display:'flex',alignItems:'center',gap:25}}><Mark size={86} color="#d6c5e9"/><div style={{fontFamily:metal,fontSize:132,fontWeight:400,letterSpacing:1,textTransform:'uppercase',transform:'skewX(-5deg)',lineHeight:1.1}}>SlayDown<span style={{color:'#b79bd6'}}>.</span></div></div><div style={{fontFamily:serif,fontSize:55,lineHeight:1.17,letterSpacing:-1,color:'#e5ddeb',marginTop:30}}>From agent output<br/>to a beautiful read.</div><div style={{fontSize:23,color:'#b5aabd',marginTop:37}}>Preview. Explore. Edit in your own app.</div><div style={{fontSize:17,letterSpacing:2.5,color:'#c7bdd0',marginTop:62}}>MAC &nbsp;·&nbsp; WINDOWS &nbsp;·&nbsp; LINUX</div><div style={{fontSize:16,color:'#9689a3',marginTop:14}}>Space bar preview on Mac</div><div style={{fontSize:25,color:'#f2edf8',marginTop:44}}>github.com/woodcreeper/folio</div></div><Screen name="quicklook" width={663} style={{left:1160,top:214,transform:'rotate(2deg)',boxShadow:'0 35px 90px #0005'}}/></Base>;
+ return <Base dark><Brand dark label="READ IT. THEN KEEP BUILDING."/><div style={{position:'absolute',left:106,top:235,width:910}}><div style={{display:'flex',alignItems:'center',gap:25}}><Mark size={86} color="#d6c5e9"/><div style={{fontFamily:metal,fontSize:132,fontWeight:400,letterSpacing:1,textTransform:'uppercase',transform:'skewX(-5deg)',lineHeight:1.1}}>SlayDown<span style={{color:'#b79bd6'}}>.</span></div></div><div style={{fontFamily:serif,fontSize:55,lineHeight:1.17,letterSpacing:-1,color:'#e5ddeb',marginTop:30}}>From agent output<br/>to a beautiful read.</div><div style={{fontSize:23,color:'#b5aabd',marginTop:37}}>Preview. Explore. Edit in your own app.</div><div style={{fontSize:17,letterSpacing:2.5,color:'#c7bdd0',marginTop:62}}>MAC &nbsp;·&nbsp; WINDOWS &nbsp;·&nbsp; LINUX</div><div style={{fontSize:16,color:'#9689a3',marginTop:14}}>Space bar preview on Mac</div><div style={{fontSize:25,color:'#f2edf8',marginTop:44}}>github.com/woodcreeper/slaydown</div></div><Screen name="quicklook" width={663} style={{left:1160,top:214,transform:'rotate(2deg)',boxShadow:'0 35px 90px #0005'}}/></Base>;
 }
 export function SlayDownFilm() {
  const {brandFont} = getInputProps<{brandFont:string}>();
@@ -205,7 +205,7 @@ export function SlayDownFilm() {
    font.load().then(loaded => {document.fonts.add(loaded); continueRender(fontHandle);}).catch(cancelRender);
  }, [brandFont,fontHandle]);
  const scenes={splash:Splash,agent:AgentOutput,finder:SelectFile,quicklook:QuickLook,open:OpenSlayDown,features:Features,handoff:Handoff,edit:Edit,refresh:Refresh,outro:Outro};
- return <AbsoluteFill style={{background:paper}}><Audio src={staticFile('metal.wav')} volume={.9}/>{Object.entries(scenes).map(([name,Scene])=>{
+ return <AbsoluteFill style={{background:paper}}><Audio src={staticFile('eyesplit.m4a')} volume={1}/>{Object.entries(scenes).map(([name,Scene])=>{
   const [from,durationInFrames]=timeline.scenes[name as keyof typeof timeline.scenes];
   return <Sequence key={name} from={from} durationInFrames={durationInFrames}><Scene/></Sequence>;
  })}</AbsoluteFill>;

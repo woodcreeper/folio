@@ -9,8 +9,8 @@ SlayDown is a Tauri 2 desktop application with a TypeScript frontend and a separ
 - The platform tools below. See the maintained [Tauri prerequisites](https://v2.tauri.app/start/prerequisites/) for details and other Linux distributions.
 
 ```sh
-git clone https://github.com/woodcreeper/folio.git
-cd folio
+git clone https://github.com/woodcreeper/slaydown.git
+cd slaydown
 npm ci
 ```
 

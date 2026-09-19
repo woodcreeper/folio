@@ -27,7 +27,8 @@ if(process.argv.includes('--poster')) {
   }
 } else {
   let last=-1;
-  const approvedAudio=(process.env.SLAYDOWN_AUDIO_FROM || process.env.FOLIO_AUDIO_FROM);
+  // Copy the approved AAC stream into the final export without another lossy encode.
+  const approvedAudio=(process.env.SLAYDOWN_AUDIO_FROM || process.env.FOLIO_AUDIO_FROM || path.join(root,'public/eyesplit.m4a'));
   const picture=path.join(output,'SlayDown-picture-pass.mp4');
   const candidate=path.join(output,'SlayDown-candidate.mp4');
   const final=path.join(output,'SlayDown-Final.mp4');

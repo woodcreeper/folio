@@ -3,8 +3,8 @@
   <h1>SlayDown</h1>
   <p><strong>A little room to read.</strong></p>
   <p>A lightweight Markdown viewer for Mac, Windows, and Linux.<br>Beautiful typography. Ordinary files. Your favorite editor, one click away.</p>
-  <p><a href="https://github.com/woodcreeper/folio/releases">Downloads</a> · <a href="#install">Install</a> · <a href="docs/DEVELOPMENT.md">Build from source</a> · <a href="https://github.com/woodcreeper/folio/issues">Feedback</a></p>
-  <p><a href="https://github.com/woodcreeper/folio/actions/workflows/build.yml"><img src="https://github.com/woodcreeper/folio/actions/workflows/build.yml/badge.svg" alt="Build status"></a> <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-sage" alt="MIT license"></a></p>
+  <p><a href="https://github.com/woodcreeper/slaydown/releases">Downloads</a> · <a href="#install">Install</a> · <a href="docs/DEVELOPMENT.md">Build from source</a> · <a href="https://github.com/woodcreeper/slaydown/issues">Feedback</a></p>
+  <p><a href="https://github.com/woodcreeper/slaydown/actions/workflows/build.yml"><img src="https://github.com/woodcreeper/slaydown/actions/workflows/build.yml/badge.svg" alt="Build status"></a> <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-sage" alt="MIT license"></a></p>
 </div>
 
 ## From agent output to a beautiful read
@@ -13,7 +13,9 @@
 
 Your AI agent writes the Markdown. Select a file in Finder, press **Space**, and read it beautifully formatted. Double-click for SlayDown’s full reader, then open the same file in your favorite editor when you want to make a change. Save there, and SlayDown updates automatically.
 
-https://github.com/user-attachments/assets/b025dee5-04a4-4a88-9c04-39b0a81a428e
+https://github.com/user-attachments/assets/af304568-818d-4b9f-8540-d638357e0590
+
+Music: [Eyesplit by Shane Ivers](https://www.silvermansound.com/free-music/eyesplit), [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Edited to 30 seconds, normalized, and faded.
 
 ![SlayDown displaying its sample document, with a heading outline and a quiet reading layout](docs/images/slaydown.png)
 
@@ -31,7 +33,7 @@ Open a Markdown file and get straight to the words. SlayDown keeps your source u
 
 ## Install
 
-**SlayDown is an early preview.** Get packages from the [Releases page](https://github.com/woodcreeper/folio/releases). The release workflow produces the following files after all platform builds and automated tests pass. If a release is still building, you can [build from source](docs/DEVELOPMENT.md).
+**SlayDown is an early preview.** Get packages from the [Releases page](https://github.com/woodcreeper/slaydown/releases). The release workflow produces the following files after all platform builds and automated tests pass. If a release is still building, you can [build from source](docs/DEVELOPMENT.md).
 
 **Version 0.2.0 introduces the SlayDown name.** Published v0.1.0 downloads still use **Folio** and predate tint controls and Close Document. Until a SlayDown release is published, [build the current source](docs/DEVELOPMENT.md); the filenames below describe the upcoming packages.
 
@@ -124,15 +126,15 @@ SlayDown reads UTF-8 `.md`, `.markdown`, `.mdown`, and `.mkd` files up to **10 M
 
 Built-in editing, annotations, Markdown-to-Markdown navigation, Mermaid, math, and mobile apps are future work. The renderer and document model are separate from the UI so editing can be added without replacing the reading foundation.
 
-The Mac app has been exercised locally, and a user has confirmed the previous Folio build works on Omarchy. CI builds packages and runs Rust tests on all three desktop platforms, plus browser interaction tests on Linux. Windows/Linux installer behavior, external editors, and file associations still need individual hands-on verification. Please [report issues](https://github.com/woodcreeper/folio/issues) with your OS version and a minimal non-private sample.
+The Mac app has been exercised locally, and a user has confirmed the previous Folio build works on Omarchy. CI builds packages and runs Rust tests on all three desktop platforms, plus browser interaction tests on Linux. Windows/Linux installer behavior, external editors, and file associations still need individual hands-on verification. Please [report issues](https://github.com/woodcreeper/slaydown/issues) with your OS version and a minimal non-private sample.
 
 ## Build, contribute, or explore
 
 See [development and platform build instructions](docs/DEVELOPMENT.md), [architecture](docs/ARCHITECTURE.md), and the [macOS extension notes](macos/README.md).
 
 ```sh
-git clone https://github.com/woodcreeper/folio.git
-cd folio
+git clone https://github.com/woodcreeper/slaydown.git
+cd slaydown
 npm ci
 npm run desktop
 ```
