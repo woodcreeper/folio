@@ -1,15 +1,21 @@
-import React from 'react';
-import {AbsoluteFill, Composition, Img, registerRoot, staticFile} from 'remotion';
+import React, {useEffect, useState} from 'react';
+import {AbsoluteFill, Composition, Img, registerRoot, staticFile, getInputProps, delayRender, continueRender, cancelRender} from 'remotion';
 
 const serif = '"Iowan Old Style", "Baskerville", Georgia, serif';
 const sans = '-apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif';
 
 function SlayDownSocial() {
+  const {brandFont} = getInputProps<{brandFont: string}>();
+  const [fontHandle] = useState(() => delayRender('Loading bundled wordmark font'));
+  useEffect(() => {
+    const font = new FontFace('Metal Mania', `url(${brandFont})`);
+    font.load().then(loaded => { document.fonts.add(loaded); continueRender(fontHandle); }).catch(cancelRender);
+  }, [brandFont, fontHandle]);
   return <AbsoluteFill style={{background:'#19181f', color:'#f5f3f8', fontFamily:sans, overflow:'hidden'}}>
     <div style={{position:'absolute', left:64, top:48, color:'#bda6d7', fontSize:12, fontWeight:600, letterSpacing:2.1}}>FOR THE MARKDOWN YOUR AI AGENT WRITES</div>
     <div style={{position:'absolute', left:61, top:109, display:'flex', alignItems:'center', gap:19}}>
       <svg width="53" height="53" viewBox="0 0 24 24" fill="none" stroke="#d6c5e9" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h5a3 3 0 0 1 3 3v13a4 4 0 0 0-4-2H4z"/><path d="M20 4h-5a3 3 0 0 0-3 3v13a4 4 0 0 1 4-2h4z"/></svg>
-      <div style={{fontFamily:serif, fontSize:82, fontWeight:600, letterSpacing:-5, lineHeight:1.1}}>SlayDown<span style={{color:'#b79bd6'}}>.</span></div>
+      <div style={{fontFamily:'"Metal Mania", fantasy', fontSize:88, fontWeight:400, letterSpacing:1, textTransform:'uppercase', transform:'skewX(-5deg)', lineHeight:1.1}}>SlayDown<span style={{color:'#b79bd6'}}>.</span></div>
     </div>
     <div style={{position:'absolute', left:64, top:244, fontFamily:serif, fontSize:65, lineHeight:1.09, letterSpacing:-1.7}}>Markdown.<br/>Beautifully read.</div>
     <div style={{position:'absolute', left:64, top:427, display:'flex', alignItems:'center', gap:22}}>

@@ -79,8 +79,8 @@
 }
 
 /* Independent reading presets. These are local interpretations, not bundled
-   third-party themes or fonts. Only the reader consumes these variables; the
-   host may use --reader-max-width for its reading column. No selection = Folio.
+   third-party themes. Omarchy uses a bundled, credited display font. Only the reader consumes these variables; the
+   host may use --reader-max-width for its reading column. No selection = SlayDown.
    References: Microsoft vscode/media/markdown.css; iA Writer Preview Templates
    (Classic/Palatino); GitHub Primer src/markdown. */
 :root[data-reading-style="code"] {
@@ -404,3 +404,21 @@
   .markdown-body pre { white-space: pre-wrap; }
   .markdown-body table { display: table; width: 100%; }
 }
+
+/* Omarchy's unicase display face is for headings; body text stays easy to scan. */
+:root[data-reading-style="omarchy"] {
+  --reader-heading-font: "Omarchy", ui-monospace, monospace;
+  --reader-body-font: ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  --reader-max-width: 880px;
+  --reader-line-height: 1.8;
+}
+:root[data-reading-style="omarchy"] .markdown-body :is(h1,h2,h3,h4,h5,h6) {
+  font-family: var(--reader-heading-font);
+  font-weight: 400;
+  letter-spacing: .01em;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+:root[data-reading-style="omarchy"] .markdown-body h1 { font-size: 2em; }
+:root[data-reading-style="omarchy"] .markdown-body h2 { font-size: 1.5em; }
+:root[data-reading-style="omarchy"] .markdown-body h3 { font-size: 1.2em; }

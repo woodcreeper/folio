@@ -1,3 +1,18 @@
+/* Bundled font assets; no external font requests. See public/licenses/. */
+@font-face {
+  font-family: "Metal Mania";
+  src: url('./assets/fonts/MetalMania-Regular.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Omarchy";
+  src: url('./assets/fonts/Omarchy.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
 /* Neutral defaults; custom tint overrides only these palette variables. */
 :root {
   --app-light-bg: #fafafa; --app-light-sidebar: #f1f1f2; --app-light-paper: #ffffff;
@@ -29,7 +44,7 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline:2px solid v
 [hidden] { display:none !important; }
 #app { display:flex; flex-direction:column; height:100dvh; min-height:300px; }
 .titlebar { height:68px; flex-shrink:0; display:grid; grid-template-columns:280px 1fr 64px; align-items:center; border-bottom:1px solid var(--border); background:var(--app-bg); padding:0 20px 0 24px; }
-.brand { display:flex; align-items:center; gap:10px; font-family:'Iowan Old Style', 'Palatino Linotype', serif; font-size:29px; font-weight:600; letter-spacing:-1.3px; }
+.brand { display:flex; align-items:center; gap:10px; font-family:"Metal Mania", fantasy; font-size:31px; font-weight:400; letter-spacing:.3px; }
 .brand-mark { display:grid; place-items:center; border-radius:8px; height:30px; width:30px; background:var(--accent); color:var(--paper); }
 .brand-mark svg { width:19px; height:19px; }
 .brand-dot { color:var(--accent); }
@@ -143,3 +158,5 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline:2px solid v
 .tint-swatches { display:flex; gap:12px; margin-top:13px; }
 .tint-swatch { width:22px; height:22px; border:3px solid var(--paper); border-radius:50%; background:var(--swatch); box-shadow:0 0 0 1px var(--border); padding:0; }
 .tint-swatch[aria-pressed='true'] { box-shadow:0 0 0 2px var(--accent); }
+
+.brand-name { text-transform:uppercase; transform:skewX(-5deg); white-space:nowrap; }

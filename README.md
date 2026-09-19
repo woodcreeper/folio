@@ -23,7 +23,7 @@ https://github.com/user-attachments/assets/efac994a-534f-4c66-8c75-b9e16c432c21
 
 Open a Markdown file and get straight to the words. SlayDown keeps your source untouched and gives it comfortable spacing, readable code, and a clear outline. When you want to make a change, **Open in Editor** sends the same file to your chosen editor. Save there, and SlayDown refreshes while keeping your place.
 
-- **Four reading styles:** SlayDown, VS Code-inspired, iA Writer Classic-inspired, and GitHub-inspired.
+- **Five reading styles:** SlayDown, VS Code-inspired, iA Writer Classic-inspired, GitHub-inspired, and Omarchy.
 - **Your preferred appearance:** light, dark, or system, with a neutral default, custom color tint, adjustable text size, and remembered settings.
 - **Easy navigation:** a heading outline, document search, and a read-only source view.
 - **One file at a time:** opening another file replaces the current preview. Close it with the × beside its name or **⌘W / Ctrl+W**, and SlayDown stays ready for the next file.
@@ -101,6 +101,8 @@ The app (then named Folio) has been confirmed working on **Omarchy 4.0.4-1, x86_
 ## Make it yours
 
 Open **Appearance** (the **Aa** button) to choose a reading style, theme, tint, or text size. Under **Tint**, pick a swatch or click **Custom color** to open your system’s color picker. Changes preview immediately and are remembered. **Neutral** restores the selected style’s original palette. Tint affects accents and adds a subtle wash to the page; it leaves your Markdown unchanged. These preferences apply to the app; Quick Look uses the neutral SlayDown default.
+
+**Omarchy** uses [Mark Cuda’s Omarchy Font](https://github.com/markcuda/Omarchy-Font) for block-letter headings, paired with monospaced body text. SlayDown’s wordmark uses Metal Mania. Both fonts are bundled locally and work offline; see [font credits and licenses](docs/FONTS.md).
 
 On Mac, choose **Show Colors…** in the picker for the full macOS color panel, including the color wheel. Tint works independently of your reading style, light/dark theme, and text size. Very bright or dark selections are adjusted for readable accent text.
 

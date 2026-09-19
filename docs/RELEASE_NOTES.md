@@ -1,8 +1,8 @@
 # SlayDown 0.2.0 preview
 
-Folio is now **SlayDown**. This release also includes custom tint controls and one-file-at-a-time viewing with Close Document. Existing appearance settings and editor selection are retained.
+Folio is now **SlayDown**. This release also includes custom tint controls and one-file-at-a-time viewing with Close Document. The Omarchy preset adds block-letter headings; the SlayDown wordmark uses a bundled metal typeface. Existing appearance settings and editor selection are retained.
 
-A local Markdown reader with four reading styles, light/dark appearance, an outline, search, and a source view. Open files in your preferred external editor and see saved changes refresh in place.
+A local Markdown reader with five reading styles, light/dark appearance, an outline, search, and a source view. Open files in your preferred external editor and see saved changes refresh in place.
 
 ## Downloads
 

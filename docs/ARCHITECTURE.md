@@ -55,7 +55,7 @@ Source and installation documentation are published at https://github.com/woodcr
 
 ## Reading-style scope
 
-The app persists reading style, theme, tint, and size independently. Four lightweight CSS presets share the same rendering output. Tint starts from each preset’s stylesheet palette; clearing the tint restores that palette. Computed hex colors avoid requiring CSS `color-mix()` on older platform webviews. No parser changes, remote fonts, or extra JS rendering packages are needed. Quick Look keeps the neutral default SlayDown styling; sharing user preferences with its sandbox is a separate future integration.
+The app persists reading style, theme, tint, and size independently. Five lightweight CSS presets share the same rendering output. Tint starts from each preset’s stylesheet palette; clearing the tint restores that palette. Computed hex colors avoid requiring CSS `color-mix()` on older platform webviews. No parser changes, remote fonts, or extra JS rendering packages are needed. Quick Look keeps the neutral default SlayDown styling; sharing user preferences with its sandbox is a separate future integration.
 
 ## Refresh and launch invariants
 
@@ -64,3 +64,5 @@ Frontend selection and refresh counters reject stale results, including after Cl
 ## Product rename compatibility
 
 SlayDown 0.2.0 was previously Folio. The executable is now `slaydown`, but the host identifier remains `dev.mdquickviewer.folio` and the extension identifier remains `dev.mdquickviewer.folio.QuickLook`. The `folio:settings` storage key, `folio` default-style ID, `folio-` heading IDs, `FolioRenderer` JavaScript namespace, and `FolioQuickLook` Swift module are intentionally stable. This preserves preferences, document fragments, and OS associations instead of treating the rename as a different app. Existing `FOLIO_*` build overrides remain supported.
+
+The desktop stylesheet bundles Metal Mania for the brand and Omarchy for the optional Omarchy heading preset. Vite emits local font assets; no remote font service or system font installation is required. Font licenses ship under `public/licenses/`. Quick Look retains the default system-font reader and does not load these app-only faces.

@@ -40,6 +40,7 @@ const readingStyles = [
   { id: 'code', name: 'VS Code', description: 'Compact & technical' },
   { id: 'writer', name: 'iA Writer', description: 'Classic serif' },
   { id: 'github', name: 'GitHub', description: 'Familiar & structured' },
+  { id: 'omarchy', name: 'Omarchy', description: 'Block type & mono' },
 ] as const;
 let readingStyle: string = 'folio';
 let tint: string | null = null;
@@ -70,7 +71,7 @@ try {
 
 $('#app').innerHTML = `
   <header class="titlebar">
-    <div class="brand"><span class="brand-mark">${icon('book')}</span><span>SlayDown<span class="brand-dot">.</span></span><span class="brand-description">MARKDOWN VIEWER</span></div>
+    <div class="brand"><span class="brand-mark">${icon('book')}</span><span class="brand-name">SlayDown<span class="brand-dot">.</span></span><span class="brand-description">MARKDOWN VIEWER</span></div>
     <div class="document-title">${icon('file')}<span id="filename"></span><span id="sample-badge" class="badge">SAMPLE</span><button id="close-document" class="icon-button" title="Close document (⌘W / Ctrl+W)" aria-label="Close document">${icon('close')}</button></div>
     <button id="appearance" class="icon-button" title="Appearance" aria-label="Appearance settings" aria-expanded="false">${icon('sun')}</button>
   </header>

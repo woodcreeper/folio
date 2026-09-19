@@ -10,6 +10,9 @@
 
 ### Added
 
+- Omarchy reading style with bundled Omarchy display headings and monospaced body text.
+- Metal Mania typography for the SlayDown wordmark; both font licenses ship with the app.
+
 - Close the current document with the × beside its name, File → Close Document, or ⌘W / Ctrl+W. Folio stays open with an empty reader and an Open button.
 - A playable 30-second walkthrough in the GitHub README, with its Remotion source in `video/`.
 - Custom tint in Appearance: five preset swatches, the system color picker, and a Neutral reset. Changes preview immediately and persist across restarts.
