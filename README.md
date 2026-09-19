@@ -35,14 +35,14 @@ Open a Markdown file and get straight to the words. SlayDown keeps your source u
 
 **SlayDown is an early preview.** Get packages from the [Releases page](https://github.com/woodcreeper/slaydown/releases). The release workflow produces the following files after all platform builds and automated tests pass. If a release is still building, you can [build from source](docs/DEVELOPMENT.md).
 
-**Version 0.2.0 introduces the SlayDown name.** Published v0.1.0 downloads still use **Folio** and predate tint controls and Close Document. Until a SlayDown release is published, [build the current source](docs/DEVELOPMENT.md); the filenames below describe the upcoming packages.
+**[Download SlayDown 0.2.0](https://github.com/woodcreeper/slaydown/releases/tag/v0.2.0)** — the current preview includes the SlayDown name, custom tint, Close Document, and the Omarchy reading style. Older v0.1.0 downloads retain the Folio name.
 
 | Computer | Download | Requirements |
 | --- | --- | --- |
-| Mac — Apple Silicon or Intel | `SlayDown-macOS-universal.zip` | macOS 12 or later |
-| Windows PC — x64 | `SlayDown_<version>_x64-setup.exe` | Windows 10 or 11; WebView2 |
-| Ubuntu / Debian — x64 | `SlayDown_<version>_amd64.deb` | Ubuntu 22.04+ or a compatible Debian-based desktop with WebKitGTK 4.1 |
-| Other Linux desktops — x64 | `SlayDown_<version>_amd64.AppImage` | A compatible glibc-based desktop; see Linux notes below |
+| Mac — Apple Silicon or Intel | [SlayDown-macOS-universal.zip](https://github.com/woodcreeper/slaydown/releases/download/v0.2.0/SlayDown-macOS-universal.zip) | macOS 12 or later |
+| Windows PC — x64 | [SlayDown_0.2.0_x64-setup.exe](https://github.com/woodcreeper/slaydown/releases/download/v0.2.0/SlayDown_0.2.0_x64-setup.exe) | Windows 10 or 11; WebView2 |
+| Ubuntu / Debian — x64 | [SlayDown_0.2.0_amd64.deb](https://github.com/woodcreeper/slaydown/releases/download/v0.2.0/SlayDown_0.2.0_amd64.deb) | Ubuntu 22.04+ or a compatible Debian-based desktop with WebKitGTK 4.1 |
+| Other Linux desktops — x64 | [SlayDown_0.2.0_amd64.AppImage](https://github.com/woodcreeper/slaydown/releases/download/v0.2.0/SlayDown_0.2.0_amd64.AppImage) | A compatible glibc-based desktop; see Linux notes below |
 
 Filenames may vary slightly; choose the matching extension in the release assets. Preview builds are **not Developer ID-signed/notarized on Mac or publisher-signed on Windows**. Mac bundles are signed ad hoc for bundle integrity. Operating systems may show security warnings. Managed computers may require administrator approval. Checksums are included as `SHA256SUMS.txt`.
 

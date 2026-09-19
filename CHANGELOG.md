@@ -1,6 +1,8 @@
 # Changelog
 
-## 0.2.0 — Unreleased
+## 0.2.0 — 2026-09-19
+
+Published packages: [SlayDown 0.2.0 preview](https://github.com/woodcreeper/slaydown/releases/tag/v0.2.0) — universal Mac ZIP, Windows x64 installer, Linux x64 DEB/AppImage, and SHA-256 checksums. Built from commit `6fa13cf` in [successful build 35441130888](https://github.com/woodcreeper/slaydown/actions/runs/35441130888).
 
 ### Renamed
 
