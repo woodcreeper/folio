@@ -27,7 +27,7 @@ function SlayDownSocial() {
       <Img src={staticFile('screenshots/slaydown-reader.png')} style={{display:'block', width:'100%', height:'100%', objectFit:'contain'}}/>
     </div>
     <div style={{position:'absolute', left:64, bottom:38, fontSize:12, letterSpacing:2, color:'#b5aabd'}}>MAC · WINDOWS · LINUX</div>
-    <div style={{position:'absolute', right:68, bottom:37, fontSize:15, color:'#b5aabd'}}>github.com/woodcreeper/folio</div>
+    <div style={{position:'absolute', right:68, bottom:37, fontSize:15, color:'#b5aabd'}}>github.com/woodcreeper/slaydown</div>
   </AbsoluteFill>;
 }
 

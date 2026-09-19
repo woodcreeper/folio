@@ -11,7 +11,7 @@ A local Markdown reader with five reading styles, light/dark appearance, an outl
 - **Linux x64:** install the `.deb` on a compatible Ubuntu/Debian desktop, or make the `.AppImage` executable and run it.
 - **SHA256SUMS.txt:** checksums for all four packages.
 
-[Full installation instructions](https://github.com/woodcreeper/folio#install) · [Build from source](https://github.com/woodcreeper/folio/blob/main/docs/DEVELOPMENT.md)
+[Full installation instructions](https://github.com/woodcreeper/slaydown#install) · [Build from source](https://github.com/woodcreeper/slaydown/blob/main/docs/DEVELOPMENT.md)
 
 ## Preview status
 
@@ -21,4 +21,4 @@ Mac Quick Look is included and experimental. Enable the extension in System Sett
 
 Built-in editing, annotations, mobile, Mermaid, math, and local Markdown-to-Markdown navigation are not included. Raw HTML and remote images stay inert; documents are limited to 10 MiB of UTF-8 Markdown.
 
-[Report a problem](https://github.com/woodcreeper/folio/issues). Please include your OS version and a small non-private example.
+[Report a problem](https://github.com/woodcreeper/slaydown/issues). Please include your OS version and a small non-private example.

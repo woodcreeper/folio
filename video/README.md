@@ -2,14 +2,13 @@
 
 A 30-second, 1080p Remotion walkthrough: your AI agent creates Markdown → select a file in Finder → press Space → double-click into SlayDown → edit in your own app → see the saved change. The [script and storyboard](SCRIPT.md) describe every shot. Production notes live here; the main README presents the finished demo.
 
-The SlayDown cut uses the bundled Metal Mania wordmark and an original 120 BPM metal instrumental: stereo power-chord guitars, palm-muted riffs, bass, and drums. The score uses plucked-string synthesis, contains no outside samples or recordings, and resolves on a sustained E5 chord. There is no narration.
+The SlayDown cut uses the bundled Metal Mania wordmark and “Eyesplit” by Shane Ivers, a recorded 154 BPM metal instrumental. The user approved this soundtrack on September 19, 2026. The 30-second excerpt fades under the end card. There is no narration. See [music attribution and source details](MUSIC.md).
 
 ## Reproduce
 
 ```sh
 cd video
 npm ci
-npm run audio
 npm run poster
 npm run stills
 npm run render
@@ -17,19 +16,21 @@ npm run verify
 npm run social
 ```
 
-The screenshots are committed, so rendering needs no running SlayDown or editor instance. Rendering uses installed Google Chrome on Mac; set `REMOTION_BROWSER` to another Chromium executable if needed. Python 3 generates the score using only its standard library. FFmpeg and FFprobe must be on PATH, or set `FFMPEG` and `FFPROBE`. Metal Mania is loaded from the bundled font. Other titles use local Iowan Old Style/Baskerville with Georgia fallback; render on Mac for matching typography.
+The screenshots are committed, so rendering needs no running SlayDown or editor instance. Rendering uses installed Google Chrome on Mac; set `REMOTION_BROWSER` to another Chromium executable if needed. The approved audio excerpt is committed as `public/eyesplit.m4a`, so ordinary rendering needs no music download. The final mux copies its AAC stream directly to avoid another lossy audio encode. To rebuild the excerpt from the artist’s original MP3, see [MUSIC.md](MUSIC.md). FFmpeg and FFprobe must be on PATH, or set `FFMPEG` and `FFPROBE`. Metal Mania is loaded from the bundled font. Other titles use local Iowan Old Style/Baskerville with Georgia fallback; render on Mac for matching typography.
 
 - `src/SlayDownFilm.tsx`: scenes, copy, crops, and animation.
 - `src/timeline.json`: the shared 900-frame timeline, review frames, and static intervals.
 - `public/Agent workspace/`: public demo documents.
 - `public/screenshots/slaydown-*.png`: the walkthrough captures.
-- `scripts/soundtrack.py`: reproducible original metal score.
+- `public/eyesplit.m4a`: approved licensed soundtrack excerpt.
+- `scripts/soundtrack-recorded.mjs`: reproducible trim, fade, and loudness normalization.
+- `scripts/soundtrack.py`: rejected synthesized experiment, retained as historical source.
 - `scripts/soundtrack-warm.py`: the previous warm score, retained as an optional alternative.
 - `out/SlayDown-Final.mp4`: H.264/AAC export.
 - `out/SlayDown-Cover.png`: fully visible frame-zero splash.
 - `src/SlayDownSocial.tsx`: the 1280 × 640 social card.
 
-Generated audio and working exports are ignored. The approved distribution MP4 belongs in `docs/media/SlayDownDemo.mp4`, with its cover in `docs/images/slaydown-video-poster.png`. Replace those files only after reviewing the rendered candidate.
+Working exports and full source downloads are ignored. The approved licensed audio excerpt is versioned. The approved distribution MP4 belongs in `docs/media/SlayDownDemo.mp4`, with its cover in `docs/images/slaydown-video-poster.png`. Replace those files only after reviewing the rendered candidate.
 
 `SLAYDOWN_FRAMES=0,490,759 npm run stills` selects specific review frames. `SLAYDOWN_AUDIO_FROM=/absolute/path/approved.mp4 npm run render` preserves encoded audio from a separate approved MP4 of the **same duration**. The old `FOLIO_FRAMES` and `FOLIO_AUDIO_FROM` names remain accepted. Do not reuse the old 42-second film’s audio in this 30-second cut.
 
@@ -51,16 +52,16 @@ The renderer uses lossless PNG frames, a single rendering page, and software `sw
 
 `npm run verify -- out/another-export.mp4` checks another export. The verifier decodes the complete audio/video, requires 900 frames and 30-second streams, scans for blank frames and short corruption bursts, and compares deliberately static intervals. It was introduced after a parallel JPEG render produced tiled and blank frames despite valid codecs. These checks do not replace watching the actual MP4 and inspecting both sides of each appearance, editor, save, and refresh cut.
 
-The September 18 SlayDown export passed the complete 900-frame scan and audio/video decoding. It is 1920 × 1080, 30 fps, H.264 High Profile / `yuv420p`, with 48 kHz stereo AAC-LC. Picture duration is 30 seconds; AAC padding brings the container to 30.059 seconds. The file is 2.34 MB. Encoded audio measures −20.0 dBFS mean and −6.9 dBFS peak. Both sides of the appearance/editor/save/refresh cuts were inspected from the encoded MP4.
+The September 19 SlayDown export passed the complete 900-frame scan and audio/video decoding. It is 1920 × 1080, 30 fps, H.264 High Profile / `yuv420p`, with 48 kHz stereo AAC-LC. Both streams and the container last 30 seconds. The file is 1.88 MB. Encoded audio measures −16.09 LUFS integrated and −6.24 dBTP true peak. Its encoded audio stream matches the user-approved Eyesplit preview exactly. The updated repository address was checked in the encoded opening and closing frames.
 
 ## GitHub and X
 
 Use the finished demo and its cover on the public README, without production instructions beside it. For an inline GitHub attachment player, upload the MP4 in GitHub’s Markdown editor and use the resulting attachment URL. A cover linking to the committed MP4 also works without an attachment upload.
 
-Upload `out/SlayDown-Final.mp4` directly to X. It is 16:9, 1920 × 1080, 30 fps, H.264 with `yuv420p`, stereo AAC, and fast-start metadata. The first frame is a complete cover; a separate PNG is available for flows that accept a thumbnail. X may transcode the upload. These scripts do not publish posts.
+Upload `out/SlayDown-Final.mp4` directly to X. It is 16:9, 1920 × 1080, 30 fps, H.264 with `yuv420p`, stereo AAC, and fast-start metadata. The first frame is a complete cover; a separate PNG is available for flows that accept a thumbnail. X may transcode the upload. Include the [music credit](MUSIC.md#credit-for-publication) in the post. These scripts do not publish posts.
 
-`npm run social` writes `docs/images/slaydown-social.png`, an opaque 1280 × 640 PNG under 1 MB. Upload it under repository **Settings → General → Social preview**; committing the image alone does not update GitHub’s link preview. It also works as a standalone image attachment. The repository remains `woodcreeper/folio`, so existing links continue to work.
+`npm run social` writes `docs/images/slaydown-social.png`, an opaque 1280 × 640 PNG under 1 MB. Upload it under repository **Settings → General → Social preview**; committing the image alone does not update GitHub’s link preview. It also works as a standalone image attachment. The repository is now `woodcreeper/slaydown`; GitHub redirects the previous `woodcreeper/folio` address.
 
-Current GitHub attachment: https://github.com/user-attachments/assets/b025dee5-04a4-4a88-9c04-39b0a81a428e
+Current GitHub attachment: https://github.com/user-attachments/assets/af304568-818d-4b9f-8540-d638357e0590
 
-Distribution MP4 SHA-256: `cd575c207aec8b8a357c228ba887399a2f521f3add1de7524db2acc5aa11221f`.
+Distribution MP4 SHA-256: `8c459221daf18ddf69dd54ffbeeb905d269f17edb01c93a479d81ad35d55dc76`.
